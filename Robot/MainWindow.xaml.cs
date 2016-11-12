@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Robot
         public MainWindow()
         {
             InitializeComponent();
+            dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm"); 
         }      
 
         private void button_Click(object sender, RoutedEventArgs e)
