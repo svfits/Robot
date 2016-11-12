@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,26 @@ namespace Robot
         public MainWindow()
         {
             InitializeComponent();
+        }      
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {           
+
+        }      
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+          //  e.Cancel = true;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }     
+
+        private void Button_Connect_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

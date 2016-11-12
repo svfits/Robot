@@ -5,8 +5,115 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Loaded="Window_Loaded" WindowStyle="None" Closing="Window_Closing" WindowState="Maximized"
+        Height="1000" Width="1000">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>            
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="10,10,10,10" VerticalAlignment="Stretch">
+            
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
+            <Separator  />
+        </StackPanel>
+
+        <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10">
+            <Grid Grid.Column="2" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>                 
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,10">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"/>
+                    <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+                </GroupBox>
+
+                <GroupBox Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <Image x:Name="robotImage" Grid.RowSpan="5" Grid.Column="0" Source="u36.png" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        
+                        <TabControl Grid.Column="1" Grid.Row="0" MinHeight="100" MinWidth="70" >
+                            <TabItem Header="Communication">
+                                <TextBox />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl Grid.Column="2" Grid.Row="1" MinHeight="150" MinWidth="150" HorizontalAlignment="Center">
+                            <TabItem Header="Neuro" HorizontalAlignment="Center">
+                                <TextBox />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl Grid.Column="1" Grid.Row="2" MinHeight="150" MinWidth="150" HorizontalAlignment="Center">
+                            <TabItem Header="Modules" HorizontalAlignment="Center">
+                                <TextBox />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl Grid.Column="2" Grid.Row="3" MinHeight="150" MinWidth="150" HorizontalAlignment="Center">
+                            <TabItem Header="System" HorizontalAlignment="Center">
+                                <TextBox />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl Grid.Column="1" Grid.Row="4" MinHeight="150" MinWidth="150" HorizontalAlignment="Center">
+                            <TabItem Header="Servo" HorizontalAlignment="Center">
+                                <TextBox />
+                            </TabItem>
+                        </TabControl>                      
+                    </Grid>                   
+                </GroupBox>
+
+                <Grid Grid.Row="2" >
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="Link" />
+                            <Label x:Name="statusConnectionLbl" Content="Disconnect"  />
+
+                        </StackPanel>
+                        <Label Content="Mode" Grid.Row="0" Grid.Column="2"/>
+                        <Label x:Name="statusConnectionUsbLbl" Content="OFF" />
+
+                        <Label Content="Статус режима робота:" />
+                        <Label x:Name="statusRegimeRobotaLbl" Content="N/A" />
+                        <Label Content="Статус заряда батареи:"  />
+                        <Label x:Name="statusBataryLbl" Content="OFF" />
+
+                        <Label Content="Версия программного обеспечения:" />
+                        <Label x:Name="versionProgrammLbl" Content="N/A" />
+                        <Label Content="Текущая дата и время"  />
+                        <Label x:Name="dateTimeLbl" Content="OFF" />
+                    </Grid>                
+                  </Grid>
+                  
+            </Grid>
+          
+
+        </GroupBox>
+   
+
+           
+                
+            
+      
     </Grid>
 </Window>
