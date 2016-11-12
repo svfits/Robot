@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>                
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition> 
                 <RowDefinition Height="0.3*"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBox x:Name="commandTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black"
