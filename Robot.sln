@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robot", "Robot\Robot.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotConsole", "RobotConsole\RobotConsole.csproj", "{EB56AF8D-F61A-4F57-942D-622134FE1413}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalDataBase", "LocalDataBase\LocalDataBase.csproj", "{F1B34171-4126-496C-A303-26D5F998E04C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EB56AF8D-F61A-4F57-942D-622134FE1413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB56AF8D-F61A-4F57-942D-622134FE1413}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB56AF8D-F61A-4F57-942D-622134FE1413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B34171-4126-496C-A303-26D5F998E04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B34171-4126-496C-A303-26D5F998E04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B34171-4126-496C-A303-26D5F998E04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B34171-4126-496C-A303-26D5F998E04C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
