@@ -108,6 +108,9 @@ namespace Robot
 
             versionProgrammLbl.Foreground = Brushes.Green;
             versionProgrammLbl.Content = "v.15.7.16";
+
+            connectOrDisconnectLbl.Content = "CONNECTED";
+            connectOrDisconnectLbl.Foreground = Brushes.Green;
         }
 
     }

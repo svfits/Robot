@@ -46,7 +46,7 @@
                     <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"
                             FontSize="20" Padding="10" IsEnabled="False"  />
                     <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Stretch"
-                          FontSize="25"  HorizontalAlignment="Stretch"/>
+                          FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl"/>
                         <Button x:Name="connectToUSB" Content="connect to USB" Click="connectToUSB_Click" FontSize="10" Padding="10"
                                 Margin="5,5,5,5"/>
                     </StackPanel>
@@ -127,36 +127,36 @@
 
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*" MinWidth="150"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto" MinWidth="150"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                <Label Content="Link" />
-                                <Label x:Name="statusConnectionLbl" Content="Disconnect"  />
+                            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
+                                <Label Content="Link" FontSize="20" />
+                                <Label x:Name="statusConnectionLbl" Content="Disconnect" FontSize="20" />
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Label Content="Mode" Grid.Row="0" Grid.Column="2"/>
-                                <Label x:Name="modeLbl" Content="OFF" />
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,10,0">
+                                <Label Content="Mode" Grid.Row="0" Grid.Column="2" FontSize="20"/>
+                                <Label x:Name="modeLbl" Content="OFF" FontSize="20" />
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="2">
-                                <Label Content="Battery:"  />
-                                <Label x:Name="statusBataryLbl" Content="OFF" />
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">
+                                <Label Content="Battery:"  FontSize="20"/>
+                                <Label x:Name="statusBataryLbl" Content="OFF" FontSize="20"/>
                             </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal" Grid.Column="3">
-                                <Label Content="Software:" />
-                                <Label x:Name="versionProgrammLbl" Content="N/A" />
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="3" Margin="0,0,10,0">
+                                <Label Content="Software:" FontSize="20" />
+                                <Label x:Name="versionProgrammLbl" Content="N/A" FontSize="20"/>
                             </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal" Grid.Column="4">
-                                <Label Content="Date: "  />
-                                <Label x:Name="dateTimeLbl" Content="OFF" />
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="4" Margin="0,0,10,0" HorizontalAlignment="Right">
+                                <Label Content="Date: "  FontSize="20" />
+                                <Label x:Name="dateTimeLbl" Content="OFF" FontSize="20"/>
                             </StackPanel>
 
                         </Grid>
