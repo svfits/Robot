@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
-        Loaded="Window_Loaded" WindowStyle="None" Closing="Window_Closing" WindowState="Maximized"
+        Loaded="Window_Loaded" Closing="Window_Closing" 
         Height="1000" Width="1000">
+    <!--WindowState="Maximized"-->
+    <!--WindowStyle="None"-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -41,9 +43,9 @@
 
                 <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,10">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <Button Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10" FontSize="30" Padding="10"/>
+                    <Button Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10" FontSize="20" Padding="10"/>
                     <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Stretch"
-                          FontSize="50"  HorizontalAlignment="Stretch"/>
+                          FontSize="25"  HorizontalAlignment="Stretch"/>
                 </StackPanel>
                 </GroupBox>
 
@@ -126,7 +128,7 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="0">
