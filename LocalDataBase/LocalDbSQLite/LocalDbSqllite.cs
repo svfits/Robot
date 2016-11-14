@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocalDataBase.LocalDbSQLite;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -32,50 +33,16 @@ namespace LocalDataBase
                     using (SQLiteCommand command = new SQLiteCommand(connection))
                     {
                         //таблица событий 
-                        command.CommandText = @"CREATE TABLE [Events] (
+                        command.CommandText = @"CREATE TABLE [ListCommand] (
                     [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [message] char(1000) NOT NULL,
-                    [type_id] int NOT NULL,                   
-                    TIMESTAMP not null default CURRENT_TIMESTAMP,
-                    [source] char(1000),   
-                    FOREIGN KEY(type_id) REFERENCES Type_Exception(type_id)                                    
+                    [command] char(1000) NOT NULL,
+                    [helpPrint] char(1000) NOT NULL,                 
+                    [monitorPrint] char(1000) NOT NULL   
                     );";
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        //таблица типов исключений
-                        command.CommandText = @"CREATE TABLE [Type_Exception] (
-                    [type_id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [type_events] char(1000) NOT NULL                                                      
-                    );";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-
-                        ADD_In_Type_Exception();
-
-                        // connection
-                        command.CommandText = @"CREATE TABLE [Connections] (
-                    [id]  integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [login] char(1000) NOT NULL,
-                    [passwords] char(1000) NOT NULL,
-                    [address]   char(1000) NOT NULL,
-                    [organization_name] char(1000),
-                    [id_organization] int,
-                    [http_proxy] char(1000),
-                    [http_proxy_port] int,
-                    [if_proxy] int                                                                         
-                    );";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-
-                        command.CommandText = @"CREATE TABLE [Versions] (
-                    id_version integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [client] char(1000),
-                    [server] char(1000)
-                    );";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-
+                        addNewHelp();
                     }
                 }
             }
@@ -84,13 +51,34 @@ namespace LocalDataBase
         /// <summary>
         ////добавим перечень исключений котрые могут возникнуть
         /// </summary>
-        private static void ADD_In_Type_Exception()
+        private static void addNewHelp()
         {
-            /*
-            List<Type_Exception> type_events = new List<Type_Exception>()
+
+            List<ListCommand> listCommand = new List<ListCommand>()
             {
-                new Type_Exception { type_events = "На стороне сервера не удалось получить список устройств",type_id = 1},
-                new Type_Exception { type_events = "Успешно выполенена отправка результатов на сервер" , type_id =2},
+                new ListCommand { command = "?", helpPrint = "Help список всех доступных команд",
+                    monitorPrint = " CP Interactive Operating System Software (CPIOSS)" +
+                    "PIOSS (tm) 1600 ANDROID Software (C), Version 15.7.16," +
+                    "Copyright (c) 2065-2073 by CP Systems, Corp." +
+                    "These shell commands are defined internally.  Type `help' to see this list." +
+                    "Type `help name' or ‘name ?’ to find out more about the function `name'." +
+                    "                                                                        " +
+                    "clear                       - clear the terminal screen."   +
+                    "cpav scan                   - scan, find and cure viruses." +
+                    "diag [node]                 - check all nodes in the system how it’s work." +
+                    "ls                      - list directory contents on flash drive" +
+                    "lsmod                       - list all modules in the system." +
+                    "make modules install [module_name]      - replaces the selected module in the system. A new" +
+                    "                         module is taken from flash drive." +
+                   "top                     - print system information."
+                } ,
+
+                new ListCommand { command = "Clear" , helpPrint = " ", monitorPrint = "Очистить экран консоли и буфер" },
+                new ListCommand { command = "Diag, Diag ?" ,
+                    helpPrint =  "Помощь по команде. Список всех доступных опций",
+                    monitorPrint = "Помощь по команде. Список всех доступных опций"
+                },
+                /*
                 new Type_Exception { type_events = "Возникла ошибка  при отправке результатов на сервер" , type_id =3},
                 new Type_Exception { type_events = "Возникла ошибка при выполнении POST запроса при отправке результатов на сервер", type_id =4},
                 new Type_Exception { type_events = "Удачно отправляет результаты поиска устройств на сервер" , type_id =5},
@@ -113,12 +101,13 @@ namespace LocalDataBase
                 new Type_Exception { type_events = "Обновление сервиса начато на версию", type_id = 22 },
                 new Type_Exception { type_events = "Не удалось получить файл обновления с сервера обновлений", type_id = 23 },
             };
-
+*/
+             };
             try
             {
                 using (HContext db = new HContext())
                 {
-                    db.Type_Exception.AddRange(type_events);
+                    db.ListCommand.AddRange(listCommand);
 
                     db.SaveChanges();
                 }
@@ -126,7 +115,7 @@ namespace LocalDataBase
             catch
             { }
             return;
-            */
+            
         }
 
         public static string GetConnectionStringByName(string name)

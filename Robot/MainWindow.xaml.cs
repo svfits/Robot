@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using LocalDataBase.LocalDbSQLite;
+using System;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Robot
 {
@@ -31,7 +18,7 @@ namespace Robot
         public MainWindow()
         {
             InitializeComponent();
-            dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm"); 
+            dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); 
         }   
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -42,6 +29,9 @@ namespace Robot
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {           
             dateTimeUpdate();
+
+            string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
+            AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
         }
 
         private void dateTimeUpdate()
@@ -53,7 +43,7 @@ namespace Robot
 
         private void printDateTime(object sender, ElapsedEventArgs e)
         {           
-            dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm"); }));
+            dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); }));
         }     
 
         /// <summary>
@@ -92,6 +82,8 @@ namespace Robot
             modeLbl.Content = "Standby";
             modeLbl.Foreground = Brushes.Gray;
             connectBtn.IsEnabled = true;
+
+
         }
 
         /// <summary>
@@ -111,6 +103,20 @@ namespace Robot
 
             connectOrDisconnectLbl.Content = "CONNECTED";
             connectOrDisconnectLbl.Foreground = Brushes.Green;
+
+            try
+            {
+                LocalDataBase.LocalDaBase.Create_Table_Events();
+
+                using (HContext db = new HContext())
+                {
+                     db.ListCommand.Find();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
     }
