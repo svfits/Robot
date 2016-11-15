@@ -1,0 +1,30 @@
+﻿<Window x:Class="Robot.AddNewCommandWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Robot"
+        mc:Ignorable="d"
+        Title="Добавление новых команд" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition MinWidth="150" Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="Команда:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox x:Name="commandTxb" Grid.Row="0" Grid.Column="1"/>
+        <Label Content="Подсказка по команде:" Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tooltipHelpTxtb" Grid.Column="1" Grid.Row="1" />
+        <Label Content="Листинг команды:" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center"/>
+        <TextBox x:Name="listingCommandTxb" Grid.Row="2" Grid.Column="1" />
+        <Button x:Name="saveNewHelpCommandBtn" Click="saveNewHelpCommandBtn_Click" Grid.Row="3" Grid.Column="1" Content="Сохранить"/>
+    </Grid>
+</Window>

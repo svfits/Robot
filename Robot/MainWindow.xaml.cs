@@ -126,5 +126,13 @@ namespace Robot
             }
         }
 
+        private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.F12)
+            {
+                AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
+                addNewHelp.Show();
+            }
+        }
     }
 }

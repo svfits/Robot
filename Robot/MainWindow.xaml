@@ -9,7 +9,7 @@
         Height="1000" Width="1000"   WindowState="Maximized">
 
     <!--WindowStyle="None"-->
-    <Grid >
+    <Grid KeyDown="Grid_KeyDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
