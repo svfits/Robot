@@ -29,8 +29,8 @@ namespace Robot
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {           
             dateTimeUpdate();
-
-            string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
+            //  string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
+            string datadb = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
         }
 
@@ -83,7 +83,7 @@ namespace Robot
             modeLbl.Foreground = Brushes.Gray;
             connectBtn.IsEnabled = true;
 
-
+            LocalDataBase.LocalDaBase.Create_Table_Events();
         }
 
         /// <summary>
@@ -106,11 +106,18 @@ namespace Robot
 
             try
             {
-                LocalDataBase.LocalDaBase.Create_Table_Events();
+                
 
                 using (HContext db = new HContext())
                 {
-                     db.ListCommand.Find();
+                    db.ListCommand.Add(new ListCommand()
+                    {
+                        command = "jjjjjjjjjjjjjjjjjj",
+                        helpPrint = "sjjjjjjjjjjjjjjjjjjjj",
+                        monitorPrint = DateTime.Now.ToString()
+                    }
+                        );
+                    db.SaveChanges();
                 }
             }
             catch (Exception ex)

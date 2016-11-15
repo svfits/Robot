@@ -16,7 +16,6 @@ namespace LocalDataBase
     {
         public static void Create_Table_Events()
         {
-
             string baseNamePath = GetConnectionStringByName("SQLiteS");
             string baseName = baseNamePath.Replace("data source=|DataDirectory|", "");
 
@@ -33,11 +32,11 @@ namespace LocalDataBase
                     using (SQLiteCommand command = new SQLiteCommand(connection))
                     {
                         //таблица событий 
-                        command.CommandText = @"CREATE TABLE [ListCommand] (
-                    [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [command] char(1000) NOT NULL,
-                    [helpPrint] char(1000) NOT NULL,                 
-                    [monitorPrint] char(1000) NOT NULL   
+                        command.CommandText = @"CREATE TABLE [ListCommands] (
+                    [id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    [command] char(1000) ,
+                    [helpPrint] char(1000) ,                 
+                    [monitorPrint] char(1000)   
                     );";
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
@@ -47,9 +46,8 @@ namespace LocalDataBase
                 }
             }
         }
-
         /// <summary>
-        ////добавим перечень исключений котрые могут возникнуть
+        ////добавим справку
         /// </summary>
         private static void addNewHelp()
         {
@@ -108,12 +106,13 @@ namespace LocalDataBase
                 using (HContext db = new HContext())
                 {
                     db.ListCommand.AddRange(listCommand);
-
                     db.SaveChanges();
                 }
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
             return;
             
         }
