@@ -50,7 +50,12 @@ namespace Robot
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             listHelpDg.ItemsSource = RepositoryLocalSQLite.getDataFromListCommand();
+            SizeToContent = SizeToContent.Width;
+        }
 
+        private void listHelpDg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("ggggg!");
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Robot
     public partial class MainWindow : Window
     {
         public int batteryCharge;
-        System.Timers.Timer timerBatttery = new System.Timers.Timer();
-        System.Timers.Timer timerDateTime = new System.Timers.Timer();
+        Timer timerBatttery = new System.Timers.Timer();
+        System.Timers.Timer timerDateTime = new Timer();
 
         public MainWindow()
         {
@@ -103,27 +103,7 @@ namespace Robot
 
             connectOrDisconnectLbl.Content = "CONNECTED";
             connectOrDisconnectLbl.Foreground = Brushes.Green;
-
-            try
-            {
-                
-
-                using (HContext db = new HContext())
-                {
-                    db.ListCommand.Add(new ListCommand()
-                    {
-                        command = "jjjjjjjjjjjjjjjjjj",
-                        helpPrint = "sjjjjjjjjjjjjjjjjjjjj",
-                        monitorPrint = DateTime.Now.ToString()
-                    }
-                        );
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+                      
         }
 
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

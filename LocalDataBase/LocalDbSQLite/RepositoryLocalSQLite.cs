@@ -20,7 +20,7 @@ namespace LocalDataBase.LocalDbSQLite
                         ;           
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 return null;
             }
