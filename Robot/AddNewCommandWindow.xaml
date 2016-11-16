@@ -9,7 +9,7 @@
         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <Grid Margin="0,0,1,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="100"  Width="auto"></ColumnDefinition>
+            <ColumnDefinition   MinWidth="100"  Width="auto"></ColumnDefinition>
             <ColumnDefinition  Width="auto"></ColumnDefinition>
             <ColumnDefinition  Width="auto"></ColumnDefinition>
             <ColumnDefinition  Width="auto"></ColumnDefinition>
