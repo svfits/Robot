@@ -46,5 +46,11 @@ namespace Robot
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            listHelpDg.ItemsSource = RepositoryLocalSQLite.getDataFromListCommand();
+
+        }
     }
 }

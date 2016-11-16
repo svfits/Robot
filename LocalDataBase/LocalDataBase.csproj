@@ -68,6 +68,7 @@
     <Compile Include="LocalDbSQLite\HContex.cs" />
     <Compile Include="LocalDbSQLite\ListCommand.cs" />
     <Compile Include="LocalDbSQLite\LocalDbSqllite.cs" />
+    <Compile Include="LocalDbSQLite\RepositoryLocalSQLite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
