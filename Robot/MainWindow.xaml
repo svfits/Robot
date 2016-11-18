@@ -26,9 +26,9 @@
                      Background="Black" Grid.Row="1" TextWrapping="Wrap" BorderBrush="Black"
                      Foreground="LightGreen" Text="#"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
+        <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
             <Separator  />
-        </StackPanel>
+        </StackPanel>-->
 
         <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10">
             <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

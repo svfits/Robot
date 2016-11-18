@@ -22,13 +22,18 @@
                 <DataGridTextColumn IsReadOnly="True"  Binding="{Binding id,Mode=TwoWay}" Header="id"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding command,Mode=TwoWay}" Header="Команда"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding helpPrint,Mode=TwoWay}" Header="Подсказка по команде"></DataGridTextColumn>
-                <DataGridTextColumn Width="500" Binding="{Binding monitorPrint,Mode=TwoWay}" Header="Листинг команды">
+                <DataGridTextColumn Header="Листинг команды" Binding="{Binding monitorPrint,Mode=TwoWay}"  Width="500">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                            <Setter Property="TextWrapping" Value="Wrap" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
-                    
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="AcceptsReturn" Value="true" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

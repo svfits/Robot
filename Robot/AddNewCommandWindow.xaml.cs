@@ -30,15 +30,24 @@ namespace Robot
 
         private void saveNewHelpCommandBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(objToAdd.id ==0)
+            try
             {
-                db.ListCommand.Add( new ListCommand
+                if (objToAdd.id == 0)
                 {
-                    command = objToAdd.command, monitorPrint = objToAdd.monitorPrint, helpPrint = objToAdd.helpPrint
-                });
-            }
+                    db.ListCommand.Add(new ListCommand
+                    {
+                        command = objToAdd.command,
+                        monitorPrint = objToAdd.monitorPrint,
+                        helpPrint = objToAdd.helpPrint
+                    });
+                }
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("Произошла ошибка данные могут не сохранится");
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
