@@ -20,6 +20,9 @@ namespace Robot
     /// </summary>
     public partial class AddNewCommandWindow : Window
     {
+        HContext db = new HContext();
+        ListCommand objToAdd;
+
         public AddNewCommandWindow()
         {
             InitializeComponent();
@@ -27,35 +30,52 @@ namespace Robot
 
         private void saveNewHelpCommandBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if(objToAdd.id ==0)
             {
-                using (HContext db = new HContext())
+                db.ListCommand.Add( new ListCommand
                 {
-                    db.ListCommand.Add(new ListCommand()
-                    {
-                        command = commandTxb.Text,
-                        helpPrint = tooltipHelpTxtb.Text,
-                        monitorPrint = listingCommandTxb.Text
-                    }
-                        );
-                    db.SaveChanges();
-                }
+                    command = objToAdd.command, monitorPrint = objToAdd.monitorPrint, helpPrint = objToAdd.helpPrint
+                });
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+
+            db.SaveChanges();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            listHelpDg.ItemsSource = RepositoryLocalSQLite.getDataFromListCommand();
+            listHelpDg.ItemsSource = getDataFromListCommand();
             SizeToContent = SizeToContent.Width;
         }
 
         private void listHelpDg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("ggggg!");
+           // MessageBox.Show("ggggg!");
+        }
+
+        private void rejectNewHelpCommandBtn_Click(object sender, RoutedEventArgs e)
+        {
+            db.SaveChanges();
+        }            
+
+        private void listHelpDg_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+          
+        }
+
+        private void listHelpDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            objToAdd = listHelpDg.SelectedItem as ListCommand;
+        }
+
+        public List<ListCommand> getDataFromListCommand()
+        {
+           return db.ListCommand.AsEnumerable().ToList();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            db.Dispose();
         }
     }
+    
 }

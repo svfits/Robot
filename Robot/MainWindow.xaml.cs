@@ -32,6 +32,8 @@ namespace Robot
             //  string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
             string datadb = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
+
+            LocalDataBase.LocalDaBase.Create_Table_Events();
         }
 
         private void dateTimeUpdate()
@@ -42,8 +44,13 @@ namespace Robot
         }
 
         private void printDateTime(object sender, ElapsedEventArgs e)
-        {           
-            dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); }));
+        {
+            try
+            {
+                dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); }));
+            }
+            catch
+            { }
         }     
 
         /// <summary>
@@ -83,7 +90,7 @@ namespace Robot
             modeLbl.Foreground = Brushes.Gray;
             connectBtn.IsEnabled = true;
 
-            LocalDataBase.LocalDaBase.Create_Table_Events();
+         
         }
 
         /// <summary>
@@ -102,8 +109,7 @@ namespace Robot
             versionProgrammLbl.Content = "v.15.7.16";
 
             connectOrDisconnectLbl.Content = "CONNECTED";
-            connectOrDisconnectLbl.Foreground = Brushes.Green;
-                      
+            connectOrDisconnectLbl.Foreground = Brushes.Green;                      
         }
 
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

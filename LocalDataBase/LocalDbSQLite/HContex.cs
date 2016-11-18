@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace LocalDataBase.LocalDbSQLite
 {
     public class HContext : DbContext
-    {  
-
+    { 
         public HContext() : base("SQLiteS") { }
 
         public DbSet<ListCommand> ListCommand { get; set; }      
