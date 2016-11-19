@@ -17,19 +17,19 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="listHelpDg" Grid.Row="0" Margin="10,10,10,10" AutoGenerateColumns="False"  MouseDoubleClick="listHelpDg_MouseDoubleClick" SelectedItem="id"
                   ScrollViewer.VerticalScrollBarVisibility="Visible" CanUserDeleteRows="True" SelectionChanged="listHelpDg_SelectionChanged"
-                  RowEditEnding="listHelpDg_RowEditEnding">
-            <DataGrid.Columns>
+                  RowEditEnding="listHelpDg_RowEditEnding" ToolTip="Переход на новую строку ENTER">
+            <DataGrid.Columns  >
                 <DataGridTextColumn IsReadOnly="True"  Binding="{Binding id,Mode=TwoWay}" Header="id"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding command,Mode=TwoWay}" Header="Команда"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding helpPrint,Mode=TwoWay}" Header="Подсказка по команде"></DataGridTextColumn>
-                <DataGridTextColumn Header="Листинг команды" Binding="{Binding monitorPrint,Mode=TwoWay}"  Width="500">
+                <DataGridTextColumn Binding="{Binding helpPrint,Mode=TwoWay}" Header="Подсказка по команде" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Листинг команды" Binding="{Binding monitorPrint,Mode=TwoWay}"  Width="500" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextWrapping" Value="Wrap" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                     <DataGridTextColumn.EditingElementStyle>
-                        <Style TargetType="TextBox">
+                        <Style TargetType="TextBox" >
                             <Setter Property="TextWrapping" Value="Wrap" />
                             <Setter Property="AcceptsReturn" Value="true" />
                         </Style>

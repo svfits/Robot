@@ -17,14 +17,14 @@
         <Grid Grid.Column="0" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="0.3*"></RowDefinition>
+                <!--<RowDefinition Height="0.3*"></RowDefinition>-->
             </Grid.RowDefinitions>
-            <TextBox x:Name="commandTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black"  Grid.Row="0" TextWrapping="NoWrap" 
-                     Foreground="White" Text="#" BorderBrush="Black">
+            <TextBox x:Name="commandTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black"  Grid.Row="0" TextWrapping="Wrap" 
+                     Foreground="LightGreen" Text="#" BorderBrush="Black" AcceptsReturn="True" KeyUp="commandTXB_KeyUp">
             </TextBox>
-            <TextBox x:Name="commandEnterTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+            <!--<TextBox x:Name="commandEnterTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                      Background="Black" Grid.Row="1" TextWrapping="Wrap" BorderBrush="Black"
-                     Foreground="LightGreen" Text="#"/>
+                     Foreground="LightGreen" Text="#"/>-->
         </Grid>
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
             <Separator  />

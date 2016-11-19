@@ -1,5 +1,6 @@
 ﻿using LocalDataBase.LocalDbSQLite;
 using System;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -66,6 +67,11 @@ namespace Robot
             timerBatttery.Start();
         }
 
+        /// <summary>
+        /// зарада больше 100 не бывает нарисуем зарядку
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void printBatteryCharge(object sender, ElapsedEventArgs e)
         {
             batteryCharge++;
@@ -112,12 +118,76 @@ namespace Robot
             connectOrDisconnectLbl.Foreground = Brushes.Green;                      
         }
 
+        /// <summary>
+        /// редактирование списка команд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.F12)
             {
                 AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
                 addNewHelp.Show();
+            }
+        }
+
+        /// <summary>
+        /// обработка нажатия enter при вводе команд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void commandTXB_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+           if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                //сколько строк 
+                int countLineTxb = commandTXB.LineCount;
+                string textLineTXB = commandTXB.GetLineText(countLineTxb - 2);
+
+                textLineTXB =  textLineTXB.Trim();
+                if(textLineTXB != "")
+                {
+                    textLineTXB = textLineTXB.Substring(1);
+                }
+
+                commandTXB.Text += "!!!!!!";
+               
+                commandTXB.Text += "#";
+                commandTXB.SelectionStart = commandTXB.Text.Length;
+
+                //commandTXB.Text = searchCommand(textLineTXB);
+                //commandTXB.Text = "fffffffffffff";
+                //MessageBox.Show(textLineTXB.ToString());
+            }
+        }
+
+        private string searchCommand(string textCommand)
+        {
+            try
+            {
+                using (HContext dbL = new HContext())
+                {
+                    var helpCommand = dbL.ListCommand
+                      .Where(c => c.command == textCommand)
+                      .Last()
+                      .ToString()
+                      ;
+
+                    if (helpCommand == null)
+                    {
+                        return "команда не найдена";
+                    }
+                    else
+                    {
+                        return helpCommand;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+              //  MessageBox.Show(ex.ToString());
+                return "";
             }
         }
     }
