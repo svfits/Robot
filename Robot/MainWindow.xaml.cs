@@ -1,5 +1,6 @@
 ﻿using LocalDataBase.LocalDbSQLite;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using System.Windows;
@@ -13,8 +14,9 @@ namespace Robot
     public partial class MainWindow : Window
     {
         public int batteryCharge;
-        Timer timerBatttery = new System.Timers.Timer();
-        System.Timers.Timer timerDateTime = new Timer();
+        Timer timerBatttery = new Timer();
+        Timer timerDateTime = new Timer();
+        public int scenarioDiagnosticRobot;
 
         public MainWindow()
         {
@@ -96,7 +98,14 @@ namespace Robot
             modeLbl.Foreground = Brushes.Gray;
             connectBtn.IsEnabled = true;
 
-         
+            selectRegimWorkRobot();
+        }
+
+        private void selectRegimWorkRobot()
+        {
+            Random r = new Random();
+            scenarioDiagnosticRobot = r.Next(1, 6);
+            System.Diagnostics.Debug.WriteLine(scenarioDiagnosticRobot);
         }
 
         /// <summary>
@@ -146,14 +155,26 @@ namespace Robot
                 string textLineTXB = commandTXB.GetLineText(countLineTxb - 2);
 
                 textLineTXB =  textLineTXB.Trim();
+                textLineTXB = textLineTXB.ToLower();
                 if(textLineTXB != "")
                 {
                     textLineTXB = textLineTXB.Substring(1);
                 }
 
-                commandTXB.Text += "!!!!!!";
-               
+                if(RepositoryLocalSQLite.searchCommandFromBD(textLineTXB) == null)
+                {
+                    commandTXB.Foreground = Brushes.Blue;
+                    commandTXB.Text += "команда не найдена" + Environment.NewLine;
+                }
+                else
+                {
+                    commandTXB.Foreground = Brushes.Blue;
+                    commandTXB.Text += RepositoryLocalSQLite.searchCommandFromBD(textLineTXB).First().monitorPrint + Environment.NewLine;
+                }
+
+                commandTXB.Foreground = Brushes.Green;
                 commandTXB.Text += "#";
+              
                 commandTXB.SelectionStart = commandTXB.Text.Length;
 
                 //commandTXB.Text = searchCommand(textLineTXB);
@@ -162,33 +183,6 @@ namespace Robot
             }
         }
 
-        private string searchCommand(string textCommand)
-        {
-            try
-            {
-                using (HContext dbL = new HContext())
-                {
-                    var helpCommand = dbL.ListCommand
-                      .Where(c => c.command == textCommand)
-                      .Last()
-                      .ToString()
-                      ;
-
-                    if (helpCommand == null)
-                    {
-                        return "команда не найдена";
-                    }
-                    else
-                    {
-                        return helpCommand;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-              //  MessageBox.Show(ex.ToString());
-                return "";
-            }
-        }
+       
     }
 }
