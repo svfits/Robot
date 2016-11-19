@@ -38,7 +38,7 @@ namespace LocalDataBase.LocalDbSQLite
                       .Where(c => c.command.ToLower().Trim() == textCommand)
                       // .Select(a => a.monitorPrint)
                       .ToList()
-                      //  .Where(a => a.id == 1)
+                      //  .Where(a => a.id == 1) 
                       //  .ToString()                                          
                       ;
                     // return helpList;
