@@ -17,5 +17,7 @@ namespace LocalDataBase.LocalDbSQLite
         public string helpPrint { get; set; }
 
         public string monitorPrint { get; set; }
+
+        public string  scenario { get; set; }
     }
 }

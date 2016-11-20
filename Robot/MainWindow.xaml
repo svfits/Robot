@@ -19,9 +19,13 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <!--<RowDefinition Height="0.3*"></RowDefinition>-->
             </Grid.RowDefinitions>
-            <TextBox x:Name="commandTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black"  Grid.Row="0" TextWrapping="Wrap" 
-                     Foreground="LightGreen" Text="#" BorderBrush="Black" AcceptsReturn="True" KeyUp="commandTXB_KeyUp">
-            </TextBox>
+            <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black" KeyUp="richTextBox_KeyUp" Foreground="LightGreen">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="#" Foreground="LightGreen"/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
             <!--<TextBox x:Name="commandEnterTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                      Background="Black" Grid.Row="1" TextWrapping="Wrap" BorderBrush="Black"
                      Foreground="LightGreen" Text="#"/>-->

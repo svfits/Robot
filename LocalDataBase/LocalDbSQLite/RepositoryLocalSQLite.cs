@@ -43,7 +43,7 @@ namespace LocalDataBase.LocalDbSQLite
                       ;
                     // return helpList; 
 
-                    if (helpList == null)
+                    if (helpList.Count == 0)
                     {
                         return null;
                     }

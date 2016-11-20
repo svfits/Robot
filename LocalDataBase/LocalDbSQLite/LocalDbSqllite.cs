@@ -36,7 +36,8 @@ namespace LocalDataBase
                     [id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                     [command] char(1000) ,
                     [helpPrint] char(1000) ,                 
-                    [monitorPrint] char(1000)   
+                    [monitorPrint] char(1000),
+                    [scenario] char(100)   
                     );";
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
