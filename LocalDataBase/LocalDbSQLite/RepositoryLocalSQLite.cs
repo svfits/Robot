@@ -41,7 +41,7 @@ namespace LocalDataBase.LocalDbSQLite
                       //  .Where(a => a.id == 1) 
                       //  .ToString()                                          
                       ;
-                    // return helpList;
+                    // return helpList; 
 
                     if (helpList == null)
                     {
