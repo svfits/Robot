@@ -37,7 +37,7 @@ namespace LocalDataBase
                     [command] char(1000) ,
                     [helpPrint] char(1000) ,                 
                     [monitorPrint] char(1000),
-                    [scenario] char(100)   
+                    [scenario] integer   
                     );";
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();

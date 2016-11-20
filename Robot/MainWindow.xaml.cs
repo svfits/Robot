@@ -147,40 +147,34 @@ namespace Robot
         private void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
-            {  
+            { 
+                if(scenarioDiagnosticRobot == 0)
+                {
+                    addTextToRich("Робот не найден подключите его к USB", Brushes.Red);
+                    return;
+                }
+                 
                 // строка которую получили из консоли
                 string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;   
                 // команда уже в правильном виде             
                 string command =  getEndLine(str);
-               var nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command);
+                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command);
                 
                 if(nameCommand == null)
                 {
                     //command not found
-                    string strC = "команда не найдена" ;
+              
                    // Brushes color = Brushes.Red;
-                    addTextToRich(strC, Brushes.Red);
+                    addTextToRich("команда не найдена", Brushes.Red);
 
-                   // richTextBox.AppendText("test tst");
+                    // richTextBox.AppendText("test tst");
+                    return;
                 }
 
-                switch (scenarioDiagnosticRobot)
-                {
-                    case 1:
-                     
-
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    default:
-                        break;
-                }
+               if(nameCommand.FirstOrDefault().scenario == scenarioDiagnosticRobot)
+                 {
+                       // addTextToRich();
+                 }
             }
 
         }

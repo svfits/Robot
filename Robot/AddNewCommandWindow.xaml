@@ -22,7 +22,7 @@
                 <DataGridTextColumn IsReadOnly="True"  Binding="{Binding id,Mode=TwoWay}" Header="id"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding command,Mode=TwoWay}" Header="Команда"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding helpPrint,Mode=TwoWay}" Header="Подсказка по команде" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Листинг команды" Binding="{Binding monitorPrint,Mode=TwoWay}"  Width="500" >
+                <DataGridTextColumn Header="Листинг команды" Binding="{Binding monitorPrint,Mode=TwoWay}"  Width="350" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -35,6 +35,7 @@
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding scenario,Mode=TwoWay}" Header="Номер сценария" Width="auto" ></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="saveNewHelpCommandBtn" Click="saveNewHelpCommandBtn_Click" Grid.Row="1" MaxHeight="25" Width="120" Content="Сохранить"

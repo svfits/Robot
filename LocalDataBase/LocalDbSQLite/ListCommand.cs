@@ -18,6 +18,6 @@ namespace LocalDataBase.LocalDbSQLite
 
         public string monitorPrint { get; set; }
 
-        public string  scenario { get; set; }
+        public int?  scenario { get; set; }
     }
 }
