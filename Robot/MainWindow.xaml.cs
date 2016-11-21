@@ -146,11 +146,12 @@ namespace Robot
 
         private void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            //press key enter
             if (e.Key == System.Windows.Input.Key.Enter)
             { 
                 if(scenarioDiagnosticRobot == 0)
                 {
-                    addTextToRich("Робот не найден подключите его к USB", Brushes.Red);
+                    addTextToRich("Робот не найден подключите его к USB", Brushes.Red,true);
                     return;
                 }
                  
@@ -158,6 +159,13 @@ namespace Robot
                 string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;   
                 // команда уже в правильном виде             
                 string command =  getEndLine(str);
+
+                if(command == "")
+                {
+                    addTextToRich("", Brushes.Red, true);
+                    return;
+                }
+
                 List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command);
                 
                 if(nameCommand == null)
@@ -165,22 +173,63 @@ namespace Robot
                     //command not found
               
                    // Brushes color = Brushes.Red;
-                    addTextToRich("команда не найдена", Brushes.Red);
+                    addTextToRich("команда не найдена", Brushes.Red,true);
 
                     // richTextBox.AppendText("test tst");
                     return;
                 }
 
-               if(nameCommand.FirstOrDefault().scenario == scenarioDiagnosticRobot)
+               if(selectedScenario(nameCommand))
                  {
-                       // addTextToRich();
+                       addTextToRich(nameCommand,Brushes.White);
                  }
             }
 
-        }
-           
+            //press key up
+            if(e.Key == System.Windows.Input.Key.Up)
+            {
+                richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+                MessageBox.Show("up");
+            }
 
-        private void addTextToRich(string v, SolidColorBrush color)
+        }
+
+        private bool selectedScenario(List<ListCommand> nameCommand)
+        {
+            if(nameCommand.FirstOrDefault().scenario == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// разберем обьект на строки и выведем их в консоль
+        /// </summary>
+        /// <param name="nameCommand">обьект</param>
+        /// <param name="color">цвет строки</param>
+        private void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
+        {
+            // nameCommand.FirstOrDefault().monitorPrint.Length
+            foreach (string line in nameCommand.FirstOrDefault().monitorPrint.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+            {
+                if (line.Length > 0)
+                {
+                    addTextToRich(line,color,false);
+                }
+            }
+
+            addTextToRich("", Brushes.White,true);
+        }
+
+        /// <summary>
+        /// вывод в консоль данных
+        /// </summary>
+        /// <param name="v">строка которую надо вывести</param>
+        /// <param name="color">цвет строки</param>
+        /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
+        private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
             TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
             range.Text = v + Environment.NewLine;
@@ -188,8 +237,10 @@ namespace Robot
             range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
             // range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
-            setLigthGreenR();
-           
+            if (printLattice)
+            {
+                setLigthGreenR();
+            }
 
 
             //   range.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightCoral);
@@ -234,13 +285,14 @@ namespace Robot
         private string getEndLine(string str)
         {
             string lineend = "";
-            str = str.ToLower().Trim().Substring(1);
+            str = str.ToLower().Trim();
+            str = str.Substring(1);
                      
             foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
                 if (line.Length > 0)
                 {
-                    lineend = line;
+                    lineend = line.Substring(1);                    
                 }
             }
 

@@ -38,7 +38,8 @@ namespace Robot
                     {
                         command = objToAdd.command,
                         monitorPrint = objToAdd.monitorPrint,
-                        helpPrint = objToAdd.helpPrint
+                        helpPrint = objToAdd.helpPrint,
+                        scenario = objToAdd.scenario
                     });
                 }
 
