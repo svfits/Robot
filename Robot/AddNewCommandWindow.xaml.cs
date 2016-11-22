@@ -24,7 +24,7 @@ namespace Robot
         ListCommand objToAdd;
 
         public AddNewCommandWindow()
-        {
+        {          
             InitializeComponent();
         }
 
@@ -32,6 +32,14 @@ namespace Robot
         {
             try
             {
+                var ss = db.ListCommand
+                      .AsEnumerable()
+                      .Where(a => a.command == objToAdd.command &&
+                       a.helpPrint == objToAdd.helpPrint &&
+                       a.monitorPrint == objToAdd.monitorPrint &&
+                       a.scenario == objToAdd.scenario)
+                      .ToList();
+
                 if (objToAdd.id == 0)
                 {
                     db.ListCommand.Add(new ListCommand
@@ -48,13 +56,15 @@ namespace Robot
             catch
             {
                 MessageBox.Show("Произошла ошибка данные могут не сохранится");
-            }
+            }          
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             listHelpDg.ItemsSource = getDataFromListCommand();
-            SizeToContent = SizeToContent.Width;
+            // SizeToContent = SizeToContent.Width;
+            MaxHeight = SystemParameters.WorkArea.Height;
+            MaxWidth = SystemParameters.WorkArea.Width;
         }
 
         private void listHelpDg_MouseDoubleClick(object sender, MouseButtonEventArgs e)

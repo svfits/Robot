@@ -127,7 +127,9 @@ namespace Robot
             versionProgrammLbl.Content = "v.15.7.16";
 
             connectOrDisconnectLbl.Content = "CONNECTED";
-            connectOrDisconnectLbl.Foreground = Brushes.Green;                      
+            connectOrDisconnectLbl.Foreground = Brushes.Green;
+
+            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
         }
 
         /// <summary>
@@ -166,7 +168,7 @@ namespace Robot
                     return;
                 }
 
-                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command);
+                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
                 
                 if(nameCommand == null)
                 {
@@ -178,31 +180,49 @@ namespace Robot
                     // richTextBox.AppendText("test tst");
                     return;
                 }
-
-               if(selectedScenario(nameCommand))
-                 {
-                       addTextToRich(nameCommand,Brushes.White);
-                 }
+ 
+                 printHelpCommand(nameCommand);
+                 addTextToRich(nameCommand,Brushes.White);
+               
             }
 
             //press key up
             if(e.Key == System.Windows.Input.Key.Up)
             {
                 richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-                MessageBox.Show("up");
+                string lastCommand = searchLastCommand();
+                addTextToRich(lastCommand,Brushes.LightGreen,false);
             }
 
         }
 
-        private bool selectedScenario(List<ListCommand> nameCommand)
+        private void printHelpCommand(List<ListCommand> nameCommand)
         {
-            if(nameCommand.FirstOrDefault().scenario == null)
-            {
-                return true;
-            }
-
-            return false;
+            logTXB.Text = nameCommand.FirstOrDefault().helpPrint;
         }
+
+        private string searchLastCommand()
+        {
+            string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+
+            string lineend = "";
+            str = str.ToLower().Trim();
+           // str = str.Substring(1);
+
+            foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+            {
+                if (line.Length > 1)
+                {                    
+                    if( line.IndexOf("#") != -1)
+                    {
+
+                        lineend = line.Substring(1);
+                    }
+                }
+            }
+                       
+            return lineend;
+        }   
 
         /// <summary>
         /// разберем обьект на строки и выведем их в консоль
@@ -211,12 +231,27 @@ namespace Robot
         /// <param name="color">цвет строки</param>
         private void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
+            if(nameCommand.FirstOrDefault().monitorPrint == null)
+            {
+                addTextToRich("", Brushes.White, true);
+                return;
+            }
+
             // nameCommand.FirstOrDefault().monitorPrint.Length
             foreach (string line in nameCommand.FirstOrDefault().monitorPrint.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
                 if (line.Length > 0)
                 {
-                    addTextToRich(line,color,false);
+                    if (line.IndexOf("#RED") != -1)
+                    {
+                      string txt = line.Substring(4);
+                        addTextToRich(txt, Brushes.Red, false);
+                    }
+                    else
+                    {
+                        addTextToRich(line, color, false);
+                    }
+                  
                 }
             }
 

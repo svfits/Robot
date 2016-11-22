@@ -11,12 +11,67 @@ namespace LocalDataBase.LocalDbSQLite
     {
         [Key]
         public int id { get; set; }
+        private string _command, _helpPrint, _monitorPrint;
 
-        public string command { get; set; }
+        /// <summary>
+        ////команда
+        /// </summary>
+        public string command
+        {
+            get
+            {
+                return _command;
+            }
+            set
+            {
+                if (_command !=value)
+                {
+                    string txt = value;
+                    txt = txt.Trim().ToLower();
+                    _command = txt;
+                }
+            }
+        }
 
-        public string helpPrint { get; set; }
+        /// <summary>
+        ////справка по команде
+        /// </summary>
+        public string helpPrint
+        {
+            get
+            {
+                return _helpPrint;
+            }
+            set
+            {
+                if (_helpPrint != value)
+                {
+                    string txt = value;
+                    txt = txt.Trim();
+                    _helpPrint = txt;
+                }
+            }
+        }
 
-        public string monitorPrint { get; set; }
+        /// <summary>
+        /// вывод по команде 
+        /// </summary>
+        public string monitorPrint
+        {
+            get
+            {
+                return _monitorPrint;
+            }
+            set
+            {
+                if (_monitorPrint != value)
+                {
+                    string txt = value;
+                    txt = txt.Trim();
+                    _monitorPrint = txt;
+                }
+            }
+        }
 
         public int?  scenario { get; set; }
     }

@@ -27,7 +27,7 @@ namespace LocalDataBase.LocalDbSQLite
         }
 
 
-        public static List<ListCommand> searchCommandFromBD(string textCommand)
+        public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace LocalDataBase.LocalDbSQLite
                 {
                     var helpList = dbL.ListCommand
                       .AsEnumerable()
-                      .Where(c => c.command.ToLower().Trim() == textCommand)
+                      .Where(c => c.command.ToLower().Trim() == textCommand || c.scenario == 0  || c.scenario == scenarioDiagnosticRobot)
                       // .Select(a => a.monitorPrint)
                       .ToList()
                       //  .Where(a => a.id == 1) 
@@ -56,6 +56,27 @@ namespace LocalDataBase.LocalDbSQLite
             catch (Exception ex)
             {
               //   MessageBox.Show(ex.ToString());
+                return null;
+            }
+        }
+
+        public static List<ListCommand> serachCOnnecting(int scenarioDiagnosticRobot)
+        {
+            try
+            {
+                using (HContext dbL = new HContext())
+                {
+                    var connection = dbL.ListCommand
+                      .AsEnumerable()
+                      .Where(c => c.command.ToLower().Trim() == "connection" || c.scenario == 0 || c.scenario == scenarioDiagnosticRobot)
+                      .ToList()
+                      ;
+                    return connection;
+                }
+               
+            }
+            catch
+            {
                 return null;
             }
         }
