@@ -52,6 +52,7 @@ namespace Robot
                 }
 
                 db.SaveChanges();
+                saveNewHelpCommandBtn.IsEnabled = false;
             }
             catch
             {
@@ -85,6 +86,7 @@ namespace Robot
         private void listHelpDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             objToAdd = listHelpDg.SelectedItem as ListCommand;
+            saveNewHelpCommandBtn.IsEnabled = true;
         }
 
         public List<ListCommand> getDataFromListCommand()

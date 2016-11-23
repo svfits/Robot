@@ -198,7 +198,8 @@ namespace Robot
 
         private void printHelpCommand(List<ListCommand> nameCommand)
         {
-            logTXB.Text = nameCommand.FirstOrDefault().helpPrint;
+            string str = nameCommand.FirstOrDefault().helpPrint;
+            logTXB.Text = str;
         }
 
         private string searchLastCommand()

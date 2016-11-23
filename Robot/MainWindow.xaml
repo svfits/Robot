@@ -141,7 +141,8 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <TextBox x:Name="logTXB" Margin="5,5,5,5" MinHeight="70" Grid.Row="0" Background="Black" Foreground="White"></TextBox>
+                        <TextBox x:Name="logTXB" Margin="5,5,5,5" MinHeight="70" Grid.Row="0" Background="Black"
+                                 Foreground="White" FontSize="30" VerticalAlignment="Center"  TextAlignment="Center"></TextBox>
 
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
