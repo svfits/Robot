@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using System.IO;
 
 namespace RobotConsole
 {
@@ -18,7 +19,7 @@ namespace RobotConsole
                 Console.WriteLine("Device ID: {0}, PNP Device ID: {1}, Description: {2}",
                     usbDevice.DeviceID, usbDevice.PnpDeviceID, usbDevice.Description);
             }
-
+            getNameFlashisAlive();
             Console.Read();
         }
 
@@ -44,7 +45,26 @@ namespace RobotConsole
             return devices;
         }
 
+        static void getNameFlashisAlive()
+        {
+            for (;;)
+            {
+                System.Threading.Thread.Sleep(5000);
+                foreach (var dinfo in DriveInfo.GetDrives())
+                {
+                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
+                    {
+                        Console.WriteLine(dinfo.VolumeLabel);
+                        Console.WriteLine(dinfo.Name);
+                        Console.WriteLine(dinfo.DriveFormat);
+                    }
+
+                }
+            }
+        }
     }
+
+   
 
     class USBDeviceInfo
     {

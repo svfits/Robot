@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Robot
 {    
@@ -40,6 +41,11 @@ namespace Robot
             AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
 
             LocalDataBase.LocalDaBase.Create_Table_Events();
+
+            if(scenarioDiagnosticRobot == 4)
+            {              
+               robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+            }
         }
 
         private void dateTimeUpdate()
@@ -232,7 +238,7 @@ namespace Robot
         /// <param name="color">цвет строки</param>
         private void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
-            if(nameCommand.FirstOrDefault().monitorPrint == null)
+            if(nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
             {
                 addTextToRich("", Brushes.White, true);
                 return;
@@ -288,36 +294,18 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
+
             TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            //range.Text = v + Environment.NewLine;
             range.Text = v + Environment.NewLine;
-           
+
             range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-            // range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+         //   range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
             if (printLattice)
             {
                 setLigthGreenR();
             }
-
-
-            //   range.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightCoral);
-            /*
-            Paragraph paragraph = new Paragraph();
-            richTextBox.Document = new FlowDocument(paragraph);
-
-            var text = v;
-            paragraph.Inlines.Add(new Bold(new Run("ffff" + ":"))
-            {
-                Foreground = Brushes.Red
-            });
-            paragraph.Inlines.Add(text);
-            paragraph.Inlines.Add(new LineBreak());
-         //   richTextBox.Document = paragraph;
-
-            /*           
-            richTextBox.AppendText(v);
-            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-            */
         }
 
         /// <summary>
@@ -342,6 +330,11 @@ namespace Robot
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
         }
 
+        /// <summary>
+        ////поиск последней команды
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         private string getEndLine(string str)
         {
             string lineend = "";
@@ -367,40 +360,35 @@ namespace Robot
         #region работа модулей
 
         private void conclusionInModulesCommunicationTXB(string str)
-        {
-           // CommunicationTXB.Text = "";
+        {          
             CommunicationTXB.Text += str + Environment.NewLine;
             CommunicationTXB.SelectionStart = CommunicationTXB.Text.Length;
             CommunicationTXB.ScrollToEnd();
         }
 
         private void conclusionInModulesNeuroTXB(string str)
-        {
-            //NeuroTXB.Text = "";
+        {            
             NeuroTXB.Text += str + Environment.NewLine;
             NeuroTXB.SelectionStart = NeuroTXB.Text.Length;
             NeuroTXB.ScrollToEnd();
         }
 
         private void conclusionInModulesModulesTXB(string str)
-        {
-           // ModulesTXB.Text = "";
+        {           
             ModulesTXB.Text += str + Environment.NewLine;
             ModulesTXB.SelectionStart = ModulesTXB.Text.Length;
             ModulesTXB.ScrollToEnd();
         }
 
         private void conclusionInModulesSystemTXB(string str)
-        {
-            //SystemTXB.Text = "";
+        {           
             SystemTXB.Text += str + Environment.NewLine;
             SystemTXB.SelectionStart = SystemTXB.Text.Length;
             SystemTXB.ScrollToEnd();
         }
 
         private void conclusionInModulesServoTXB(string str)
-        {
-            //ServoTXB.Text = "";
+        {           
             ServoTXB.Text += str + Environment.NewLine;
             ServoTXB.SelectionStart = ServoTXB.Text.Length;
             ServoTXB.ScrollToEnd();

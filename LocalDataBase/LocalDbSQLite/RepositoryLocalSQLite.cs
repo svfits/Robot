@@ -36,13 +36,9 @@ namespace LocalDataBase.LocalDbSQLite
                     var helpList = dbL.ListCommand
                       .AsEnumerable()
                       .Where(c => c.command.ToLower().Trim() == textCommand || c.scenario == 0  || c.scenario == scenarioDiagnosticRobot)
-                      // .Select(a => a.monitorPrint)
                       .ToList()
-                      //  .Where(a => a.id == 1) 
-                      //  .ToString()                                          
                       ;
-                    // return helpList; 
-
+                    
                     if (helpList.Count == 0)
                     {
                         return null;
@@ -53,9 +49,8 @@ namespace LocalDataBase.LocalDbSQLite
                     }
                 }
             }
-            catch (Exception ex)
-            {
-              //   MessageBox.Show(ex.ToString());
+            catch
+            {             
                 return null;
             }
         }
