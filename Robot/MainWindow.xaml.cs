@@ -246,17 +246,38 @@ namespace Robot
                     if (line.IndexOf("#RED") != -1)
                     {
                       string txt = line.Substring(4);
-                        addTextToRich(txt, Brushes.Red, false);
+                      addTextToRich(txt, Brushes.Red, false);
+                        addTexttoModules();
                     }
                     else
                     {
-                        addTextToRich(line, color, false);
+                      addTextToRich(line, color, false);
+                        addTexttoModules();
                     }
                   
                 }
             }
 
             addTextToRich("", Brushes.White,true);
+        }
+
+        /// <summary>
+        /// получим случайную строку и выведем ее в модули 
+        /// </summary>
+        private void addTexttoModules()
+        {
+            Random r = new Random();            
+            string str = RepositoryLocalSQLite.getStringForModules(r);
+            string str1 = RepositoryLocalSQLite.getStringForModules(r);
+            string str2 = RepositoryLocalSQLite.getStringForModules(r);
+            string str3 = RepositoryLocalSQLite.getStringForModules(r);
+            string str4 = RepositoryLocalSQLite.getStringForModules(r);
+              
+            conclusionInModulesCommunicationTXB(str);
+            conclusionInModulesModulesTXB(str1);
+            conclusionInModulesNeuroTXB(str2);
+            conclusionInModulesServoTXB(str3);
+            conclusionInModulesSystemTXB(str4);
         }
 
         /// <summary>
@@ -299,6 +320,9 @@ namespace Robot
             */
         }
 
+        /// <summary>
+        /// вывести в консоль # и покрасить ее в светло зеленый
+        /// </summary>
         private void setLigthGreenR()
         {
             //Paragraph myParagraph = new Paragraph();
@@ -334,54 +358,54 @@ namespace Robot
 
             return lineend;
         }
-
-        ///// <summary>
-        ///// обработка нажатия enter при вводе команд
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void commandTXB_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        //{
-        //   if(e.Key == System.Windows.Input.Key.Enter)
-        //    {
-        //        //сколько строк 
-        //        int countLineTxb = commandTXB.LineCount;
-        //        string textLineTXB = commandTXB.GetLineText(countLineTxb - 2);
-
-        //        textLineTXB =  textLineTXB.Trim();
-        //        textLineTXB = textLineTXB.ToLower();
-        //        if(textLineTXB != "")
-        //        {
-        //            textLineTXB = textLineTXB.Substring(1);
-        //        }
-
-        //        if(RepositoryLocalSQLite.searchCommandFromBD(textLineTXB) == null)
-        //        {
-        //            commandTXB.Foreground = Brushes.Blue;
-        //            commandTXB.Text += "команда не найдена" + Environment.NewLine;
-        //        }
-        //        else
-        //        {
-        //            commandTXB.Foreground = Brushes.Blue;
-        //            commandTXB.Text += RepositoryLocalSQLite.searchCommandFromBD(textLineTXB).First().monitorPrint + Environment.NewLine;
-        //        }
-
-        //        commandTXB.Foreground = Brushes.Green;
-        //        commandTXB.Text += "#";
-
-        //        commandTXB.SelectionStart = commandTXB.Text.Length;
-
-        //        //commandTXB.Text = searchCommand(textLineTXB);
-        //        //commandTXB.Text = "fffffffffffff";
-        //        //MessageBox.Show(textLineTXB.ToString());
-        //    }
-        //}
-
+             
         private  void beeper()
         {
             SystemSounds.Beep.Play();
         }
 
-      
+        #region работа модулей
+
+        private void conclusionInModulesCommunicationTXB(string str)
+        {
+           // CommunicationTXB.Text = "";
+            CommunicationTXB.Text += str + Environment.NewLine;
+            CommunicationTXB.SelectionStart = CommunicationTXB.Text.Length;
+            CommunicationTXB.ScrollToEnd();
+        }
+
+        private void conclusionInModulesNeuroTXB(string str)
+        {
+            //NeuroTXB.Text = "";
+            NeuroTXB.Text += str + Environment.NewLine;
+            NeuroTXB.SelectionStart = NeuroTXB.Text.Length;
+            NeuroTXB.ScrollToEnd();
+        }
+
+        private void conclusionInModulesModulesTXB(string str)
+        {
+           // ModulesTXB.Text = "";
+            ModulesTXB.Text += str + Environment.NewLine;
+            ModulesTXB.SelectionStart = ModulesTXB.Text.Length;
+            ModulesTXB.ScrollToEnd();
+        }
+
+        private void conclusionInModulesSystemTXB(string str)
+        {
+            //SystemTXB.Text = "";
+            SystemTXB.Text += str + Environment.NewLine;
+            SystemTXB.SelectionStart = SystemTXB.Text.Length;
+            SystemTXB.ScrollToEnd();
+        }
+
+        private void conclusionInModulesServoTXB(string str)
+        {
+            //ServoTXB.Text = "";
+            ServoTXB.Text += str + Environment.NewLine;
+            ServoTXB.SelectionStart = ServoTXB.Text.Length;
+            ServoTXB.ScrollToEnd();
+        }            
+
+        #endregion работа модулей
     }
 }
