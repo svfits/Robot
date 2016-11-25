@@ -12,13 +12,13 @@ namespace RobotConsole
     {
         static void Main(string[] args)
         {
-            var usbDevices = GetUSBDevices();
+            //var usbDevices = GetUSBDevices();
 
-            foreach (var usbDevice in usbDevices)
-            {
-                Console.WriteLine("Device ID: {0}, PNP Device ID: {1}, Description: {2}",
-                    usbDevice.DeviceID, usbDevice.PnpDeviceID, usbDevice.Description);
-            }
+            //foreach (var usbDevice in usbDevices)
+            //{
+            //    Console.WriteLine("Device ID: {0}, PNP Device ID: {1}, Description: {2}",
+            //        usbDevice.DeviceID, usbDevice.PnpDeviceID, usbDevice.Description);
+            //}
             getNameFlashisAlive();
             Console.Read();
         }
@@ -45,21 +45,43 @@ namespace RobotConsole
             return devices;
         }
 
-        static void getNameFlashisAlive()
+        /// <summary>
+        /// проверяем флешку на файл RobotKernel.bin и его содержимое 
+        /// </summary>
+        /// <returns></returns>
+        static int? getNameFlashisAlive()
         {
-            for (;;)
+            string fileNameKernel = "RobotKernel.bin";
+
+            try
             {
-                System.Threading.Thread.Sleep(5000);
                 foreach (var dinfo in DriveInfo.GetDrives())
                 {
                     if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
                     {
-                        Console.WriteLine(dinfo.VolumeLabel);
-                        Console.WriteLine(dinfo.Name);
-                        Console.WriteLine(dinfo.DriveFormat);
-                    }
+                        string[] dirs = Directory.GetFiles(dinfo.Name);
 
+                        foreach (string dir in dirs)
+                        {
+                            if (Path.GetFileName(dir) == fileNameKernel)
+                            {
+                                string line;
+                                StreamReader file = new StreamReader(dir);
+
+                                while ((line = file.ReadLine()) != null)
+                                {
+                                    return Convert.ToInt32(line);
+                                }
+                                file.Close();
+                            }
+                        }                   
+                    }               
                 }
+                return null;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

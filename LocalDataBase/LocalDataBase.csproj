@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlashDrive\GetScenarioOfFlashDrive.cs" />
     <Compile Include="LocalDbSQLite\HContex.cs" />
     <Compile Include="LocalDbSQLite\ListCommand.cs" />
     <Compile Include="LocalDbSQLite\LocalDbSqllite.cs" />

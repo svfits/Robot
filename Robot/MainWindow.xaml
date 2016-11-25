@@ -66,7 +66,6 @@
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10" IsEnabled="False" Grid.Column="0"  />
                         <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="ImageFonts/SpaceAge"
                           FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
-                        <Button x:Name="connectToUSB" Content="connect to USB" Click="connectToUSB_Click" Padding="10"  Margin="10,10,10,10" FontSize="10" Grid.Column="2" />
                         <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Column="3" />
                     </Grid>
                 </GroupBox>
@@ -157,12 +156,12 @@
 
                             <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
                                 <Label Content="Link" FontSize="20" />
-                                <Label x:Name="statusConnectionLbl" Content="Disconnect" FontSize="20" />
+                                <Label x:Name="statusConnectionLbl" Content="OFF" FontSize="20" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,10,0">
                                 <Label Content="Mode" Grid.Row="0" Grid.Column="2" FontSize="20"/>
-                                <Label x:Name="modeLbl" Content="OFF" FontSize="20" />
+                                <Label x:Name="modeLbl" Content="N/A" FontSize="20" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">

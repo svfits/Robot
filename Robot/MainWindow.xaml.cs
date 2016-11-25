@@ -1,4 +1,5 @@
-﻿using LocalDataBase.LocalDbSQLite;
+﻿using LocalDataBase.FlashDrive;
+using LocalDataBase.LocalDbSQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,10 @@ namespace Robot
         public int batteryCharge;
         Timer timerBatttery = new Timer();
         Timer timerDateTime = new Timer();
+        Timer timerGetDataFlashDrive = new Timer();
         public int scenarioDiagnosticRobot;
-
+        private Boolean connectNotConnect;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -40,11 +43,96 @@ namespace Robot
             string datadb = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
 
-            LocalDataBase.LocalDaBase.Create_Table_Events();
+            LocalDataBase.LocalDaBase.Create_Table_Events();           
 
-            if(scenarioDiagnosticRobot == 4)
-            {              
-               robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+            searchFlashDriveandScenarioGet();
+        }
+
+        private void searchFlashDriveandScenarioGet()
+        {
+            timerGetDataFlashDrive.Elapsed += setScenarioDiagnosticRobot;
+            timerGetDataFlashDrive.Interval = 5000;
+            timerGetDataFlashDrive.Start();
+        }
+
+        private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
+        {
+            scenarioDiagnosticRobot = GetScenarioOfFlashDrive.getNameFlashisAlive();
+
+            // не известный робот поставим картинку
+            if (scenarioDiagnosticRobot == 4)
+            {
+                try
+                {
+                    robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+                }
+                catch
+                { }
+            }
+
+            // usb не подключено
+            if(scenarioDiagnosticRobot == 0)
+            {
+                try
+                {
+                    //LINK
+                    //dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); }));
+                    statusConnectionLbl.Dispatcher.Invoke(new Action(delegate { statusConnectionLbl.Content = "OFF"; }));
+                    statusConnectionLbl.Dispatcher.Invoke(new Action(delegate { statusConnectionLbl.Foreground = Brushes.Black; }) );
+                    //statusConnectionLbl.Content = "OFF";
+                    //statusConnectionLbl.Foreground = Brushes.Gray;
+
+                    modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Content = "N/A"; }));
+                    modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Foreground = Brushes.Black; }) );
+                    //modeLbl.Content = "N/A";
+                    //modeLbl.Foreground = Brushes.Gray;
+
+                    connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = false; }));
+                    //connectBtn.IsEnabled = false;
+                    connectNotConnect = false;
+
+                    timerBatttery.Stop();                  
+                    statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Content = "N/A"; }));
+                    statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Foreground = Brushes.Black; }));
+
+                    //connectOrDisconnectLbl.Content = "CONNECTED";
+                    //connectOrDisconnectLbl.Foreground = Brushes.Green;
+                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Content = "DISCONNECT"; }));
+                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Foreground = Brushes.Black ; }));
+
+                    //versionProgrammLbl.Foreground = Brushes.Green;
+                    //versionProgrammLbl.Content = "v.15.7.16";
+                    versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Content = "N/A"; }));
+                    versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Foreground = Brushes.Black; }));
+
+                    richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
+
+                }
+                catch
+                { }
+            }
+
+            // usb подключено 
+            if(scenarioDiagnosticRobot > 0)
+            {
+                try
+                {
+                    //LINK
+                    //  statusConnectionLbl.Content = "ON";
+                    //  statusConnectionLbl.Foreground = Brushes.Green;
+                    statusConnectionLbl.Dispatcher.Invoke(new Action(delegate { statusConnectionLbl.Content = "ON"; }));
+                    statusConnectionLbl.Dispatcher.Invoke(new Action(delegate { statusConnectionLbl.Foreground = Brushes.Green; }));
+
+                    // modeLbl.Content = "Standby";
+                    // modeLbl.Foreground = Brushes.Gray;
+                    modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Content = "Standby"; }));
+                    modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Foreground = Brushes.Green; }));
+
+                    // connectBtn.IsEnabled = true;
+                    connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
+                }
+                catch
+                { }
             }
         }
 
@@ -106,16 +194,9 @@ namespace Robot
             modeLbl.Content = "Standby";
             modeLbl.Foreground = Brushes.Gray;
             connectBtn.IsEnabled = true;
-
-            selectRegimWorkRobot();
+                       
         }
-
-        private void selectRegimWorkRobot()
-        {
-            Random r = new Random();
-            scenarioDiagnosticRobot = r.Next(1, 6);
-            System.Diagnostics.Debug.WriteLine(scenarioDiagnosticRobot);
-        }
+             
 
         /// <summary>
         ///  при нажатии кнопки connect
@@ -136,6 +217,7 @@ namespace Robot
             connectOrDisconnectLbl.Foreground = Brushes.Green;
 
             addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+            connectNotConnect = true;
         }
 
         /// <summary>
@@ -159,7 +241,15 @@ namespace Robot
             { 
                 if(scenarioDiagnosticRobot == 0)
                 {
-                    addTextToRich("Робот не найден подключите его к USB", Brushes.Red,true);
+                    addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,true);
+                    printHelpCommand("Робот не найден, подключите его к USB");
+                    return;
+                }
+
+                if(connectNotConnect == false)
+                {
+                    addTextToRich("Инициализация робота не выполнена", Brushes.Red, true);
+                    printHelpCommand("Инициализация робота не выполнена");
                     return;
                 }
                  
@@ -183,7 +273,7 @@ namespace Robot
                    // Brushes color = Brushes.Red;
                     addTextToRich("команда не найдена", Brushes.Red,true);
 
-                    // richTextBox.AppendText("test tst");
+                    printHelpCommand("команда не найдена");
                     return;
                 }
  
@@ -200,6 +290,11 @@ namespace Robot
                 addTextToRich(lastCommand,Brushes.LightGreen,false);
             }
 
+        }
+
+        private void printHelpCommand(string v)
+        {
+            logTXB.Text = v;
         }
 
         private void printHelpCommand(List<ListCommand> nameCommand)

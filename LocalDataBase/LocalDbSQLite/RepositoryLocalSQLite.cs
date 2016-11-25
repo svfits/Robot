@@ -35,11 +35,22 @@ namespace LocalDataBase.LocalDbSQLite
                 {
                     var helpList = dbL.ListCommand
                       .AsEnumerable()
-                      .Where(c => c.command.ToLower().Trim() == textCommand || c.scenario == 0  || c.scenario == scenarioDiagnosticRobot)
+                      .Where(c => c.command.ToLower().Trim() == textCommand && c.scenario == scenarioDiagnosticRobot)
                       .ToList()
                       ;
-                    
-                    if (helpList.Count == 0)
+
+                    if(helpList != null && helpList.Count != 0)
+                    {
+                        return helpList;
+                    }
+
+                    helpList = dbL.ListCommand
+                        .AsEnumerable()
+                        .Where(a => a.command.ToLower().Trim() == textCommand )
+                        .ToList()
+                        ;
+
+                    if (helpList.Count == 0 || helpList == null)
                     {
                         return null;
                     }
