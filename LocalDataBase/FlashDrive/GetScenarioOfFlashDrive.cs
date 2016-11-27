@@ -52,5 +52,33 @@ namespace LocalDataBase.FlashDrive
             }
         }
 
+      public static string[] getFilesFromFlash()
+        {
+            string[] files = new string[100];
+            int i = 0;
+            try
+            {
+                foreach (var dinfo in DriveInfo.GetDrives())
+                {
+                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
+                    {
+                        string[] dirs = Directory.GetFiles(dinfo.Name);
+
+                        foreach (string dir in dirs)
+                        {
+                            files[i] = Path.GetFileName(dir);
+                            i++;
+                        }
+                        return files;
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }

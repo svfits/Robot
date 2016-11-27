@@ -18,11 +18,22 @@ namespace Robot
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// заряд батареи
+        /// </summary>
         public int batteryCharge;
         Timer timerBatttery = new Timer();
         Timer timerDateTime = new Timer();
         Timer timerGetDataFlashDrive = new Timer();
+        Timer timerRobotWorkPrintModules = new Timer();
+
+        /// <summary>
+        /// номер сценария
+        /// </summary>
         public int scenarioDiagnosticRobot;
+        /// <summary>
+        /// нажата кнопка коннект
+        /// </summary>
         private Boolean connectNotConnect;
         
         public MainWindow()
@@ -57,14 +68,24 @@ namespace Robot
 
         private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
         {
-            scenarioDiagnosticRobot = GetScenarioOfFlashDrive.getNameFlashisAlive();
+            // проверим вылечен ли робот статус флешки 
+            if(GetScenarioOfFlashDrive.getNameFlashisAlive() == 0 || scenarioDiagnosticRobot != 199)
+            {    
+              scenarioDiagnosticRobot = GetScenarioOfFlashDrive.getNameFlashisAlive();
+            }            
 
             // не известный робот поставим картинку
-            if (scenarioDiagnosticRobot == 4)
+             if (scenarioDiagnosticRobot == 4)
             {
                 try
                 {
-                    robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+                    // robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+                    robotImage.Dispatcher.Invoke(new Action(
+                        delegate
+                        {
+                            robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+                        }
+                    ));
                 }
                 catch
                 { }
@@ -105,15 +126,16 @@ namespace Robot
                     versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Content = "N/A"; }));
                     versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Foreground = Brushes.Black; }));
 
-                    richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
+                   // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
 
+                   // addTextToRich("", Brushes.Green, true);
                 }
                 catch
                 { }
             }
 
             // usb подключено 
-            if(scenarioDiagnosticRobot > 0)
+            if(scenarioDiagnosticRobot > 0 && scenarioDiagnosticRobot != 4 )
             {
                 try
                 {
@@ -133,6 +155,10 @@ namespace Robot
                 }
                 catch
                 { }
+            }
+            else if(scenarioDiagnosticRobot == 4)
+            {
+                connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
             }
         }
 
@@ -193,10 +219,8 @@ namespace Robot
             statusConnectionLbl.Foreground = Brushes.Green;
             modeLbl.Content = "Standby";
             modeLbl.Foreground = Brushes.Gray;
-            connectBtn.IsEnabled = true;
-                       
-        }
-             
+            connectBtn.IsEnabled = true;                       
+        }             
 
         /// <summary>
         ///  при нажатии кнопки connect
@@ -205,19 +229,37 @@ namespace Robot
         /// <param name="e"></param>
         private void Button_Connect_Click(object sender, RoutedEventArgs e)
         {
-            randomBatteryCharge();
-            statusBataryLbl.Content = batteryCharge;
-            modeLbl.Content = "Prog";
-            modeLbl.Foreground = Brushes.Green;
+            if (scenarioDiagnosticRobot != 4 && scenarioDiagnosticRobot !=5 )
+            {
+                randomBatteryCharge();
+                statusBataryLbl.Content = batteryCharge;
+                modeLbl.Content = "Prog";
+                modeLbl.Foreground = Brushes.Green;
 
-            versionProgrammLbl.Foreground = Brushes.Green;
-            versionProgrammLbl.Content = "v.15.7.16";
+                versionProgrammLbl.Foreground = Brushes.Green;
+                versionProgrammLbl.Content = "v.15.7.16";
 
-            connectOrDisconnectLbl.Content = "CONNECTED";
-            connectOrDisconnectLbl.Foreground = Brushes.Green;
+                connectOrDisconnectLbl.Content = "CONNECTED";
+                connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-            connectNotConnect = true;
+                addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                connectNotConnect = true;
+            }
+
+            if(scenarioDiagnosticRobot == 4)
+            {
+                addTextToRich("Connected not known robot can not recognize", Brushes.Red,true);
+                printHelpCommand("Connected not known robot can not recognize");
+                return;
+            }
+
+            if(scenarioDiagnosticRobot == 5)
+            {
+                connectNotConnect = true;
+                addTextToRich("Connected robot without software", Brushes.Red,true);
+                printHelpCommand("Connected not known robot can not recognize");
+                return;
+            }
         }
 
         /// <summary>
@@ -252,6 +294,13 @@ namespace Robot
                     printHelpCommand("Инициализация робота не выполнена");
                     return;
                 }
+
+                if(scenarioDiagnosticRobot == 4)
+                {
+                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, true);                   
+                    printHelpCommand("Connected not known robot can not recognize");
+                    return;
+                }
                  
                 // строка которую получили из консоли
                 string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;   
@@ -264,7 +313,7 @@ namespace Robot
                     return;
                 }
 
-                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
+                 List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
                 
                 if(nameCommand == null)
                 {
@@ -279,17 +328,133 @@ namespace Robot
  
                  printHelpCommand(nameCommand);
                  addTextToRich(nameCommand,Brushes.White);
-               
+
+                #region команды
+                // очистка консоли
+                if (nameCommand.FirstOrDefault().command == "clear")
+                {
+                    richTextBox.Document.Blocks.Clear();
+                    addTextToRich("", Brushes.Green, true);
+                    return;
+                }
+                //диагностика
+                if(nameCommand.FirstOrDefault().command == "diag all")
+                {
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
+                }
+
+                // установка ПО
+                if(nameCommand.FirstOrDefault().command == "init robot" && scenarioDiagnosticRobot == 5)
+                {
+                    // все стало хорошо ОС установлена
+                    scenarioDiagnosticRobot = 199;
+
+                    randomBatteryCharge();
+                    statusBataryLbl.Content = batteryCharge;
+                    modeLbl.Content = "Prog";
+                    modeLbl.Foreground = Brushes.Green;
+
+                    versionProgrammLbl.Foreground = Brushes.Green;
+                    versionProgrammLbl.Content = "v.15.7.16";
+
+                    connectOrDisconnectLbl.Content = "CONNECTED";
+                    connectOrDisconnectLbl.Foreground = Brushes.Green;
+
+                    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    connectNotConnect = true;
+                }
+
+                if(nameCommand.FirstOrDefault().command == "cpav nav" && scenarioDiagnosticRobot == 1)
+                {
+                    scenarioDiagnosticRobot = 199;
+                }
+
+                if(nameCommand.FirstOrDefault().command == "make modules install" && scenarioDiagnosticRobot == 2)
+                {
+                    scenarioDiagnosticRobot = 199;
+                }
+
+                if (nameCommand.FirstOrDefault().command == "init robot" && scenarioDiagnosticRobot == 3)
+                {
+                    // все стало хорошо ОС установлена
+                    scenarioDiagnosticRobot = 199;
+                                      
+                }
+
+                if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
+                {
+                    string[] files = GetScenarioOfFlashDrive.getFilesFromFlash();
+                    addTextToRich(files, Brushes.White);
+                }
+
+
+                #endregion конец команд
+
             }
 
             //press key up
-            if(e.Key == System.Windows.Input.Key.Up)
-            {
-                richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+            if (e.Key == System.Windows.Input.Key.Up)
+            {               
                 string lastCommand = searchLastCommand();
-                addTextToRich(lastCommand,Brushes.LightGreen,false);
+                addTextToRich(lastCommand,Brushes.LightGreen);
+                richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             }
 
+        }
+
+        private void addTextToRich(string[] files, SolidColorBrush color)
+        {
+            foreach(var file in files)
+            {
+                if(file != null)
+                {
+                    addTextToRich(file, color, false);
+                }                
+            }
+            addTextToRich("", color, true);
+        }
+
+        private void colorizeModule(int scenarioDiagnosticRobot, SolidColorBrush color)
+        {
+            switch (scenarioDiagnosticRobot)
+            {
+                case 1:
+                    SystemTXB.Background = color;
+                    break;
+                case 2:
+                    NeuroTXB.Background = color;
+                    break;
+                case 3:
+                    CommunicationTXB.Background = color;
+                    break;
+                case 4:
+                    ServoTXB.Background = color;
+                    CommunicationTXB.Background = color;
+                    NeuroTXB.Background = color;
+                    SystemTXB.Background = color;
+                    ModulesTXB.Background = color;
+                    break;
+                case 5:
+                    emptyModules();
+                    break;
+                case 199:
+
+                    break;
+
+            }
+        }
+
+        private void emptyModules()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void addTextToRich(string v, SolidColorBrush color)
+        {
+            TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            //range.Text = v + Environment.NewLine;
+            range.Text = v;
+            range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
         }
 
         private void printHelpCommand(string v)
@@ -347,13 +512,11 @@ namespace Robot
                     if (line.IndexOf("#RED") != -1)
                     {
                       string txt = line.Substring(4);
-                      addTextToRich(txt, Brushes.Red, false);
-                        addTexttoModules();
+                      addTextToRich(txt, Brushes.Red, false);                
                     }
                     else
                     {
-                      addTextToRich(line, color, false);
-                        addTexttoModules();
+                      addTextToRich(line, color, false);                     
                     }
                   
                 }
@@ -389,13 +552,15 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
+            if (v != String.Empty)
+            {
+                TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+                //range.Text = v + Environment.NewLine;
+                range.Text = v + Environment.NewLine;
 
-            TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-            //range.Text = v + Environment.NewLine;
-            range.Text = v + Environment.NewLine;
-
-            range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-         //   range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
+                //   range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            }
 
             if (printLattice)
             {
