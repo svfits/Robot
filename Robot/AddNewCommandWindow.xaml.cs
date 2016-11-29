@@ -1,6 +1,7 @@
 ﻿using LocalDataBase.LocalDbSQLite;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +63,9 @@ namespace Robot
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            listHelpDg.ItemsSource = getDataFromListCommand();
+             listHelpDg.ItemsSource = getDataFromListCommand();
+            //db.ListCommand.Load();
+            //this.DataContext = db.ListCommand.Local.ToBindingList();
             // SizeToContent = SizeToContent.Width;
             MaxHeight = SystemParameters.WorkArea.Height;
             MaxWidth = SystemParameters.WorkArea.Width;
@@ -75,7 +78,16 @@ namespace Robot
 
         private void rejectNewHelpCommandBtn_Click(object sender, RoutedEventArgs e)
         {
-            db.SaveChanges();
+            if (objToAdd == null) return;
+
+            try
+            {
+                db.ListCommand.Remove(objToAdd);
+                db.SaveChanges();
+            }
+            catch
+            { }
+           
         }            
 
         private void listHelpDg_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

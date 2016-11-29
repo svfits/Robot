@@ -74,7 +74,7 @@ namespace LocalDataBase.LocalDbSQLite
                 {
                     var connection = dbL.ListCommand
                       .AsEnumerable()
-                      .Where(c => c.command.ToLower().Trim() == "connection" || c.scenario == 0 || c.scenario == scenarioDiagnosticRobot)
+                      .Where(c => c.command.ToLower().Trim() == "connecting" && c.scenario == scenarioDiagnosticRobot)
                       .ToList()
                       ;
                     return connection;

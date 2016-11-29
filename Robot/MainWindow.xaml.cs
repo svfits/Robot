@@ -152,6 +152,7 @@ namespace Robot
 
                     // connectBtn.IsEnabled = true;
                     connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
+                                   
                 }
                 catch
                 { }
@@ -278,6 +279,18 @@ namespace Robot
 
         private void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            // строка которую получили из консоли
+            string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            
+            if(getEndLine(str).Length == 0)
+            {
+                addTextToRich("", Brushes.LightGreen, true);
+                return;
+            }
+
+            // команда уже в правильном виде             
+            string command = getEndLine(str).Substring(1);
+
             //press key enter
             if (e.Key == System.Windows.Input.Key.Enter)
             { 
@@ -300,12 +313,7 @@ namespace Robot
                     addTextToRich("Connected not known robot can not recognize", Brushes.Red, true);                   
                     printHelpCommand("Connected not known robot can not recognize");
                     return;
-                }
-                 
-                // строка которую получили из консоли
-                string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;   
-                // команда уже в правильном виде             
-                string command =  getEndLine(str);
+                }               
 
                 if(command == "")
                 {
@@ -316,18 +324,12 @@ namespace Robot
                  List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
                 
                 if(nameCommand == null)
-                {
-                    //command not found
-              
-                   // Brushes color = Brushes.Red;
+                {                  
                     addTextToRich("команда не найдена", Brushes.Red,true);
 
                     printHelpCommand("команда не найдена");
                     return;
-                }
- 
-                 printHelpCommand(nameCommand);
-                 addTextToRich(nameCommand,Brushes.White);
+                }              
 
                 #region команды
                 // очистка консоли
@@ -364,21 +366,29 @@ namespace Robot
                     connectNotConnect = true;
                 }
 
-                if(nameCommand.FirstOrDefault().command == "cpav nav" && scenarioDiagnosticRobot == 1)
+                if(nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 1)
                 {
                     scenarioDiagnosticRobot = 199;
                 }
 
-                if(nameCommand.FirstOrDefault().command == "make modules install" && scenarioDiagnosticRobot == 2)
+                if( ( nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
-                    scenarioDiagnosticRobot = 199;
+                    if (GetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+                    {
+                        scenarioDiagnosticRobot = 199;
+                    }
+                    else
+                    {
+                        addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, true);
+                        printHelpCommand("Ошибка ненайден файл ns230.bin");
+                        return;
+                    }
                 }
 
-                if (nameCommand.FirstOrDefault().command == "init robot" && scenarioDiagnosticRobot == 3)
+                if (nameCommand.FirstOrDefault().command == "make modules install" && scenarioDiagnosticRobot == 3)
                 {
                     // все стало хорошо ОС установлена
-                    scenarioDiagnosticRobot = 199;
-                                      
+                    scenarioDiagnosticRobot = 199;                                      
                 }
 
                 if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
@@ -388,16 +398,31 @@ namespace Robot
                 }
 
 
+                //вывод текста команды
+                printHelpCommand(nameCommand);
+                addTextToRich(nameCommand, Brushes.White);
                 #endregion конец команд
 
             }
 
             //press key up
             if (e.Key == System.Windows.Input.Key.Up)
-            {               
+            {                           
                 string lastCommand = searchLastCommand();
                 addTextToRich(lastCommand,Brushes.LightGreen);
                 richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+            }
+
+            //press key back
+            if(e.Key == System.Windows.Input.Key.Back)
+            {
+                int ss = command.Length;
+                //  int index = richTextBox.Get;
+                // MessageBox.Show(richTextBox.Count);
+              if(command.Length <= 0)
+                {
+                 addTextToRich("", Brushes.White, true);
+                }              
             }
 
         }
@@ -438,11 +463,18 @@ namespace Robot
                     emptyModules();
                     break;
                 case 199:
-
+                    printInModulesDateTimer();
                     break;
 
             }
         }
+
+        private void printInModulesDateTimer()
+        {           
+            timerRobotWorkPrintModules.Elapsed += addTexttoModules;
+            timerRobotWorkPrintModules.Interval = 3000;
+            timerRobotWorkPrintModules.Start();
+        }      
 
         private void emptyModules()
         {
@@ -525,10 +557,22 @@ namespace Robot
             addTextToRich("", Brushes.White,true);
         }
 
+        //private void printBatteryCharge(object sender, ElapsedEventArgs e)
+        //{
+        //    batteryCharge++;
+
+        //    if (batteryCharge >= 100)
+        //    {
+        //        timerBatttery.Stop();
+        //    }
+        //    statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Content = batteryCharge; }));
+        //}
+
+
         /// <summary>
         /// получим случайную строку и выведем ее в модули 
         /// </summary>
-        private void addTexttoModules()
+        private void addTexttoModules(object sender, ElapsedEventArgs e)
         {
             Random r = new Random();            
             string str = RepositoryLocalSQLite.getStringForModules(r);
@@ -555,7 +599,7 @@ namespace Robot
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-                //range.Text = v + Environment.NewLine;
+               // range.Text = v + "\n";
                 range.Text = v + Environment.NewLine;
 
                 range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
@@ -597,18 +641,22 @@ namespace Robot
         /// <returns></returns>
         private string getEndLine(string str)
         {
-            string lineend = "";
+            string lineend = "";        
+             
             str = str.ToLower().Trim();
+            if(str == "")
+            {
+                return lineend;
+            }
             str = str.Substring(1);
                      
             foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
-                if (line.Length > 0)
+                if (line.Length >= 0)
                 {
-                    lineend = line.Substring(1);                    
+                    lineend = line;                    
                 }
             }
-
             return lineend;
         }
              
@@ -621,39 +669,71 @@ namespace Robot
 
         private void conclusionInModulesCommunicationTXB(string str)
         {          
-            CommunicationTXB.Text += str + Environment.NewLine;
-            CommunicationTXB.SelectionStart = CommunicationTXB.Text.Length;
-            CommunicationTXB.ScrollToEnd();
+            try
+            {             
+                CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.Text += str + Environment.NewLine; } ) );
+                CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.SelectionStart = CommunicationTXB.Text.Length; }));
+                CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.ScrollToEnd(); }));
+            }
+            catch
+            { }
         }
 
         private void conclusionInModulesNeuroTXB(string str)
-        {            
-            NeuroTXB.Text += str + Environment.NewLine;
-            NeuroTXB.SelectionStart = NeuroTXB.Text.Length;
-            NeuroTXB.ScrollToEnd();
+        {         
+            try
+            {
+                NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.Text += str + Environment.NewLine; }));
+                NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.SelectionStart = NeuroTXB.Text.Length; }));
+                NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.ScrollToEnd(); }));
+            }
+            catch
+            { }
         }
 
         private void conclusionInModulesModulesTXB(string str)
-        {           
-            ModulesTXB.Text += str + Environment.NewLine;
-            ModulesTXB.SelectionStart = ModulesTXB.Text.Length;
-            ModulesTXB.ScrollToEnd();
+        {
+            //ModulesTXB.Text += str + Environment.NewLine;
+            //ModulesTXB.SelectionStart = ModulesTXB.Text.Length;
+            //ModulesTXB.ScrollToEnd();
+            try
+            {
+                ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.Text += str + Environment.NewLine; }));
+                ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.SelectionStart = ModulesTXB.Text.Length; }));
+                ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.ScrollToEnd(); }));
+            }
+            catch { }
         }
 
         private void conclusionInModulesSystemTXB(string str)
-        {           
-            SystemTXB.Text += str + Environment.NewLine;
-            SystemTXB.SelectionStart = SystemTXB.Text.Length;
-            SystemTXB.ScrollToEnd();
+        {
+            //SystemTXB.Text += str + Environment.NewLine;
+            //SystemTXB.SelectionStart = SystemTXB.Text.Length;
+            //SystemTXB.ScrollToEnd();
+            try
+            {
+                SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.Text += str + Environment.NewLine; }));
+                SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.SelectionStart = SystemTXB.Text.Length; }));
+                SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.ScrollToEnd(); }));
+            }
+            catch { }
         }
 
         private void conclusionInModulesServoTXB(string str)
-        {           
-            ServoTXB.Text += str + Environment.NewLine;
-            ServoTXB.SelectionStart = ServoTXB.Text.Length;
-            ServoTXB.ScrollToEnd();
-        }            
+        {
+            //ServoTXB.Text += str + Environment.NewLine;
+            //ServoTXB.SelectionStart = ServoTXB.Text.Length;
+            //ServoTXB.ScrollToEnd();
+            try
+            {
+                ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.Text += str + Environment.NewLine; }));
+                ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.SelectionStart = ServoTXB.Text.Length; }));
+                ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.ScrollToEnd(); }));
+            }
+            catch { }
+        }
 
         #endregion работа модулей
+      
     }
 }

@@ -20,7 +20,8 @@
                 <!--<RowDefinition Height="0.3*"></RowDefinition>-->
             </Grid.RowDefinitions>
             <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                         Background="Black" KeyUp="richTextBox_KeyUp" Foreground="LightGreen">
+                         Background="Black" KeyUp="richTextBox_KeyUp" Foreground="LightGreen" Focusable="True"
+                         AcceptsTab="False" AllowDrop="False">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>

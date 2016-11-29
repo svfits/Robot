@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LocalDataBase.LocalDbSQLite
 {
-    public  class ListCommand
+    public  class ListCommand : INotifyPropertyChanged
     {
         [Key]
         public int id { get; set; }
         private string _command, _helpPrint, _monitorPrint;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         ////команда
@@ -19,17 +23,21 @@ namespace LocalDataBase.LocalDbSQLite
         public string command
         {
             get
-            {
-                return _command;
-            }
+            {  return _command; }
             set
             {
-                if (_command !=value)
-                {
-                    string txt = value;
-                    txt = txt.Trim().ToLower();
-                    _command = txt;
-                }
+                string txt = value;
+                txt = txt.Trim().ToLower();
+                _command = txt;
+                OnPropertyChanged("command");
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
 
@@ -44,12 +52,8 @@ namespace LocalDataBase.LocalDbSQLite
             }
             set
             {
-                if (_helpPrint != value)
-                {
-                    string txt = value;
-                    txt = txt.Trim();
-                    _helpPrint = txt;
-                }
+                _helpPrint = value;
+                OnPropertyChanged("helpPrint");
             }
         }
 
@@ -64,12 +68,8 @@ namespace LocalDataBase.LocalDbSQLite
             }
             set
             {
-                if (_monitorPrint != value)
-                {
-                    string txt = value;
-                    txt = txt.Trim();
-                    _monitorPrint = txt;
-                }
+                _monitorPrint = value;
+                OnPropertyChanged("monitorPrint");
             }
         }
 

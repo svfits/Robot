@@ -40,7 +40,7 @@
         </DataGrid>
         <Button x:Name="saveNewHelpCommandBtn" Click="saveNewHelpCommandBtn_Click" Grid.Row="1" MaxHeight="25" Width="120" Content="Сохранить"
                 Margin="10,10,10,10" Padding="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Button x:Name="rejectNewHelpCommandBtn" Click="rejectNewHelpCommandBtn_Click" Grid.Row="1" MaxHeight="25" Width="120" Content="Сбросить"
+        <Button x:Name="rejectNewHelpCommandBtn" Click="rejectNewHelpCommandBtn_Click" Grid.Row="1" MaxHeight="25" Width="120" Content="Удалить"
                 Margin="10,10,10,10" Padding="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
     </Grid>
 </Window>
