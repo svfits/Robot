@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace LocalDataBase.RandomFiles
 {
- public  class WarningCheckFilesRandom
+ public static class WarningCheckFilesRandom
     {
-        public string RandomFiles()
+        public static string RandomFiles()
         {
             string str = "";
-            int numFile;
-
+            Random r = new Random();
+            int numFile = r.Next(1, 9);
+            
             switch (numFile)
             {
                 case 1:

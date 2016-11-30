@@ -124,9 +124,11 @@
                                         <TextBox x:Name="SystemTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="LightGreen"/>
                                     </TabItem>
                                 </TabControl>
-                                <TabControl Grid.Column="0" Grid.Row="4" MinHeight="150" MinWidth="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <TabItem Header="Servo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <TextBox x:Name="ServoTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Foreground="LightGreen"/>
+                                <TabControl Grid.Column="0" Grid.Row="4" MinHeight="150" MinWidth="150" HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch">
+                                    <TabItem Header="Servo" x:Name="tabItemServo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" >
+                                        <TextBox x:Name="ServoTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                                 Foreground="LightGreen"/>
                                     </TabItem>
                                 </TabControl>
                             </Grid>

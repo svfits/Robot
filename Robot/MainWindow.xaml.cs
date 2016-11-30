@@ -1,5 +1,6 @@
 ﻿using LocalDataBase.FlashDrive;
 using LocalDataBase.LocalDbSQLite;
+using LocalDataBase.RandomFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,11 @@ namespace Robot
         Timer timerDateTime = new Timer();
         Timer timerGetDataFlashDrive = new Timer();
         Timer timerRobotWorkPrintModules = new Timer();
+
+        /// <summary>
+        /// ошибка в файле для сценария 3
+        /// </summary>
+        string errorFileScenario3;
 
         /// <summary>
         /// номер сценария
@@ -56,7 +62,7 @@ namespace Robot
 
             LocalDataBase.LocalDaBase.Create_Table_Events();           
 
-            searchFlashDriveandScenarioGet();
+            searchFlashDriveandScenarioGet();            
         }
 
         private void searchFlashDriveandScenarioGet()
@@ -126,9 +132,9 @@ namespace Robot
                     versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Content = "N/A"; }));
                     versionProgrammLbl.Dispatcher.Invoke(new Action(delegate { versionProgrammLbl.Foreground = Brushes.Black; }));
 
-                   // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
+                    // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
 
-                   // addTextToRich("", Brushes.Green, true);
+                    connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = false; }));
                 }
                 catch
                 { }
@@ -151,18 +157,26 @@ namespace Robot
                     modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Foreground = Brushes.Green; }));
 
                     // connectBtn.IsEnabled = true;
-                    connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
-                                   
+                    if (!connectNotConnect)
+                    {
+                        connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
+                    }             
                 }
                 catch
                 { }
+            
             }
-            else if(scenarioDiagnosticRobot == 4)
+
+            // неизвестный робот
+           if(scenarioDiagnosticRobot == 4)
             {
                 connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
             }
         }
 
+        /// <summary>
+        ////показать время 
+        /// </summary>
         private void dateTimeUpdate()
         {
             timerDateTime.Elapsed += printDateTime;
@@ -245,6 +259,8 @@ namespace Robot
 
                 addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
                 connectNotConnect = true;
+
+                connectBtn.IsEnabled = false;
             }
 
             if(scenarioDiagnosticRobot == 4)
@@ -260,6 +276,12 @@ namespace Robot
                 addTextToRich("Connected robot without software", Brushes.Red,true);
                 printHelpCommand("Connected not known robot can not recognize");
                 return;
+            }
+
+            // сценарий ошибка в одном из файлов
+            if (scenarioDiagnosticRobot == 3)
+            {
+                errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
             }
         }
 
@@ -277,6 +299,11 @@ namespace Robot
             }
         }
 
+        /// <summary>
+        /// ввод команды в консоль
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // строка которую получили из консоли
@@ -326,7 +353,6 @@ namespace Robot
                 if(nameCommand == null)
                 {                  
                     addTextToRich("команда не найдена", Brushes.Red,true);
-
                     printHelpCommand("команда не найдена");
                     return;
                 }              
@@ -368,13 +394,17 @@ namespace Robot
 
                 if(nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 1)
                 {
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    printInModulesDateTimer();
                     scenarioDiagnosticRobot = 199;
                 }
 
                 if( ( nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
                     if (GetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
-                    {
+                    {                        
+                        colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                        printInModulesDateTimer();
                         scenarioDiagnosticRobot = 199;
                     }
                     else
@@ -385,10 +415,23 @@ namespace Robot
                     }
                 }
 
-                if (nameCommand.FirstOrDefault().command == "make modules install" && scenarioDiagnosticRobot == 3)
+                if(scenarioDiagnosticRobot == 3 && nameCommand.FirstOrDefault().command == "diag servo")
                 {
-                    // все стало хорошо ОС установлена
-                    scenarioDiagnosticRobot = 199;                                      
+                    addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
+                }
+
+                if (scenarioDiagnosticRobot == 3 && parsingCompareString("make modules install") == true && parsingCompareString(errorFileScenario3) )
+                {
+                    // переустановлен модуль сбойный
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                    printInModulesDateTimer();
+                    scenarioDiagnosticRobot = 199;
+                }
+                else if(scenarioDiagnosticRobot == 3 && parsingCompareString("make modules install") == true && parsingCompareString(errorFileScenario3) != true)
+                {
+                    addTextToRich("module not found", Brushes.Red, true);
+                    printHelpCommand("Модуль для сборки не найден");
+                    return;
                 }
 
                 if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
@@ -397,8 +440,7 @@ namespace Robot
                     addTextToRich(files, Brushes.White);
                 }
 
-
-                //вывод текста команды
+                //вывод текста команды и справки
                 printHelpCommand(nameCommand);
                 addTextToRich(nameCommand, Brushes.White);
                 #endregion конец команд
@@ -427,6 +469,46 @@ namespace Robot
 
         }
 
+        /// <summary>
+        /// проверить есть ли такая строка в команде
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private Boolean parsingCompareString(string v)
+        {
+            string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            
+            string lineend = "";
+
+            str = str.ToLower().Trim();
+            if (str == "")
+            {
+                return false;
+            }
+            str = str.Substring(1);
+             
+
+            foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+            {
+                if (line.Length >= 0)
+                {
+                    lineend = line;
+                }
+            }
+
+            if(lineend.Contains(v) == true)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+        /// <summary>
+        /// вывести в консоль
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="color"></param>
         private void addTextToRich(string[] files, SolidColorBrush color)
         {
             foreach(var file in files)
@@ -436,9 +518,13 @@ namespace Robot
                     addTextToRich(file, color, false);
                 }                
             }
-            addTextToRich("", color, true);
+           // addTextToRich("", color, true);
         }
-
+        /// <summary>
+        /// раскрасим модули bkb yfxytv dsdjlbnm byajhvfwb. d yb[
+        /// </summary>
+        /// <param name="scenarioDiagnosticRobot">номер сценария</param>
+        /// <param name="color">цвет</param>
         private void colorizeModule(int scenarioDiagnosticRobot, SolidColorBrush color)
         {
             switch (scenarioDiagnosticRobot)
@@ -450,7 +536,7 @@ namespace Robot
                     NeuroTXB.Background = color;
                     break;
                 case 3:
-                    CommunicationTXB.Background = color;
+                    ServoTXB.Background = color;                 
                     break;
                 case 4:
                     ServoTXB.Background = color;
@@ -463,7 +549,7 @@ namespace Robot
                     emptyModules();
                     break;
                 case 199:
-                    printInModulesDateTimer();
+                    printInModulesDateTimer();                   
                     break;
 
             }
