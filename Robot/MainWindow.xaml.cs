@@ -374,22 +374,31 @@ namespace Robot
                 // установка ПО
                 if(nameCommand.FirstOrDefault().command == "init robot" && scenarioDiagnosticRobot == 5)
                 {
-                    // все стало хорошо ОС установлена
-                    scenarioDiagnosticRobot = 199;
+                    if(GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenario5())
+                    {
+                        // все стало хорошо ОС установлена
+                        scenarioDiagnosticRobot = 199;
 
-                    randomBatteryCharge();
-                    statusBataryLbl.Content = batteryCharge;
-                    modeLbl.Content = "Prog";
-                    modeLbl.Foreground = Brushes.Green;
+                        randomBatteryCharge();
+                        statusBataryLbl.Content = batteryCharge;
+                        modeLbl.Content = "Prog";
+                        modeLbl.Foreground = Brushes.Green;
 
-                    versionProgrammLbl.Foreground = Brushes.Green;
-                    versionProgrammLbl.Content = "v.15.7.16";
+                        versionProgrammLbl.Foreground = Brushes.Green;
+                        versionProgrammLbl.Content = "v.15.7.16";
 
-                    connectOrDisconnectLbl.Content = "CONNECTED";
-                    connectOrDisconnectLbl.Foreground = Brushes.Green;
+                        connectOrDisconnectLbl.Content = "CONNECTED";
+                        connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-                    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-                    connectNotConnect = true;
+                        addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                        connectNotConnect = true;
+                    }
+                    else
+                    {
+                        addTextToRich("Init flash drive not detect", Brushes.Red, true);
+                        printHelpCommand("Init flash drive not detect");
+                        return;
+                    }
                 }
 
                 if(nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 1)
@@ -443,8 +452,8 @@ namespace Robot
                 //вывод текста команды и справки
                 printHelpCommand(nameCommand);
                 addTextToRich(nameCommand, Brushes.White);
-                #endregion конец команд
 
+                #endregion конец команд
             }
 
             //press key up
@@ -487,7 +496,6 @@ namespace Robot
             }
             str = str.Substring(1);
              
-
             foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
                 if (line.Length >= 0)

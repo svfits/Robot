@@ -52,6 +52,10 @@ namespace LocalDataBase.FlashDrive
             }
         }
 
+        /// <summary>
+        /// получить список файлов с флешки
+        /// </summary>
+        /// <returns></returns>
       public static string[] getFilesFromFlash()
         {
             string[] files = new string[100];
@@ -80,6 +84,12 @@ namespace LocalDataBase.FlashDrive
             }
         }
 
+
+        /// <summary>
+        ////если файл на флешке
+        /// </summary>
+        /// <param name="nameFile"></param>
+        /// <returns></returns>
         public static Boolean checkFilesFromFlash(string nameFile)
         {          
            try
@@ -106,6 +116,51 @@ namespace LocalDataBase.FlashDrive
                 return false;
             }
         }
+
+        public static Boolean checkFilesFromFlashForInitScenario5()
+        {
+            List<string> binCheck = new List<string>();
+            binCheck.Add("cp1600-bf-v2-5-0.bin");
+            binCheck.Add("cp1600-sys-v15-7-16.bin");
+            binCheck.Add("ns230.bin");
+            binCheck.Add("ss274.bin");
+            binCheck.Add("sa232.bin");
+            binCheck.Add("sw244.bin");
+            binCheck.Add("sb210.bin");
+            binCheck.Add("sk212.bin");
+            binCheck.Add("san235.bin");
+
+            List<string> files = new List<string>();
+            
+            try
+            {
+                foreach (var dinfo in DriveInfo.GetDrives())
+                {
+                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
+                    {
+                        string[] dirs = Directory.GetFiles(dinfo.Name);
+
+                        foreach (string dir in dirs)
+                        {
+                            files.Add(Path.GetFileName(dir));                           
+                        }
+                       
+                    }
+                }
+
+                List<string> resultList = binCheck.Where(t => files.Contains(t)).ToList<string>();
+                if(binCheck.Count == resultList.Count)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch { return false; }
+        }
+
 
     }
 }
