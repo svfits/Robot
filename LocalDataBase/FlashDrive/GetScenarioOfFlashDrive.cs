@@ -116,7 +116,10 @@ namespace LocalDataBase.FlashDrive
                 return false;
             }
         }
-
+        /// <summary>
+        /// проверка наличия файлов для сценария 5
+        /// </summary>
+        /// <returns></returns>
         public static Boolean checkFilesFromFlashForInitScenario5()
         {
             List<string> binCheck = new List<string>();

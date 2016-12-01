@@ -408,7 +408,7 @@ namespace Robot
                     scenarioDiagnosticRobot = 199;
                 }
 
-                if( ( nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
+                if((nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
                     if (GetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
                     {                        
