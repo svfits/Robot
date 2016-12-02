@@ -348,7 +348,7 @@ namespace Robot
                     return;
                 }
 
-                 List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
+                 List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot,searchLastCommand(-1));
                 
                 if(nameCommand == null)
                 {                  
@@ -408,7 +408,14 @@ namespace Robot
                     scenarioDiagnosticRobot = 199;
                 }
 
-                if((nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
+                if (nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 2)
+                {
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    printInModulesDateTimer();
+                    scenarioDiagnosticRobot = 199;
+                }
+
+                if ((nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
                     if (GetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
                     {                        
@@ -449,6 +456,22 @@ namespace Robot
                     addTextToRich(files, Brushes.White);
                 }
 
+                // команда buckup
+                if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
+                    && searchLastCommand() != "yes" )
+                {
+                    addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, true);
+                    printHelpCommand("Flash drive is not empty, all data will delete?");
+                    return;
+                }
+                
+                if(nameCommand.FirstOrDefault().command == "save" && searchLastCommand() != "yes")
+                {
+                    addTextToRich("Proceed with save?", Brushes.Red, true);
+                    printHelpCommand("Proceed with save?");
+                    return;
+                }                         
+
                 //вывод текста команды и справки
                 printHelpCommand(nameCommand);
                 addTextToRich(nameCommand, Brushes.White);
@@ -476,6 +499,36 @@ namespace Robot
                 }              
             }
 
+        }
+
+        private string searchLastCommand(int v)
+        {
+            try
+            {
+                string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+
+                List<string> lineend = new List<string>();
+                str = str.ToLower().Trim();
+
+                foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+                {
+                    if (line.Length > 1)
+                    {
+                        if (line.IndexOf("#") != -1)
+                        {
+                            lineend.Add(line.Substring(1));
+                        }
+                    }
+                }
+                int count = lineend.Count - 2;
+
+                string str1 = lineend[count];
+                return str1;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         /// <summary>
@@ -594,7 +647,11 @@ namespace Robot
             logTXB.Text = str;
         }
 
-        private string searchLastCommand()
+         /// <summary>
+         /// последняя команда
+         /// </summary>
+         /// <returns></returns>
+        public string searchLastCommand()
         {
             string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
 
@@ -608,7 +665,6 @@ namespace Robot
                 {                    
                     if( line.IndexOf("#") != -1)
                     {
-
                         lineend = line.Substring(1);
                     }
                 }

@@ -27,12 +27,17 @@ namespace LocalDataBase.LocalDbSQLite
         }
 
 
-        public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot)
-        {
+        public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot, string lastCommand)
+        {           
             try
             {
                 using (HContext dbL = new HContext())
                 {
+                    if((textCommand.Contains("y") || textCommand.Contains("yes")) &&  lastCommand == "backup")
+                    {
+                        textCommand = "backup";
+                    }
+
                     if(textCommand.Contains("make modules install") && scenarioDiagnosticRobot == 3)
                     {
                         var makeModulesInstall = dbL.ListCommand

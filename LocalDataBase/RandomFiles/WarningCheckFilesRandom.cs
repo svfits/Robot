@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LocalDataBase.RandomFiles
 {
+    /// <summary>
+    //// ошибка в работе файла сценарий 3
+    /// </summary>
  public static class WarningCheckFilesRandom
     {
         public static string RandomFiles()
