@@ -500,7 +500,11 @@ namespace Robot
             }
 
         }
-
+        /// <summary>
+        /// поиск ПРЕД последней каманды
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         private string searchLastCommand(int v)
         {
             try

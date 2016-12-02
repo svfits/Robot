@@ -26,13 +26,24 @@ namespace LocalDataBase.LocalDbSQLite
             }
         }
 
-
+        /// <summary>
+        /// поиск команды и описание к ней
+        /// </summary>
+        /// <param name="textCommand"></param>
+        /// <param name="scenarioDiagnosticRobot"></param>
+        /// <param name="lastCommand"></param>
+        /// <returns></returns>
         public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot, string lastCommand)
         {           
             try
             {
                 using (HContext dbL = new HContext())
                 {
+                    if((textCommand.Contains("y") || textCommand.Contains("yes")) && lastCommand == "save")
+                    {
+                        textCommand = "save";
+                    }
+
                     if((textCommand.Contains("y") || textCommand.Contains("yes")) &&  lastCommand == "backup")
                     {
                         textCommand = "backup";
