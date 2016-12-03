@@ -16,21 +16,27 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <!--<RowDefinition Height="0.3*"></RowDefinition>-->
             </Grid.RowDefinitions>
             <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Background="Black" KeyUp="richTextBox_KeyUp" Foreground="LightGreen" Focusable="True"
-                         AcceptsTab="False" AllowDrop="False">
+                         AcceptsTab="False" AllowDrop="False" BorderThickness="0">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
-            <!--<TextBox x:Name="commandEnterTXB" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                     Background="Black" Grid.Row="1" TextWrapping="Wrap" BorderBrush="Black"
-                     Foreground="LightGreen" Text="#"/>-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="textBox1" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black" BorderThickness="0" Background="Black" Text="#" />
+                <TextBox x:Name="textBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
+                 Text="" MinWidth="50" Background="Black" Foreground="White" BorderThickness="0" KeyUp="richTextBox_KeyUp" />
+            </Grid>
         </Grid>
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
             <Separator  />
