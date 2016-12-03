@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="textBox1" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black" BorderThickness="0" Background="Black" Text="#" />
             <TextBox x:Name="textBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
-                 Text="TextBoxhhhhhhhhhhhhhhhhhhhhhhh " MinWidth="50" Background="Black" Foreground="White" BorderThickness="0"/>
+                 Text="TextBoxhhhhhhhhhhhhhhhhhhhhhhh" MinWidth="50" Background="Black" Foreground="White" BorderThickness="0"/>
         </Grid>
       
         
