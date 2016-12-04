@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" 
-        Height="1000" Width="1000"   WindowState="Maximized">
-
+        Height="1000" Width="1000"   WindowState="Maximized"  >
     <!--WindowStyle="None"-->
+
     <Grid KeyDown="Grid_KeyDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -20,22 +20,23 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                         Background="Black" KeyUp="richTextBox_KeyUp" Foreground="LightGreen" Focusable="True"
-                         AcceptsTab="False" AllowDrop="False" BorderThickness="0">
-                <FlowDocument>
+                         Background="Black" Foreground="LightGreen" 
+                         AcceptsTab="False" AllowDrop="False" BorderThickness="0" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="auto">
+                <!--<FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>
                     </Paragraph>
-                </FlowDocument>
+                </FlowDocument>-->
             </RichTextBox>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="textBox1" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black" BorderThickness="0" Background="Black" Text="#" />
-                <TextBox x:Name="textBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
-                 Text="" MinWidth="50" Background="Black" Foreground="White" BorderThickness="0" KeyUp="richTextBox_KeyUp" />
+                <TextBox x:Name="textBoxSuffix" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black"
+                         BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"/>
+                <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
+                 Text="" MinWidth="50" Background="Black" Foreground="White" BorderThickness="0" KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True"/>
             </Grid>
         </Grid>
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">

@@ -11,6 +11,10 @@ namespace LocalDataBase.RandomFiles
     /// </summary>
  public static class WarningCheckFilesRandom
     {
+        /// <summary>
+        /// случайный сломанный файл для сценария 3
+        /// </summary>
+        /// <returns></returns>
         public static string RandomFiles()
         {
             string str = "";

@@ -54,7 +54,10 @@ namespace Robot
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {           
+        {
+            //  richTextBox.MaxHeight =  System.Windows.SystemParameters.PrimaryScreenHeight - 60;
+            richTextBox.MaxHeight = SystemParameters.WorkArea.Height -60;
+                    
             dateTimeUpdate();
             //  string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
             string datadb = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
@@ -265,7 +268,7 @@ namespace Robot
 
             if(scenarioDiagnosticRobot == 4)
             {
-                addTextToRich("Connected not known robot can not recognize", Brushes.Red,true);
+                addTextToRich("Connected not known robot can not recognize", Brushes.Red,false);
                 printHelpCommand("Connected not known robot can not recognize");
                 return;
             }
@@ -273,7 +276,7 @@ namespace Robot
             if(scenarioDiagnosticRobot == 5)
             {
                 connectNotConnect = true;
-                addTextToRich("Connected robot without software", Brushes.Red,true);
+                addTextToRich("Connected robot without software", Brushes.Red,false);
                 printHelpCommand("Connected not known robot can not recognize");
                 return;
             }
@@ -307,62 +310,55 @@ namespace Robot
         private void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // строка которую получили из консоли
-            string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-            
-            if(getEndLine(str).Length == 0)
-            {
-                addTextToRich("", Brushes.LightGreen, true);
-                return;
-            }
-
-            // команда уже в правильном виде             
-            string command = getEndLine(str).Substring(1);
-
+            string command = textBoxCommands.Text.Trim();
+                  
             //press key enter
             if (e.Key == System.Windows.Input.Key.Enter)
             { 
                 if(scenarioDiagnosticRobot == 0)
                 {
-                    addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,true);
+                    addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
                     printHelpCommand("Робот не найден, подключите его к USB");
                     return;
                 }
 
                 if(connectNotConnect == false)
                 {
-                    addTextToRich("Инициализация робота не выполнена", Brushes.Red, true);
+                    addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
                     printHelpCommand("Инициализация робота не выполнена");
                     return;
                 }
 
                 if(scenarioDiagnosticRobot == 4)
                 {
-                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, true);                   
+                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
                     printHelpCommand("Connected not known robot can not recognize");
                     return;
-                }               
+                } 
 
-                if(command == "")
+                if(command.Length == 0)
                 {
-                    addTextToRich("", Brushes.Red, true);
-                    return;
+                    addTextToRich("", Brushes.Red, false);
                 }
-
-                 List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot,searchLastCommand(-1));
+                              
+                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot,searchLastCommand(-1));
                 
                 if(nameCommand == null)
                 {                  
-                    addTextToRich("команда не найдена", Brushes.Red,true);
+                    addTextToRich("команда не найдена", Brushes.Red,false);
                     printHelpCommand("команда не найдена");
                     return;
-                }              
+                }
+
+                addTextToRich("#" +command, Brushes.LightGreen, false);
+                textBoxCommands.Clear();
 
                 #region команды
                 // очистка консоли
                 if (nameCommand.FirstOrDefault().command == "clear")
                 {
                     richTextBox.Document.Blocks.Clear();
-                    addTextToRich("", Brushes.Green, true);
+                    addTextToRich("", Brushes.Green, false);
                     return;
                 }
                 //диагностика
@@ -395,7 +391,7 @@ namespace Robot
                     }
                     else
                     {
-                        addTextToRich("Init flash drive not detect", Brushes.Red, true);
+                        addTextToRich("Init flash drive not detect", Brushes.Red, false);
                         printHelpCommand("Init flash drive not detect");
                         return;
                     }
@@ -425,7 +421,7 @@ namespace Robot
                     }
                     else
                     {
-                        addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, true);
+                        addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, false);
                         printHelpCommand("Ошибка ненайден файл ns230.bin");
                         return;
                     }
@@ -445,7 +441,7 @@ namespace Robot
                 }
                 else if(scenarioDiagnosticRobot == 3 && parsingCompareString("make modules install") == true && parsingCompareString(errorFileScenario3) != true)
                 {
-                    addTextToRich("module not found", Brushes.Red, true);
+                    addTextToRich("module not found", Brushes.Red, false);
                     printHelpCommand("Модуль для сборки не найден");
                     return;
                 }
@@ -460,14 +456,14 @@ namespace Robot
                 if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
                     && searchLastCommand() != "yes" )
                 {
-                    addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, true);
+                    addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, false);
                     printHelpCommand("Flash drive is not empty, all data will delete?");
                     return;
                 }
                 
                 if(nameCommand.FirstOrDefault().command == "save" && searchLastCommand() != "yes")
                 {
-                    addTextToRich("Proceed with save?", Brushes.Red, true);
+                    addTextToRich("Proceed with save?", Brushes.Red, false);
                     printHelpCommand("Proceed with save?");
                     return;
                 }                         
@@ -488,16 +484,16 @@ namespace Robot
             }
 
             //press key back
-            if(e.Key == System.Windows.Input.Key.Back)
-            {
-                int ss = command.Length;
-                //  int index = richTextBox.Get;
-                // MessageBox.Show(richTextBox.Count);
-              if(command.Length <= 0)
-                {
-                 addTextToRich("", Brushes.White, true);
-                }              
-            }
+            //if(e.Key == System.Windows.Input.Key.Back)
+            //{
+            //    int ss = command.Length;
+            //    //  int index = richTextBox.Get;
+            //    // MessageBox.Show(richTextBox.Count);
+            //  if(command.Length <= 0)
+            //    {
+            //     addTextToRich("", Brushes.White, false);
+            //    }              
+            //}
 
         }
         /// <summary>
@@ -686,7 +682,7 @@ namespace Robot
         {
             if(nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
             {
-                addTextToRich("", Brushes.White, true);
+                addTextToRich("", Brushes.White, false);
                 return;
             }
 
@@ -708,7 +704,7 @@ namespace Robot
                 }
             }
 
-            addTextToRich("", Brushes.White,true);
+            addTextToRich("", Brushes.White,false);
         }
 
         //private void printBatteryCharge(object sender, ElapsedEventArgs e)
@@ -760,6 +756,7 @@ namespace Robot
                 //   range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
             }
 
+            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             if (printLattice)
             {
                 setLigthGreenR();
