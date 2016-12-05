@@ -37,10 +37,16 @@ namespace Robot
         /// номер сценария
         /// </summary>
         public int scenarioDiagnosticRobot;
+
         /// <summary>
         /// нажата кнопка коннект
         /// </summary>
         private Boolean connectNotConnect;
+
+        /// <summary>
+        /// был ли получен root
+        /// </summary>
+        private Boolean sudoNotsudo;
         
         public MainWindow()
         {
@@ -338,19 +344,68 @@ namespace Robot
 
                 if(command.Length == 0)
                 {
-                    addTextToRich("", Brushes.Red, false);
-                }
-                              
-                List<ListCommand> nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot,searchLastCommand(-1));
-                
-                if(nameCommand == null)
-                {                  
-                    addTextToRich("команда не найдена", Brushes.Red,false);
-                    printHelpCommand("команда не найдена");
+                    textBoxCommands.Clear();
+                    addTextToRich("#", Brushes.LightGreen, false);
                     return;
                 }
 
-                addTextToRich("#" +command, Brushes.LightGreen, false);
+                List<ListCommand> nameCommand = null;
+
+                // подверждение команды
+                if (textBoxSuffix.Text.Length > 1)               
+                {
+                    //backup 2 проверка на замену файлов
+                    if (textBoxSuffix.Text == "Flash drive is not empty, all data will delete?" && command == "yes")
+                    {
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup", scenarioDiagnosticRobot);
+                        textBoxSuffix.Text = "#";
+
+                    }
+                    else if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
+                    {
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("save", scenarioDiagnosticRobot);
+                        textBoxSuffix.Text = "#";
+                    }
+                    else if(textBoxSuffix.Text.Trim() == "Password:")
+                    {
+                        if (command == RepositoryLocalSQLite.searchCommandFromBD("Password111", scenarioDiagnosticRobot).FirstOrDefault().command)
+                        {
+                            addTextToRich("Root rights successfully", Brushes.Green, false);
+                            printHelpCommand("Root rights successfully");
+                            textBoxCommands.Clear();
+                            textBoxSuffix.Text = "#";
+                            return;
+                        }
+                        else
+                        {
+                            addTextToRich("Authentication failure. Sorry, try again", Brushes.Red, false);
+                            printHelpCommand("Authentication failure. Sorry, try again");
+                            textBoxCommands.Clear();
+                            textBoxSuffix.Text = "#";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        textBoxSuffix.Text = "#";
+                        textBoxCommands.Clear();
+                        return;
+                    }
+                }
+                else
+                {
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
+                }
+                              
+                if(nameCommand == null)
+                {                  
+                    addTextToRich(command + ":    " + "команда не найдена", Brushes.Red,false);
+                    printHelpCommand("команда не найдена");
+                    textBoxCommands.Clear();
+                    return;
+                }
+
+                addTextToRich("#" + command, Brushes.LightGreen, false);
                 textBoxCommands.Clear();
 
                 #region команды
@@ -456,18 +511,27 @@ namespace Robot
                 if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
                     && searchLastCommand() != "yes" )
                 {
-                    addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, false);
+                    //addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, false);
+                    textBoxSuffix.Text = "Flash drive is not empty, all data will delete?";
                     printHelpCommand("Flash drive is not empty, all data will delete?");
                     return;
                 }
                 
                 if(nameCommand.FirstOrDefault().command == "save" && searchLastCommand() != "yes")
                 {
-                    addTextToRich("Proceed with save?", Brushes.Red, false);
+                    // addTextToRich("Proceed with save?", Brushes.Red, false);
+                    textBoxSuffix.Text = "Proceed with save?";
                     printHelpCommand("Proceed with save?");
                     return;
-                }                         
-
+                } 
+                
+                 if(nameCommand.FirstOrDefault().command == "sudo" && textBoxSuffix.Text != "Password:" )
+                   {
+                    textBoxSuffix.Text = "Password:";
+                    printHelpCommand("Password: ");
+                    return;
+                   }           
+                           
                 //вывод текста команды и справки
                 printHelpCommand(nameCommand);
                 addTextToRich(nameCommand, Brushes.White);
@@ -479,21 +543,11 @@ namespace Robot
             if (e.Key == System.Windows.Input.Key.Up)
             {                           
                 string lastCommand = searchLastCommand();
-                addTextToRich(lastCommand,Brushes.LightGreen);
-                richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-            }
-
-            //press key back
-            //if(e.Key == System.Windows.Input.Key.Back)
-            //{
-            //    int ss = command.Length;
-            //    //  int index = richTextBox.Get;
-            //    // MessageBox.Show(richTextBox.Count);
-            //  if(command.Length <= 0)
-            //    {
-            //     addTextToRich("", Brushes.White, false);
-            //    }              
-            //}
+                // addTextToRich(lastCommand,Brushes.LightGreen);
+                // richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+                textBoxCommands.Text = lastCommand;
+                textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
+            }         
 
         }
         /// <summary>
@@ -565,6 +619,7 @@ namespace Robot
             return false;
 
         }
+
         /// <summary>
         /// вывести в консоль
         /// </summary>
@@ -581,6 +636,7 @@ namespace Robot
             }
            // addTextToRich("", color, true);
         }
+
         /// <summary>
         /// раскрасим модули bkb yfxytv dsdjlbnm byajhvfwb. d yb[
         /// </summary>
@@ -634,6 +690,7 @@ namespace Robot
             //range.Text = v + Environment.NewLine;
             range.Text = v;
             range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
+            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
         }
 
         private void printHelpCommand(string v)
@@ -704,21 +761,10 @@ namespace Robot
                 }
             }
 
-            addTextToRich("", Brushes.White,false);
+            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+            richTextBox.ScrollToEnd();
         }
-
-        //private void printBatteryCharge(object sender, ElapsedEventArgs e)
-        //{
-        //    batteryCharge++;
-
-        //    if (batteryCharge >= 100)
-        //    {
-        //        timerBatttery.Stop();
-        //    }
-        //    statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Content = batteryCharge; }));
-        //}
-
-
+        
         /// <summary>
         /// получим случайную строку и выведем ее в модули 
         /// </summary>
@@ -757,33 +803,9 @@ namespace Robot
             }
 
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-            if (printLattice)
-            {
-                setLigthGreenR();
-            }
+            richTextBox.ScrollToEnd();
         }
-
-        /// <summary>
-        /// вывести в консоль # и покрасить ее в светло зеленый
-        /// </summary>
-        private void setLigthGreenR()
-        {
-            //Paragraph myParagraph = new Paragraph();
-            //myParagraph.Inlines.Add(new Run("Some paragraph text."));
-
-            //// Create a FlowDocument and add the paragraph to it.
-            //FlowDocument myFlowDocument = new FlowDocument();
-            //myFlowDocument.Blocks.Add(myParagraph);
-
-            //richTextBox.DataContext = myFlowDocument;
-
-            TextRange rangeR = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-            rangeR.Text = "#";
-
-            rangeR.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGreen);            
-            //caret to end pozion
-            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-        }
+        
 
         /// <summary>
         ////поиск последней команды

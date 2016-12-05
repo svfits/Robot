@@ -33,22 +33,12 @@ namespace LocalDataBase.LocalDbSQLite
         /// <param name="scenarioDiagnosticRobot"></param>
         /// <param name="lastCommand"></param>
         /// <returns></returns>
-        public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot, string lastCommand)
+        public static List<ListCommand> searchCommandFromBD(string textCommand,int scenarioDiagnosticRobot)
         {           
             try
             {
                 using (HContext dbL = new HContext())
-                {
-                    if((textCommand.Contains("y") || textCommand.Contains("yes")) && lastCommand == "save")
-                    {
-                        textCommand = "save";
-                    }
-
-                    if((textCommand.Contains("y") || textCommand.Contains("yes")) &&  lastCommand == "backup")
-                    {
-                        textCommand = "backup";
-                    }
-
+                {                 
                     if(textCommand.Contains("make modules install") && scenarioDiagnosticRobot == 3)
                     {
                         var makeModulesInstall = dbL.ListCommand
