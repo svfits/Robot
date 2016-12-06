@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" 
-        Height="1000" Width="1000"   WindowState="Maximized"  >
+        Height="1000" Width="1000"   WindowState="Maximized"  WindowStyle="None">
     <!--WindowStyle="None"-->
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  CanExecute="CanExecute_New"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.New"  Gesture="Ctrl+F11"/>
+    </Window.InputBindings>
 
     <Grid KeyDown="Grid_KeyDown">
         <Grid.ColumnDefinitions>

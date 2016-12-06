@@ -46,7 +46,7 @@ namespace Robot
         /// <summary>
         /// был ли получен root
         /// </summary>
-        private Boolean sudoNotsudo;
+        private Boolean sudoNotsudo = false;
         
         public MainWindow()
         {
@@ -144,6 +144,24 @@ namespace Robot
                     // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
 
                     connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = false; }));
+
+                    // остоновим модули вывод
+                    timerRobotWorkPrintModules.Stop();
+
+                    // очистим модули
+                    emptyModules();
+
+                    //очистим richtext
+                    //richTextBox.Document.Blocks.Clear();
+                    richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document.Blocks.Clear(); }));
+
+                    // очистить вывода подсказки об ишибках
+                    logTXB.Dispatcher.Invoke(new Action ( delegate { logTXB.Clear(); }));
+
+                    //
+                    //textBoxCommands.Clear
+                    textBoxCommands.Dispatcher.Invoke(new Action(delegate { textBoxCommands.Clear(); }));
+
                 }
                 catch
                 { }
@@ -325,6 +343,7 @@ namespace Robot
                 {
                     addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
                     printHelpCommand("Робот не найден, подключите его к USB");
+                    beeper();
                     return;
                 }
 
@@ -332,6 +351,7 @@ namespace Robot
                 {
                     addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
                     printHelpCommand("Инициализация робота не выполнена");
+                    beeper();
                     return;
                 }
 
@@ -339,12 +359,14 @@ namespace Robot
                 {
                     addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
                     printHelpCommand("Connected not known robot can not recognize");
+                    beeper();
                     return;
                 } 
 
                 if(command.Length == 0)
                 {
                     textBoxCommands.Clear();
+                    textBoxSuffix.Text = "#";
                     addTextToRich("#", Brushes.LightGreen, false);
                     return;
                 }
@@ -368,12 +390,13 @@ namespace Robot
                     }
                     else if(textBoxSuffix.Text.Trim() == "Password:")
                     {
-                        if (command == RepositoryLocalSQLite.searchCommandFromBD("Password111", scenarioDiagnosticRobot).FirstOrDefault().command)
+                        if (command == RepositoryLocalSQLite.searchCommandFromBD("password111q!!!", scenarioDiagnosticRobot).FirstOrDefault().helpPrint)
                         {
-                            addTextToRich("Root rights successfully", Brushes.Green, false);
+                            addTextToRich("Root rights successfully", Brushes.LightGreen, false);
                             printHelpCommand("Root rights successfully");
                             textBoxCommands.Clear();
                             textBoxSuffix.Text = "#";
+                            sudoNotsudo = true;
                             return;
                         }
                         else
@@ -382,8 +405,16 @@ namespace Robot
                             printHelpCommand("Authentication failure. Sorry, try again");
                             textBoxCommands.Clear();
                             textBoxSuffix.Text = "#";
+                            sudoNotsudo = false;
+                            beeper();
                             return;
                         }
+                    }
+                    else if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
+                        {
+                        // reboot yes
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("reboot", scenarioDiagnosticRobot);
+                        textBoxSuffix.Text = "#";
                     }
                     else
                     {
@@ -402,11 +433,13 @@ namespace Robot
                     addTextToRich(command + ":    " + "команда не найдена", Brushes.Red,false);
                     printHelpCommand("команда не найдена");
                     textBoxCommands.Clear();
+                    beeper();
                     return;
                 }
 
-                addTextToRich("#" + command, Brushes.LightGreen, false);
-                textBoxCommands.Clear();
+                    addTextToRich("#" + command, Brushes.LightGreen, false);
+                    textBoxCommands.Clear();
+                 
 
                 #region команды
                 // очистка консоли
@@ -425,7 +458,15 @@ namespace Robot
                 // установка ПО
                 if(nameCommand.FirstOrDefault().command == "init robot" && scenarioDiagnosticRobot == 5)
                 {
-                    if(GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenario5())
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
+
+                    if (GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenario5())
                     {
                         // все стало хорошо ОС установлена
                         scenarioDiagnosticRobot = 199;
@@ -448,12 +489,21 @@ namespace Robot
                     {
                         addTextToRich("Init flash drive not detect", Brushes.Red, false);
                         printHelpCommand("Init flash drive not detect");
+                        beeper();
                         return;
                     }
                 }
 
                 if(nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 1)
                 {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
+
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     printInModulesDateTimer();
                     scenarioDiagnosticRobot = 199;
@@ -461,6 +511,14 @@ namespace Robot
 
                 if (nameCommand.FirstOrDefault().command == "cpav scan" && scenarioDiagnosticRobot == 2)
                 {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
+
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     printInModulesDateTimer();
                     scenarioDiagnosticRobot = 199;
@@ -469,15 +527,26 @@ namespace Robot
                 if ((nameCommand.FirstOrDefault().command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
                     if (GetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
-                    {                        
-                        colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
-                        printInModulesDateTimer();
-                        scenarioDiagnosticRobot = 199;
+                    {
+                        if (sudoNotsudo == true)
+                        {
+                            colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                            printInModulesDateTimer();
+                            scenarioDiagnosticRobot = 199;
+                        }
+                        else
+                        {
+                            addTextToRich("Only root!", Brushes.Red, false);
+                            printHelpCommand("Only root!");
+                            beeper();
+                            return;
+                        }
                     }
                     else
                     {
                         addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, false);
                         printHelpCommand("Ошибка ненайден файл ns230.bin");
+                        beeper();
                         return;
                     }
                 }
@@ -489,6 +558,13 @@ namespace Robot
 
                 if (scenarioDiagnosticRobot == 3 && parsingCompareString("make modules install") == true && parsingCompareString(errorFileScenario3) )
                 {
+                    if(sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
                     // переустановлен модуль сбойный
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     printInModulesDateTimer();
@@ -496,8 +572,16 @@ namespace Robot
                 }
                 else if(scenarioDiagnosticRobot == 3 && parsingCompareString("make modules install") == true && parsingCompareString(errorFileScenario3) != true)
                 {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
                     addTextToRich("module not found", Brushes.Red, false);
                     printHelpCommand("Модуль для сборки не найден");
+                    beeper();
                     return;
                 }
 
@@ -530,7 +614,22 @@ namespace Robot
                     textBoxSuffix.Text = "Password:";
                     printHelpCommand("Password: ");
                     return;
-                   }           
+                   }  
+                 
+                 if(nameCommand.FirstOrDefault().command == "reboot" && textBoxSuffix.Text != "Proceed with reboot?" && searchLastCommand() != "yes")
+                  {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!");
+                        beeper();
+                        return;
+                    }
+
+                    textBoxSuffix.Text = "Proceed with reboot?";
+                    printHelpCommand("Proceed with reboot?");
+                    return;
+                }         
                            
                 //вывод текста команды и справки
                 printHelpCommand(nameCommand);
@@ -663,7 +762,7 @@ namespace Robot
                     ModulesTXB.Background = color;
                     break;
                 case 5:
-                    emptyModules();
+                  
                     break;
                 case 199:
                     printInModulesDateTimer();                   
@@ -675,13 +774,23 @@ namespace Robot
         private void printInModulesDateTimer()
         {           
             timerRobotWorkPrintModules.Elapsed += addTexttoModules;
-            timerRobotWorkPrintModules.Interval = 3000;
+            timerRobotWorkPrintModules.Interval = 1000;
             timerRobotWorkPrintModules.Start();
         }      
 
         private void emptyModules()
         {
-            //throw new NotImplementedException();
+            //ServoTXB.Clear();
+            //CommunicationTXB.Clear();
+            //NeuroTXB.Clear();
+            //SystemTXB.Clear();
+            //ModulesTXB.Clear();
+
+            ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.Clear(); }));
+            CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.Clear(); }));
+            NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.Clear(); }));
+            SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.Clear(); }));
+            ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.Clear(); }));
         }
 
         private void addTextToRich(string v, SolidColorBrush color)
@@ -835,7 +944,11 @@ namespace Robot
              
         private  void beeper()
         {
-            SystemSounds.Beep.Play();
+         //   SystemSounds.Beep.Play();
+              SystemSounds.Asterisk.Play();
+          //  SystemSounds.Exclamation.Play();
+         //   SystemSounds.Question.Play();
+          //  SystemSounds.Hand.Play();
         }
 
         #region работа модулей
@@ -907,6 +1020,23 @@ namespace Robot
         }
 
         #endregion работа модулей
-      
+
+        private void Executed_New(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            // MessageBox.Show("Вызов команды 'New'");
+            Application.Current.Dispatcher.Invoke( () =>
+            {
+               MainWindow window3 = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                if (window3 != null)
+                {
+                    window3.Close();
+                }
+            } );
+        }
+
+        private void CanExecute_New(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }
