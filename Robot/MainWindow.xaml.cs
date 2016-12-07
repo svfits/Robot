@@ -288,11 +288,7 @@ namespace Robot
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Connect_Click(object sender, RoutedEventArgs e)
-        {
-            LogInFile.addFileLog("Нажатие кнопки");
-            string path = Directory.GetCurrentDirectory();
-            string pathFile = Path.Combine(path, "log.txt");
-            MessageBox.Show(pathFile);
+        {        
             try
             {
                 if (scenarioDiagnosticRobot != 4 && scenarioDiagnosticRobot != 5)

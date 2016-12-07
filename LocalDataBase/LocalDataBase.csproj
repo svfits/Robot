@@ -76,9 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Resource Include="data.sqlite">
+    <EmbeddedResource Include="data.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

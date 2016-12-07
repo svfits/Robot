@@ -26,7 +26,7 @@ namespace Robot
                     sw.WriteLineAsync(txt + "  " + DateTime.Now.ToString());
                 }
             }
-            catch(Exception ex)
+            catch
             {
                 return;
             }
