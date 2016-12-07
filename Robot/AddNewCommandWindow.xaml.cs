@@ -28,6 +28,7 @@ namespace Robot
             }
             catch (Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 MessageBox.Show("Произошла ошибка данные могут не сохранится, текст ошибки  " + ex.ToString());
             }
         }
@@ -49,6 +50,7 @@ namespace Robot
             }
             catch (Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 MessageBox.Show("база данных не доступна или сломалась  " + ex.ToString());
                 return null;
             }

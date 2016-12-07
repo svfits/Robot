@@ -1,4 +1,5 @@
 ﻿using LocalDataBase.LocalDbSQLite;
+using Robot;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,35 +17,42 @@ namespace LocalDataBase
     {
         public static void Create_Table_Events()
         {
-            string baseNamePath = GetConnectionStringByName("SQLiteS");
-            string baseName = baseNamePath.Replace("data source=|DataDirectory|", "");
-
-            if (!File.Exists(baseName))
+            try
             {
-                SQLiteConnection.CreateFile(baseName);
+                string baseNamePath = GetConnectionStringByName("SQLiteS");
+                string baseName = baseNamePath.Replace("data source=|DataDirectory|", "");
 
-                SQLiteFactory factory = (SQLiteFactory)DbProviderFactories.GetFactory("System.Data.SQLite");
-                using (SQLiteConnection connection = (SQLiteConnection)factory.CreateConnection())
+                if (!File.Exists(baseName))
                 {
-                    connection.ConnectionString = baseNamePath;
-                    connection.Open();
+                    SQLiteConnection.CreateFile(baseName);
 
-                    using (SQLiteCommand command = new SQLiteCommand(connection))
+                    SQLiteFactory factory = (SQLiteFactory)DbProviderFactories.GetFactory("System.Data.SQLite");
+                    using (SQLiteConnection connection = (SQLiteConnection)factory.CreateConnection())
                     {
-                        //таблица событий 
-                        command.CommandText = @"CREATE TABLE [ListCommands] (
+                        connection.ConnectionString = baseNamePath;
+                        connection.Open();
+
+                        using (SQLiteCommand command = new SQLiteCommand(connection))
+                        {
+                            //таблица событий 
+                            command.CommandText = @"CREATE TABLE [ListCommands] (
                     [id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                     [command] char(1000) ,
                     [helpPrint] char(1000) ,                 
                     [monitorPrint] char(1000),
                     [scenario] integer   
                     );";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
+                            command.CommandType = CommandType.Text;
+                            command.ExecuteNonQuery();
 
-                        addNewHelp();
+                            addNewHelp();
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
             }
         }
         /// <summary>
@@ -90,6 +98,7 @@ namespace LocalDataBase
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
+                LogInFile.addFileLog(ex.ToString());
             }
             return;
             

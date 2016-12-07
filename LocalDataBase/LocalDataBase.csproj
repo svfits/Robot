@@ -70,14 +70,15 @@
     <Compile Include="LocalDbSQLite\ListCommand.cs" />
     <Compile Include="LocalDbSQLite\LocalDbSqllite.cs" />
     <Compile Include="LocalDbSQLite\RepositoryLocalSQLite.cs" />
+    <Compile Include="LogInFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomFiles\WarningCheckFilesRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="data.sqlite">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Resource Include="data.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Robot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,8 +77,9 @@ namespace LocalDataBase.LocalDbSQLite
                     }
                 }
             }
-            catch
-            {             
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
                 return null;
             }
         }
@@ -97,8 +99,9 @@ namespace LocalDataBase.LocalDbSQLite
                 }
                
             }
-            catch
+            catch(Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 return null;
             }
         }

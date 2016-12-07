@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Robot;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,8 +47,9 @@ namespace LocalDataBase.FlashDrive
                 }
                 return 0;
             }
-            catch
+            catch(Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 return 0;
             }
         }
@@ -78,8 +80,9 @@ namespace LocalDataBase.FlashDrive
                 }
                 return null;
             }
-            catch
+            catch(Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 return null;
             }
         }
@@ -111,8 +114,9 @@ namespace LocalDataBase.FlashDrive
                 }
                 return false;
             }
-            catch
+            catch(Exception ex)
             {
+                LogInFile.addFileLog(ex.ToString());
                 return false;
             }
         }
@@ -162,7 +166,11 @@ namespace LocalDataBase.FlashDrive
                     return false;
                 }
             }
-            catch { return false; }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+                return false;
+            }
         }
 
         /// <summary>
@@ -210,7 +218,11 @@ namespace LocalDataBase.FlashDrive
                     return false;
                 }
             }
-            catch { return false; }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+                return false;
+            }
         }
 
 

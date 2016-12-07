@@ -3,6 +3,7 @@ using LocalDataBase.LocalDbSQLite;
 using LocalDataBase.RandomFiles;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Timers;
@@ -47,7 +48,11 @@ namespace Robot
         /// был ли получен root
         /// </summary>
         private Boolean sudoNotsudo = false;
-        
+        /// <summary>
+        ////закрыть или не закрыть окно
+        /// </summary>
+        private bool closeNotCloseWindowd;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -56,13 +61,18 @@ namespace Robot
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-          //  e.Cancel = true;
+            if(closeNotCloseWindowd)
+            {
+                return;
+            }
+
+            e.Cancel = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //  richTextBox.MaxHeight =  System.Windows.SystemParameters.PrimaryScreenHeight - 60;
-            richTextBox.MaxHeight = SystemParameters.WorkArea.Height -60;
+            richTextBox.MaxHeight = SystemParameters.WorkArea.Height - 10;
                     
             dateTimeUpdate();
             //  string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
@@ -102,8 +112,10 @@ namespace Robot
                         }
                     ));
                 }
-                catch
-                { }
+                catch(Exception ex)
+                {
+                    LogInFile.addFileLog(ex.ToString());
+                }
             }
 
             // usb не подключено
@@ -163,8 +175,10 @@ namespace Robot
                     textBoxCommands.Dispatcher.Invoke(new Action(delegate { textBoxCommands.Clear(); }));
 
                 }
-                catch
-                { }
+                catch(Exception ex)
+                {
+                    LogInFile.addFileLog(ex.ToString());
+                }
             }
 
             // usb подключено 
@@ -189,8 +203,10 @@ namespace Robot
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
                     }             
                 }
-                catch
-                { }
+                catch(Exception ex)
+                {
+                    LogInFile.addFileLog(ex.ToString());
+                }
             
             }
 
@@ -217,8 +233,10 @@ namespace Robot
             {
                 dateTimeLbl.Dispatcher.Invoke(new Action(delegate { dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); }));
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }     
 
         /// <summary>
@@ -271,44 +289,56 @@ namespace Robot
         /// <param name="e"></param>
         private void Button_Connect_Click(object sender, RoutedEventArgs e)
         {
-            if (scenarioDiagnosticRobot != 4 && scenarioDiagnosticRobot !=5 )
+            LogInFile.addFileLog("Нажатие кнопки");
+            string path = Directory.GetCurrentDirectory();
+            string pathFile = Path.Combine(path, "log.txt");
+            MessageBox.Show(pathFile);
+            try
             {
-                randomBatteryCharge();
-                statusBataryLbl.Content = batteryCharge;
-                modeLbl.Content = "Prog";
-                modeLbl.Foreground = Brushes.Green;
+                if (scenarioDiagnosticRobot != 4 && scenarioDiagnosticRobot != 5)
+                {
+                    randomBatteryCharge();
+                    statusBataryLbl.Content = batteryCharge;
+                    modeLbl.Content = "Prog";
+                    modeLbl.Foreground = Brushes.Green;
 
-                versionProgrammLbl.Foreground = Brushes.Green;
-                versionProgrammLbl.Content = "v.15.7.16";
+                    versionProgrammLbl.Foreground = Brushes.Green;
+                    versionProgrammLbl.Content = "v.15.7.16";
 
-                connectOrDisconnectLbl.Content = "CONNECTED";
-                connectOrDisconnectLbl.Foreground = Brushes.Green;
+                    connectOrDisconnectLbl.Content = "CONNECTED";
+                    connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-                addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-                connectNotConnect = true;
+                    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    connectNotConnect = true;
 
-                connectBtn.IsEnabled = false;
+                    connectBtn.IsEnabled = false;
+                }
+
+                if (scenarioDiagnosticRobot == 4)
+                {
+                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);
+                    printHelpCommand("Connected not known robot can not recognize");
+                    return;
+                }
+
+                if (scenarioDiagnosticRobot == 5)
+                {
+                    connectNotConnect = true;
+                    addTextToRich("Connected robot without software", Brushes.Red, false);
+                    printHelpCommand("Connected not known robot can not recognize");
+                    return;
+                }
+
+                // сценарий ошибка в одном из файлов
+                if (scenarioDiagnosticRobot == 3)
+                {
+                    errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+                }
             }
-
-            if(scenarioDiagnosticRobot == 4)
+            catch (Exception ex)
             {
-                addTextToRich("Connected not known robot can not recognize", Brushes.Red,false);
-                printHelpCommand("Connected not known robot can not recognize");
+                LogInFile.addFileLog(ex.ToString());
                 return;
-            }
-
-            if(scenarioDiagnosticRobot == 5)
-            {
-                connectNotConnect = true;
-                addTextToRich("Connected robot without software", Brushes.Red,false);
-                printHelpCommand("Connected not known robot can not recognize");
-                return;
-            }
-
-            // сценарий ошибка в одном из файлов
-            if (scenarioDiagnosticRobot == 3)
-            {
-                errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
             }
         }
 
@@ -961,8 +991,10 @@ namespace Robot
                 CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.SelectionStart = CommunicationTXB.Text.Length; }));
                 CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.ScrollToEnd(); }));
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }
 
         private void conclusionInModulesNeuroTXB(string str)
@@ -973,8 +1005,10 @@ namespace Robot
                 NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.SelectionStart = NeuroTXB.Text.Length; }));
                 NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.ScrollToEnd(); }));
             }
-            catch
-            { }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }
 
         private void conclusionInModulesModulesTXB(string str)
@@ -988,7 +1022,10 @@ namespace Robot
                 ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.SelectionStart = ModulesTXB.Text.Length; }));
                 ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.ScrollToEnd(); }));
             }
-            catch { }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }
 
         private void conclusionInModulesSystemTXB(string str)
@@ -1002,7 +1039,10 @@ namespace Robot
                 SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.SelectionStart = SystemTXB.Text.Length; }));
                 SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.ScrollToEnd(); }));
             }
-            catch { }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }
 
         private void conclusionInModulesServoTXB(string str)
@@ -1016,7 +1056,10 @@ namespace Robot
                 ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.SelectionStart = ServoTXB.Text.Length; }));
                 ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.ScrollToEnd(); }));
             }
-            catch { }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog(ex.ToString());
+            }
         }
 
         #endregion работа модулей
@@ -1029,6 +1072,7 @@ namespace Robot
                MainWindow window3 = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                 if (window3 != null)
                 {
+                    closeNotCloseWindowd = true;
                     window3.Close();
                 }
             } );
