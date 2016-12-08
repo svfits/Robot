@@ -14,6 +14,10 @@ namespace Robot
            
         }
 
+        /// <summary>
+        ////запись логов в файл
+        /// </summary>
+        /// <param name="txt"></param>
         public static void addFileLog(string txt)
         {
             try

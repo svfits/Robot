@@ -55,6 +55,7 @@ namespace Robot
 
         public MainWindow()
         {
+           // Topmost = true;
             InitializeComponent();
             dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); 
         }   
@@ -93,6 +94,7 @@ namespace Robot
 
         private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
         {
+            timerGetDataFlashDrive.Stop();
             // проверим вылечен ли робот статус флешки 
             if(GetScenarioOfFlashDrive.getNameFlashisAlive() == 0 || scenarioDiagnosticRobot != 199)
             {    
@@ -146,7 +148,7 @@ namespace Robot
                     //connectOrDisconnectLbl.Content = "CONNECTED";
                     //connectOrDisconnectLbl.Foreground = Brushes.Green;
                     connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Content = "DISCONNECT"; }));
-                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Foreground = Brushes.Black ; }));
+                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Foreground = Brushes.Red; }));
 
                     //versionProgrammLbl.Foreground = Brushes.Green;
                     //versionProgrammLbl.Content = "v.15.7.16";
@@ -197,7 +199,9 @@ namespace Robot
                     modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Content = "Standby"; }));
                     modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Foreground = Brushes.Green; }));
 
-                    // connectBtn.IsEnabled = true;
+
+                    // logTXB.Text = "Robot ready for programming. Please use console.";
+                    logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Robot ready for programming. Please use console."; }));
                     if (!connectNotConnect)
                     {
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
@@ -215,6 +219,8 @@ namespace Robot
             {
                 connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
             }
+
+            timerGetDataFlashDrive.Start();
         }
 
         /// <summary>
@@ -369,6 +375,7 @@ namespace Robot
                 {
                     addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
                     printHelpCommand("Робот не найден, подключите его к USB");
+                    textBoxCommands.Clear();
                     beeper();
                     return;
                 }
@@ -377,6 +384,7 @@ namespace Robot
                 {
                     addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
                     printHelpCommand("Инициализация робота не выполнена");
+                    textBoxCommands.Clear();
                     beeper();
                     return;
                 }
@@ -385,6 +393,7 @@ namespace Robot
                 {
                     addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
                     printHelpCommand("Connected not known robot can not recognize");
+                    textBoxCommands.Clear();
                     beeper();
                     return;
                 } 
@@ -393,7 +402,7 @@ namespace Robot
                 {
                     textBoxCommands.Clear();
                     textBoxSuffix.Text = "#";
-                    addTextToRich("#", Brushes.LightGreen, false);
+                    addTextToRich("# ", Brushes.LightGreen, false);
                     return;
                 }
 
@@ -463,7 +472,7 @@ namespace Robot
                     return;
                 }
 
-                    addTextToRich("#" + command, Brushes.LightGreen, false);
+                    addTextToRich("# " + command, Brushes.LightGreen, false);
                     textBoxCommands.Clear();
                  
 
@@ -637,7 +646,7 @@ namespace Robot
                 
                  if(nameCommand.FirstOrDefault().command == "sudo" && textBoxSuffix.Text != "Password:" )
                    {
-                    textBoxSuffix.Text = "Password:";
+                    textBoxSuffix.Text = "Password: ";
                     printHelpCommand("Password: ");
                     return;
                    }  
@@ -930,7 +939,7 @@ namespace Robot
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-               // range.Text = v + "\n";
+                string vStr = " " + v;
                 range.Text = v + Environment.NewLine;
 
                 range.ApplyPropertyValue(TextElement.ForegroundProperty, color);

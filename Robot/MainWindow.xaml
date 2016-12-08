@@ -15,7 +15,7 @@
         <KeyBinding Command="ApplicationCommands.New"  Gesture="Ctrl+F11"/>
     </Window.InputBindings>
 
-    <Grid KeyDown="Grid_KeyDown">
+    <Grid KeyDown="Grid_KeyDown" FocusManager.FocusedElement="{Binding ElementName=textBoxCommands}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,7 +27,9 @@
             </Grid.RowDefinitions>
             <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Background="Black" Foreground="LightGreen" 
-                         AcceptsTab="False" AllowDrop="False" BorderThickness="0" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="auto">
+                         AcceptsTab="False" AllowDrop="False" BorderThickness="0" IsReadOnly="True"
+                        
+                         ScrollViewer.VerticalScrollBarVisibility="auto">
                 <!--<FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>
@@ -42,14 +44,15 @@
                 <TextBox x:Name="textBoxSuffix" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black"
                          BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"/>
                 <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
-                 Text="" MinWidth="50" Background="Black" Foreground="White" BorderThickness="0" KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True"/>
+                 Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
+                         KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0"/>
             </Grid>
         </Grid>
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">
             <Separator  />
         </StackPanel>-->
 
-        <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10">
+        <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Background="LightGray">
             <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -77,7 +80,8 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10" IsEnabled="False" Grid.Column="0"  />
+                        <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10"
+                                IsEnabled="False" Grid.Column="0"  />
                         <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="ImageFonts/SpaceAge"
                           FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
                         <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Column="3" />
@@ -99,7 +103,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <GroupBox Margin="5,5,5,5" Grid.RowSpan="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <GroupBox Margin="5,5,5,5" Grid.RowSpan="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="LightGray" >
                             <Image x:Name="robotImage"  Source="ImageFonts/Robot.png" />
                         </GroupBox>
 
@@ -119,29 +123,32 @@
 
                                 <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
                                     <TabItem Header="Communication">
-                                        <TextBox x:Name="CommunicationTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="LightGreen"/>
+                                        <TextBox x:Name="CommunicationTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                 Foreground="LightGreen" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <TabItem Header="Neuro" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <TextBox x:Name="NeuroTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="LightGreen"/>
+                                        <TextBox x:Name="NeuroTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                                 Foreground="LightGreen" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="0" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <TabItem Header="Modules" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <TextBox x:Name="ModulesTXB" Background="Black" Foreground="LightGreen"/>
+                                        <TextBox x:Name="ModulesTXB" Background="Black" Foreground="LightGreen"  IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="1" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <TabItem Header="System" HorizontalAlignment="Center">
-                                        <TextBox x:Name="SystemTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="LightGreen"/>
+                                        <TextBox x:Name="SystemTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                 Foreground="LightGreen"  IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="0" Grid.Row="4" MinHeight="150" MinWidth="150" HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch">
                                     <TabItem Header="Servo" x:Name="tabItemServo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" >
                                         <TextBox x:Name="ServoTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                                 Foreground="LightGreen"/>
+                                                 Foreground="LightGreen"  IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                             </Grid>
@@ -157,9 +164,9 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <TextBox x:Name="logTXB" Margin="5,5,5,5" MinHeight="70" Grid.Row="0" Background="Black"
-                                 Foreground="White" FontSize="30" VerticalAlignment="Center"  TextAlignment="Center"
-                                 TextWrapping="Wrap"></TextBox>
+                        <TextBox x:Name="logTXB" Margin="5,5,5,5" MinHeight="50" Grid.Row="0" Background="Black"
+                                 Foreground="LightGreen" FontSize="30" VerticalAlignment="Center"  TextAlignment="Center"
+                                 TextWrapping="Wrap" IsReadOnly="True"></TextBox>
 
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -171,28 +178,28 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
-                                <Label Content="Link" FontSize="20" />
-                                <Label x:Name="statusConnectionLbl" Content="OFF" FontSize="20" />
+                                <Label Content="Link" FontSize="15" VerticalAlignment="Center"/>
+                                <Label x:Name="statusConnectionLbl" Content="OFF" FontSize="15" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,10,0">
-                                <Label Content="Mode" Grid.Row="0" Grid.Column="2" FontSize="20"/>
-                                <Label x:Name="modeLbl" Content="N/A" FontSize="20" />
+                                <Label Content="Mode" Grid.Row="0" Grid.Column="2" FontSize="15" VerticalAlignment="Center"/>
+                                <Label x:Name="modeLbl" Content="N/A" FontSize="15" VerticalAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">
-                                <Label Content="Battery:"  FontSize="20"/>
-                                <Label x:Name="statusBataryLbl" Content="OFF" FontSize="20"/>
+                                <Label Content="Battery:"  FontSize="15" VerticalAlignment="Center"/>
+                                <Label x:Name="statusBataryLbl" Content="OFF" FontSize="15" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="3" Margin="0,0,10,0">
-                                <Label Content="Software:" FontSize="20" />
-                                <Label x:Name="versionProgrammLbl" Content="N/A" FontSize="20"/>
+                                <Label Content="Software:" FontSize="15" VerticalAlignment="Center" />
+                                <Label x:Name="versionProgrammLbl" Content="N/A" FontSize="15" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="4" Margin="0,0,10,0" HorizontalAlignment="Right">
-                                <Label Content="Date: "  FontSize="20" />
-                                <Label x:Name="dateTimeLbl" Content="OFF" FontSize="20"/>
+                                <Label Content="Date: "  FontSize="15" VerticalAlignment="Center" />
+                                <Label x:Name="dateTimeLbl" Content="OFF" FontSize="15" VerticalAlignment="Center"/>
                             </StackPanel>
 
                         </Grid>
