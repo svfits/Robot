@@ -201,11 +201,13 @@ namespace Robot
 
 
                     // logTXB.Text = "Robot ready for programming. Please use console.";
-                    logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Robot ready for programming. Please use console."; }));
+                 
                     if (!connectNotConnect)
                     {
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
-                    }             
+                        logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Robot ready for programming. Please use console."; }));
+                    }
+                             
                 }
                 catch(Exception ex)
                 {
@@ -319,7 +321,7 @@ namespace Robot
                 if (scenarioDiagnosticRobot == 4)
                 {
                     addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);
-                    printHelpCommand("Connected not known robot can not recognize");
+                    printHelpCommand("Connected not known robot can not recognize",Brushes.Red);
                     return;
                 }
 
@@ -327,7 +329,7 @@ namespace Robot
                 {
                     connectNotConnect = true;
                     addTextToRich("Connected robot without software", Brushes.Red, false);
-                    printHelpCommand("Connected not known robot can not recognize");
+                    printHelpCommand("Connected not known robot can not recognize",Brushes.Red);
                     return;
                 }
 
@@ -343,6 +345,8 @@ namespace Robot
                 return;
             }
         }
+
+     
 
         /// <summary>
         /// редактирование списка команд
@@ -374,7 +378,7 @@ namespace Robot
                 if(scenarioDiagnosticRobot == 0)
                 {
                     addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
-                    printHelpCommand("Робот не найден, подключите его к USB");
+                    printHelpCommand("Робот не найден, подключите его к USB",Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -383,7 +387,7 @@ namespace Robot
                 if(connectNotConnect == false)
                 {
                     addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
-                    printHelpCommand("Инициализация робота не выполнена");
+                    printHelpCommand("Инициализация робота не выполнена",Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -392,7 +396,7 @@ namespace Robot
                 if(scenarioDiagnosticRobot == 4)
                 {
                     addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
-                    printHelpCommand("Connected not known robot can not recognize");
+                    printHelpCommand("Connected not known robot can not recognize", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -400,9 +404,9 @@ namespace Robot
 
                 if(command.Length == 0)
                 {
-                    textBoxCommands.Clear();
-                    textBoxSuffix.Text = "#";
-                    addTextToRich("# ", Brushes.LightGreen, false);
+                    textBoxCommands.Clear();                  
+                    textBoxSuffixAddText("#");
+                    addTextToRich("#", Brushes.LightGreen, false);
                     return;
                 }
 
@@ -415,31 +419,30 @@ namespace Robot
                     if (textBoxSuffix.Text == "Flash drive is not empty, all data will delete?" && command == "yes")
                     {
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup", scenarioDiagnosticRobot);
-                        textBoxSuffix.Text = "#";
-
+                        textBoxSuffixAddText("#");
                     }
                     else if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
                     {
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("save", scenarioDiagnosticRobot);
-                        textBoxSuffix.Text = "#";
+                        textBoxSuffixAddText("#");
                     }
                     else if(textBoxSuffix.Text.Trim() == "Password:")
                     {
                         if (command == RepositoryLocalSQLite.searchCommandFromBD("password111q!!!", scenarioDiagnosticRobot).FirstOrDefault().helpPrint)
                         {
-                            addTextToRich("Root rights successfully", Brushes.LightGreen, false);
-                            printHelpCommand("Root rights successfully");
-                            textBoxCommands.Clear();
-                            textBoxSuffix.Text = "#";
                             sudoNotsudo = true;
+                            addTextToRich("Root rights successfully", Brushes.LightGreen, false);
+                            printHelpCommand("Root rights successfully",Brushes.LightGreen);
+                            textBoxCommands.Clear();
+                            textBoxSuffixAddText("#");                           
                             return;
                         }
                         else
                         {
                             addTextToRich("Authentication failure. Sorry, try again", Brushes.Red, false);
-                            printHelpCommand("Authentication failure. Sorry, try again");
+                            printHelpCommand("Authentication failure. Sorry, try again",Brushes.Red);
                             textBoxCommands.Clear();
-                            textBoxSuffix.Text = "#";
+                            textBoxSuffixAddText("#");
                             sudoNotsudo = false;
                             beeper();
                             return;
@@ -449,11 +452,11 @@ namespace Robot
                         {
                         // reboot yes
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("reboot", scenarioDiagnosticRobot);
-                        textBoxSuffix.Text = "#";
+                        textBoxSuffixAddText("#");
                     }
                     else
                     {
-                        textBoxSuffix.Text = "#";
+                        textBoxSuffixAddText("#");
                         textBoxCommands.Clear();
                         return;
                     }
@@ -466,7 +469,7 @@ namespace Robot
                 if(nameCommand == null)
                 {                  
                     addTextToRich(command + ":    " + "команда не найдена", Brushes.Red,false);
-                    printHelpCommand("команда не найдена");
+                    printHelpCommand("команда не найдена", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -496,7 +499,7 @@ namespace Robot
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -523,7 +526,7 @@ namespace Robot
                     else
                     {
                         addTextToRich("Init flash drive not detect", Brushes.Red, false);
-                        printHelpCommand("Init flash drive not detect");
+                        printHelpCommand("Init flash drive not detect",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -534,7 +537,7 @@ namespace Robot
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -549,7 +552,7 @@ namespace Robot
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -572,7 +575,7 @@ namespace Robot
                         else
                         {
                             addTextToRich("Only root!", Brushes.Red, false);
-                            printHelpCommand("Only root!");
+                            printHelpCommand("Only root!", Brushes.Red);
                             beeper();
                             return;
                         }
@@ -580,7 +583,7 @@ namespace Robot
                     else
                     {
                         addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, false);
-                        printHelpCommand("Ошибка ненайден файл ns230.bin");
+                        printHelpCommand("Ошибка ненайден файл ns230.bin",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -596,7 +599,7 @@ namespace Robot
                     if(sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
@@ -610,44 +613,47 @@ namespace Robot
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
                     addTextToRich("module not found", Brushes.Red, false);
-                    printHelpCommand("Модуль для сборки не найден");
+                    printHelpCommand("Модуль для сборки не найден",Brushes.Red);
                     beeper();
                     return;
                 }
 
-                if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
-                {
-                    string[] files = GetScenarioOfFlashDrive.getFilesFromFlash();
-                    addTextToRich(files, Brushes.White);
-                }
+                //if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
+                //{
+                //    string[] files = GetScenarioOfFlashDrive.getFilesFromFlash();
+                //    addTextToRich(files, Brushes.White);
+                //}
 
                 // команда buckup
                 if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
                     && searchLastCommand() != "yes" )
                 {
                     //addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, false);
-                    textBoxSuffix.Text = "Flash drive is not empty, all data will delete?";
-                    printHelpCommand("Flash drive is not empty, all data will delete?");
+                    // textBoxSuffix.Text = "Flash drive is not empty, all data will delete?";
+                    textBoxSuffixAddText("Flash drive is not empty, all data will delete?");
+                    printHelpCommand("Flash drive is not empty, all data will delete?",Brushes.Red);
                     return;
                 }
                 
                 if(nameCommand.FirstOrDefault().command == "save" && searchLastCommand() != "yes")
                 {
                     // addTextToRich("Proceed with save?", Brushes.Red, false);
-                    textBoxSuffix.Text = "Proceed with save?";
-                    printHelpCommand("Proceed with save?");
+                   // textBoxSuffix.Text = "Proceed with save?";
+                    textBoxSuffixAddText("Proceed with save?");
+                    printHelpCommand("Proceed with save?",Brushes.Red);
                     return;
                 } 
                 
                  if(nameCommand.FirstOrDefault().command == "sudo" && textBoxSuffix.Text != "Password:" )
                    {
-                    textBoxSuffix.Text = "Password: ";
-                    printHelpCommand("Password: ");
+                    //textBoxSuffix.Text = "Password: ";
+                    textBoxSuffixAddText("Password: ");
+                    printHelpCommand("Password: ",Brushes.Red);
                     return;
                    }  
                  
@@ -656,18 +662,19 @@ namespace Robot
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!");
+                        printHelpCommand("Only root!",Brushes.Red);
                         beeper();
                         return;
                     }
 
-                    textBoxSuffix.Text = "Proceed with reboot?";
-                    printHelpCommand("Proceed with reboot?");
+                   // textBoxSuffix.Text = "Proceed with reboot?";
+                    textBoxSuffixAddText("Proceed with reboot? ");
+                    printHelpCommand("Proceed with reboot?",Brushes.Red);
                     return;
                 }         
                            
                 //вывод текста команды и справки
-                printHelpCommand(nameCommand);
+                printHelpCommand(nameCommand, Brushes.LightGreen);
                 addTextToRich(nameCommand, Brushes.White);
 
                 #endregion конец команд
@@ -684,6 +691,19 @@ namespace Robot
             }         
 
         }
+
+        private void textBoxSuffixAddText(string v)
+        {
+            if(sudoNotsudo)
+            {
+                textBoxSuffix.Text = "root" + v;
+            }
+            else
+            {
+                textBoxSuffix.Text = v;
+            }
+        }
+
         /// <summary>
         /// поиск ПРЕД последней каманды
         /// </summary>
@@ -836,22 +856,34 @@ namespace Robot
             range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
         }
-
-        private void printHelpCommand(string v)
-        {
-            logTXB.Text = v;
-        }
-
-        private void printHelpCommand(List<ListCommand> nameCommand)
+     
+        /// <summary>
+        /// вывод сообщения об ошибке в подсказки
+        /// </summary>
+        /// <param name="nameCommand"></param>
+        /// <param name="color"></param>
+        private void printHelpCommand(List<ListCommand> nameCommand, SolidColorBrush color)
         {
             string str = nameCommand.FirstOrDefault().helpPrint;
             logTXB.Text = str;
+            logTXB.Foreground = color;
         }
 
-         /// <summary>
-         /// последняя команда
-         /// </summary>
-         /// <returns></returns>
+        /// <summary>
+        ////вывод сообщения об ошибке в подсказки
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="color"></param>
+        private void printHelpCommand(string v, SolidColorBrush color)
+        {
+            logTXB.Text = v;
+            logTXB.Foreground = color;
+        }
+
+        /// <summary>
+        /// последняя команда
+        /// </summary>
+        /// <returns></returns>
         public string searchLastCommand()
         {
             string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
@@ -863,11 +895,14 @@ namespace Robot
             foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
                 if (line.Length > 1)
-                {                    
-                    if( line.IndexOf("#") != -1)
+                {                  
+                    string value = line;
+                    Char delimiter = '#';
+                    String[] substring = value.Split(delimiter);
+                    if(substring.Length > 1 && substring[1] != String.Empty)
                     {
-                        lineend = line.Substring(1);
-                    }
+                        lineend = substring[1];
+                    }                  
                 }
             }
                        
@@ -936,10 +971,15 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
+            if(sudoNotsudo)
+            {
+                v = "root" + v;
+            }
+
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-                string vStr = " " + v;
+             
                 range.Text = v + Environment.NewLine;
 
                 range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
