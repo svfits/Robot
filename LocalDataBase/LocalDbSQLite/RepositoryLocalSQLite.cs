@@ -79,11 +79,16 @@ namespace LocalDataBase.LocalDbSQLite
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("поиск справки в таблице " + ex.ToString());
                 return null;
             }
         }
 
+        /// <summary>
+        /// поиск конектинг
+        /// </summary>
+        /// <param name="scenarioDiagnosticRobot"></param>
+        /// <returns></returns>
         public static List<ListCommand> serachCOnnecting(int scenarioDiagnosticRobot)
         {
             try
@@ -101,7 +106,7 @@ namespace LocalDataBase.LocalDbSQLite
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("поиск конектинг  " + ex.ToString());
                 return null;
             }
         }

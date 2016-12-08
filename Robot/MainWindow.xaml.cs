@@ -116,7 +116,7 @@ namespace Robot
                 }
                 catch(Exception ex)
                 {
-                    LogInFile.addFileLog(ex.ToString());
+                    LogInFile.addFileLog("не известный робот его картинка " + ex.ToString());
                 }
             }
 
@@ -176,10 +176,13 @@ namespace Robot
                     //textBoxCommands.Clear
                     textBoxCommands.Dispatcher.Invoke(new Action(delegate { textBoxCommands.Clear(); }));
 
+                    sudoNotsudo = false;
+
+                    textBoxSuffix.Dispatcher.Invoke(new Action(delegate { textBoxSuffix.Text = "#"; }));
                 }
                 catch(Exception ex)
                 {
-                    LogInFile.addFileLog(ex.ToString());
+                    LogInFile.addFileLog("юсб не подключено   " + ex.ToString());
                 }
             }
 
@@ -211,7 +214,7 @@ namespace Robot
                 }
                 catch(Exception ex)
                 {
-                    LogInFile.addFileLog(ex.ToString());
+                    LogInFile.addFileLog("юсб подключено  " + ex.ToString());
                 }
             
             }
@@ -277,20 +280,6 @@ namespace Robot
         }
 
         /// <summary>
-        /// при подключении USB
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void connectToUSB_Click(object sender, RoutedEventArgs e)
-        {
-            statusConnectionLbl.Content = "ON";
-            statusConnectionLbl.Foreground = Brushes.Green;
-            modeLbl.Content = "Standby";
-            modeLbl.Foreground = Brushes.Gray;
-            connectBtn.IsEnabled = true;                       
-        }             
-
-        /// <summary>
         ///  при нажатии кнопки connect
         /// </summary>
         /// <param name="sender"></param>
@@ -312,10 +301,15 @@ namespace Robot
                     connectOrDisconnectLbl.Content = "CONNECTED";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-                    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    if(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                    {
+                        addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    }
+                   
                     connectNotConnect = true;
 
                     connectBtn.IsEnabled = false;
+                    printInModulesDateTimer();
                 }
 
                 if (scenarioDiagnosticRobot == 4)
@@ -337,11 +331,12 @@ namespace Robot
                 if (scenarioDiagnosticRobot == 3)
                 {
                     errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+                    printInModulesDateTimer();
                 }
             }
             catch (Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("кнопка конект нажата " + ex.ToString());
                 return;
             }
         }
@@ -413,7 +408,7 @@ namespace Robot
                 List<ListCommand> nameCommand = null;
 
                 // подверждение команды
-                if (textBoxSuffix.Text.Length > 1)               
+                if (textBoxSuffix.Text.Length != 1 && textBoxSuffix.Text.Length != 5)               
                 {
                     //backup 2 проверка на замену файлов
                     if (textBoxSuffix.Text == "Flash drive is not empty, all data will delete?" && command == "yes")
@@ -421,12 +416,14 @@ namespace Robot
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
                     }
-                    else if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
+
+                   if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
                     {
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("save", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
                     }
-                    else if(textBoxSuffix.Text.Trim() == "Password:")
+
+                    if(textBoxSuffix.Text.Trim() == "Password:")
                     {
                         if (command == RepositoryLocalSQLite.searchCommandFromBD("password111q!!!", scenarioDiagnosticRobot).FirstOrDefault().helpPrint)
                         {
@@ -448,8 +445,10 @@ namespace Robot
                             return;
                         }
                     }
-                    else if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
-                        {
+
+
+                   if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
+                    {
                         // reboot yes
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("reboot", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
@@ -460,6 +459,8 @@ namespace Robot
                         textBoxCommands.Clear();
                         return;
                     }
+
+
                 }
                 else
                 {
@@ -520,7 +521,10 @@ namespace Robot
                         connectOrDisconnectLbl.Content = "CONNECTED";
                         connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-                        addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                        if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                        {
+                            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                        }
                         connectNotConnect = true;
                     }
                     else
@@ -621,13 +625,7 @@ namespace Robot
                     printHelpCommand("Модуль для сборки не найден",Brushes.Red);
                     beeper();
                     return;
-                }
-
-                //if(nameCommand.FirstOrDefault().command == "ls" && scenarioDiagnosticRobot != 5)
-                //{
-                //    string[] files = GetScenarioOfFlashDrive.getFilesFromFlash();
-                //    addTextToRich(files, Brushes.White);
-                //}
+                }             
 
                 // команда buckup
                 if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
@@ -694,6 +692,12 @@ namespace Robot
 
         private void textBoxSuffixAddText(string v)
         {
+            if (v.Length > 5)
+            {
+                textBoxSuffix.Text = v;
+                return;
+            }
+
             if(sudoNotsudo)
             {
                 textBoxSuffix.Text = "root" + v;
@@ -701,41 +705,6 @@ namespace Robot
             else
             {
                 textBoxSuffix.Text = v;
-            }
-        }
-
-        /// <summary>
-        /// поиск ПРЕД последней каманды
-        /// </summary>
-        /// <param name="v"></param>
-        /// <returns></returns>
-        private string searchLastCommand(int v)
-        {
-            try
-            {
-                string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-
-                List<string> lineend = new List<string>();
-                str = str.ToLower().Trim();
-
-                foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
-                {
-                    if (line.Length > 1)
-                    {
-                        if (line.IndexOf("#") != -1)
-                        {
-                            lineend.Add(line.Substring(1));
-                        }
-                    }
-                }
-                int count = lineend.Count - 2;
-
-                string str1 = lineend[count];
-                return str1;
-            }
-            catch
-            {
-                return "";
             }
         }
 
@@ -775,23 +744,6 @@ namespace Robot
         }
 
         /// <summary>
-        /// вывести в консоль
-        /// </summary>
-        /// <param name="files"></param>
-        /// <param name="color"></param>
-        private void addTextToRich(string[] files, SolidColorBrush color)
-        {
-            foreach(var file in files)
-            {
-                if(file != null)
-                {
-                    addTextToRich(file, color, false);
-                }                
-            }
-           // addTextToRich("", color, true);
-        }
-
-        /// <summary>
         /// раскрасим модули bkb yfxytv dsdjlbnm byajhvfwb. d yb[
         /// </summary>
         /// <param name="scenarioDiagnosticRobot">номер сценария</param>
@@ -827,20 +779,17 @@ namespace Robot
         }
 
         private void printInModulesDateTimer()
-        {           
+        {     
             timerRobotWorkPrintModules.Elapsed += addTexttoModules;
             timerRobotWorkPrintModules.Interval = 1000;
             timerRobotWorkPrintModules.Start();
         }      
 
+        /// <summary>
+        ////почистить модули вывода сделать пустыми
+        /// </summary>
         private void emptyModules()
-        {
-            //ServoTXB.Clear();
-            //CommunicationTXB.Clear();
-            //NeuroTXB.Clear();
-            //SystemTXB.Clear();
-            //ModulesTXB.Clear();
-
+        {       
             ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.Clear(); }));
             CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.Clear(); }));
             NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.Clear(); }));
@@ -848,15 +797,6 @@ namespace Robot
             ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.Clear(); }));
         }
 
-        private void addTextToRich(string v, SolidColorBrush color)
-        {
-            TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-            //range.Text = v + Environment.NewLine;
-            range.Text = v;
-            range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-            richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-        }
-     
         /// <summary>
         /// вывод сообщения об ошибке в подсказки
         /// </summary>
@@ -949,18 +889,39 @@ namespace Robot
         /// </summary>
         private void addTexttoModules(object sender, ElapsedEventArgs e)
         {
-            Random r = new Random();            
-            string str = RepositoryLocalSQLite.getStringForModules(r);
-            string str1 = RepositoryLocalSQLite.getStringForModules(r);
-            string str2 = RepositoryLocalSQLite.getStringForModules(r);
-            string str3 = RepositoryLocalSQLite.getStringForModules(r);
-            string str4 = RepositoryLocalSQLite.getStringForModules(r);
-              
-            conclusionInModulesCommunicationTXB(str);
-            conclusionInModulesModulesTXB(str1);
-            conclusionInModulesNeuroTXB(str2);
-            conclusionInModulesServoTXB(str3);
-            conclusionInModulesSystemTXB(str4);
+            timerRobotWorkPrintModules.Stop();
+            
+            Random r = new Random();                        
+            int randomString = r.Next(1, 6);
+
+            int randomTime = r.Next(200,1500);
+            timerRobotWorkPrintModules.Interval = randomTime;
+
+            switch (randomString)
+            {
+                case 1:
+                    string str0 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesCommunicationTXB(str0);
+                    break;
+                case 2:
+                    string str1 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesModulesTXB(str1);
+                    break;
+                case 3:
+                    string str2 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesNeuroTXB(str2);
+                    break;
+                case 4:
+                    string str3 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesServoTXB(str3);
+                    break;
+                case 5:
+                    string str4 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesSystemTXB(str4);
+                    break;
+            }
+
+            timerRobotWorkPrintModules.Start();
         }
 
         /// <summary>
@@ -971,7 +932,7 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
-            if(sudoNotsudo)
+            if(sudoNotsudo && printLattice)
             {
                 v = "root" + v;
             }
@@ -988,35 +949,9 @@ namespace Robot
 
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
-        }
+        }       
         
-
-        /// <summary>
-        ////поиск последней команды
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private string getEndLine(string str)
-        {
-            string lineend = "";        
-             
-            str = str.ToLower().Trim();
-            if(str == "")
-            {
-                return lineend;
-            }
-            str = str.Substring(1);
-                     
-            foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
-            {
-                if (line.Length >= 0)
-                {
-                    lineend = line;                    
-                }
-            }
-            return lineend;
-        }
-             
+         
         private  void beeper()
         {
          //   SystemSounds.Beep.Play();
@@ -1109,6 +1044,7 @@ namespace Robot
 
         #endregion работа модулей
 
+        #region сочетание клавиш на закрытие окна
         private void Executed_New(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             // MessageBox.Show("Вызов команды 'New'");
@@ -1127,5 +1063,6 @@ namespace Robot
         {
             e.CanExecute = true;
         }
+        #endregion сочетание клавиш на закрытие окна
     }
 }

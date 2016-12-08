@@ -28,7 +28,7 @@ namespace Robot
             }
             catch (Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("СОхранение новых команд в таблице " + ex.ToString());
                 MessageBox.Show("Произошла ошибка данные могут не сохранится, текст ошибки  " + ex.ToString());
             }
         }

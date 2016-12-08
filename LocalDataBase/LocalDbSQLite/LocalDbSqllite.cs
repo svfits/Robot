@@ -52,7 +52,7 @@ namespace LocalDataBase
             }
             catch (Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("создание фала базы данных  " + ex.ToString());
             }
         }
         /// <summary>
@@ -98,7 +98,7 @@ namespace LocalDataBase
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("заполнение таблицы  " + ex.ToString());
             }
             return;
             

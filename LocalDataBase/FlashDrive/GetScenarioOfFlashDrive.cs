@@ -49,7 +49,7 @@ namespace LocalDataBase.FlashDrive
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("ошибка при чтении конфига с флешки" + ex.ToString());
                 return 0;
             }
         }
@@ -116,7 +116,7 @@ namespace LocalDataBase.FlashDrive
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("ошибка при проверке наличия файла на флешке  " + ex.ToString());
                 return false;
             }
         }
@@ -168,7 +168,7 @@ namespace LocalDataBase.FlashDrive
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("проверка файлов на флешке для сценария 5 " + ex.ToString());
                 return false;
             }
         }
@@ -220,7 +220,7 @@ namespace LocalDataBase.FlashDrive
             }
             catch(Exception ex)
             {
-                LogInFile.addFileLog(ex.ToString());
+                LogInFile.addFileLog("ошибка при проверки файлов на флешке для БЭКАПА" + ex.ToString());
                 return false;
             }
         }
