@@ -151,7 +151,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Content Include="data.sqlite">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Robot_TemporaryKey.pfx" />
     <Resource Include="ImageFonts\SpaceAge.ttf">

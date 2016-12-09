@@ -76,12 +76,11 @@ namespace LocalDataBase.LocalDbSQLite
         /// <summary>
         /// номер сценария
         /// </summary>
-        public int?  scenario { get; set; }
+        public int? scenario { get; set; }
 
         /// <summary>
         /// есть ли root
         /// </summary>
         public int? sudo { get; set; }
-       
     }
 }

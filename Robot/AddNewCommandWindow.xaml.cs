@@ -34,10 +34,16 @@ namespace Robot
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {        
-            db.ListCommand.Load();
-            listHelpDg.ItemsSource = db.ListCommand.Local;
-     
+        {
+            try
+            {
+                db.ListCommand.Load();
+                listHelpDg.ItemsSource = db.ListCommand.Local;
+            }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog("Открытие команд в таблице " + ex.ToString());
+            }
             //MaxHeight = SystemParameters.WorkArea.Height;
             //MaxWidth = SystemParameters.WorkArea.Width;
         }      
@@ -46,7 +52,6 @@ namespace Robot
         {            
             this.db.Dispose();
         }
-
     
     }
     

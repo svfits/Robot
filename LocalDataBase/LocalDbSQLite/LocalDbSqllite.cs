@@ -41,7 +41,7 @@ namespace LocalDataBase
                             [helpPrint] char(1000) ,                 
                             [monitorPrint] char(1000),
                             [scenario] integer,
-                            [sudo]     integer  NULL 
+                            [sudo]     integer DEFAULT 0
                             );";
                             command.CommandType = CommandType.Text;
                             command.ExecuteNonQuery();
