@@ -339,7 +339,7 @@ namespace Robot
             }
             catch (Exception ex)
             {
-                LogInFile.addFileLog("кнопка конект нажата " + ex.ToString());
+                LogInFile.addFileLog("при нажатии кнопки конект   " + ex.ToString());
                 return;
             }
         }
@@ -453,8 +453,17 @@ namespace Robot
                    if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
                     {
                         // reboot yes
-                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("reboot", scenarioDiagnosticRobot);
+                        richTextBox.Document.Blocks.Clear();
+                        addTextToRich("", Brushes.Green, false);
+
+                        if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                        {
+                            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                        }
+                        sudoNotsudo = false;
                         textBoxSuffixAddText("#");
+                        textBoxCommands.Clear();
+                        return;
                     }
                     else
                     {
@@ -671,7 +680,7 @@ namespace Robot
 
                    // textBoxSuffix.Text = "Proceed with reboot?";
                     textBoxSuffixAddText("Proceed with reboot? ");
-                    printHelpCommand("Proceed with reboot?",Brushes.Red);
+                    printHelpCommand("Proceed with reboot?",Brushes.LightGreen);
                     return;
                 }         
                            
@@ -809,8 +818,18 @@ namespace Robot
         private void printHelpCommand(List<ListCommand> nameCommand, SolidColorBrush color)
         {
             string str = nameCommand.FirstOrDefault().helpPrint;
-            logTXB.Text = str;
-            logTXB.Foreground = color;
+
+            if (str.Contains("#RED"))
+            {
+                string txt = str.Substring(4);
+                logTXB.Text = txt;
+                logTXB.Foreground = Brushes.Red;
+            }
+            else
+            {
+                logTXB.Text = str;
+                logTXB.Foreground = color;
+            }         
         }
 
         /// <summary>
