@@ -38,24 +38,10 @@ namespace Robot
             db.ListCommand.Load();
             listHelpDg.ItemsSource = db.ListCommand.Local;
      
-            MaxHeight = SystemParameters.WorkArea.Height;
-            MaxWidth = SystemParameters.WorkArea.Width;
-        }       
+            //MaxHeight = SystemParameters.WorkArea.Height;
+            //MaxWidth = SystemParameters.WorkArea.Width;
+        }      
         
-        public List<ListCommand> getDataFromListCommand()
-        {
-            try
-            {
-                return db.ListCommand.AsEnumerable().ToList();
-            }
-            catch (Exception ex)
-            {
-                LogInFile.addFileLog(ex.ToString());
-                MessageBox.Show("база данных не доступна или сломалась  " + ex.ToString());
-                return null;
-            }
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {            
             this.db.Dispose();

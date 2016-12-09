@@ -285,7 +285,10 @@ namespace Robot
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Connect_Click(object sender, RoutedEventArgs e)
-        {           
+        {
+            richTextBox.Document.Blocks.Clear();
+            addTextToRich("", Brushes.Green, false);
+
             try
             {
                 if (scenarioDiagnosticRobot != 4 && scenarioDiagnosticRobot != 5)
@@ -525,6 +528,7 @@ namespace Robot
                         {
                             addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
                         }
+
                         connectNotConnect = true;
                     }
                     else

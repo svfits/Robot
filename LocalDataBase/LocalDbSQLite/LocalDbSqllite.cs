@@ -36,12 +36,13 @@ namespace LocalDataBase
                         {
                             //таблица событий 
                             command.CommandText = @"CREATE TABLE [ListCommands] (
-                    [id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    [command] char(1000) ,
-                    [helpPrint] char(1000) ,                 
-                    [monitorPrint] char(1000),
-                    [scenario] integer   
-                    );";
+                            [id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            [command] char(1000) ,
+                            [helpPrint] char(1000) ,                 
+                            [monitorPrint] char(1000),
+                            [scenario] integer,
+                            [sudo]     integer  NULL 
+                            );";
                             command.CommandType = CommandType.Text;
                             command.ExecuteNonQuery();
 

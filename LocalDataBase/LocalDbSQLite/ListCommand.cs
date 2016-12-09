@@ -13,8 +13,8 @@ namespace LocalDataBase.LocalDbSQLite
     {
         [Key]
         public int id { get; set; }
-        private string _command, _helpPrint, _monitorPrint;
-
+        private string _command, _helpPrint, _monitorPrint ;
+      
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -72,7 +72,16 @@ namespace LocalDataBase.LocalDbSQLite
                 OnPropertyChanged("monitorPrint");
             }
         }
-
+        
+        /// <summary>
+        /// номер сценария
+        /// </summary>
         public int?  scenario { get; set; }
+
+        /// <summary>
+        /// есть ли root
+        /// </summary>
+        public int? sudo { get; set; }
+       
     }
 }

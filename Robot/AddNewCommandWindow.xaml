@@ -36,6 +36,7 @@
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding scenario,Mode=TwoWay}" Header="Номер сценария" Width="auto" ></DataGridTextColumn>
+                <DataGridCheckBoxColumn Binding="{Binding sudo,Mode=TwoWay}" Header="Нужен ли root?"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="saveNewHelpCommandBtn" Click="saveNewHelpCommandBtn_Click" Grid.Row="1" MaxHeight="25" Width="120" Content="Сохранить"
