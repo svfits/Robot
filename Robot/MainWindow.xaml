@@ -63,7 +63,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,10">
+                <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,0">
                     <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="25" Padding="10" IsEnabled="False"  />
                         <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="ImageFonts/SpaceAge"
@@ -82,10 +82,11 @@
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
-                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"
-                          FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
-                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right"
-                               Margin="5,5,5,5" Grid.Column="3" />
+                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
+                               FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="25"
+                               HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
+                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
+                                 Grid.Column="3"  />
                     </Grid>
                 </GroupBox>
 
