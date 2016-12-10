@@ -15,7 +15,7 @@
         <KeyBinding Command="ApplicationCommands.New"  Gesture="Ctrl+F11"/>
     </Window.InputBindings>
 
-    <Grid KeyDown="Grid_KeyDown" FocusManager.FocusedElement="{Binding ElementName=textBoxCommands}">
+    <Grid KeyDown="Grid_KeyDown" FocusManager.FocusedElement="{Binding ElementName=connectBtn}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -81,10 +81,11 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10"
-                                IsEnabled="False" Grid.Column="0"  />
-                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="ImageFonts/SpaceAge"
+                                IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
+                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"
                           FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
-                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Column="3" />
+                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Margin="5,5,5,5" Grid.Column="3" />
                     </Grid>
                 </GroupBox>
 

@@ -53,6 +53,11 @@ namespace Robot
         /// </summary>
         private bool closeNotCloseWindowd;
 
+        /// <summary>
+        /// требует ли команда повтора ввода
+        /// </summary>
+        private Boolean x2command = false;
+
         public MainWindow()
         {
            // Topmost = true;
@@ -375,7 +380,7 @@ namespace Robot
             { 
                 if(scenarioDiagnosticRobot == 0)
                 {
-                    addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
+                  //  addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
                     printHelpCommand("Робот не найден, подключите его к USB",Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
@@ -384,8 +389,8 @@ namespace Robot
 
                 if(connectNotConnect == false)
                 {
-                    addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
-                    printHelpCommand("Инициализация робота не выполнена",Brushes.Red);
+                  //  addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
+                    printHelpCommand("НЕТ СОЕДИНЕНИЯ С РОБОТОМ",Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -393,7 +398,7 @@ namespace Robot
 
                 if(scenarioDiagnosticRobot == 4)
                 {
-                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
+                 //   addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
                     printHelpCommand("Connected not known robot can not recognize", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
@@ -404,26 +409,30 @@ namespace Robot
                 {
                     textBoxCommands.Clear();                  
                     textBoxSuffixAddText("#");
-                    addTextToRich("#", Brushes.LightGreen, false);
+                    addTextToRich("#", Brushes.LightGreen, true);
                     return;
                 }
 
                 List<ListCommand> nameCommand = null;
 
                 // подверждение команды
-                if (textBoxSuffix.Text.Length != 1 && textBoxSuffix.Text.Length != 5)               
+                if (x2command)               
                 {
+                    #region подверждение команд
+                    
                     //backup 2 проверка на замену файлов
                     if (textBoxSuffix.Text == "Flash drive is not empty, all data will delete?" && command == "yes")
                     {
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
+                        x2command = false;
                     }
 
                    if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
                     {
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("save", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
+                        x2command = false;
                     }
 
                     if(textBoxSuffix.Text.Trim() == "Password:")
@@ -434,7 +443,8 @@ namespace Robot
                             addTextToRich("Root rights successfully", Brushes.LightGreen, false);
                             printHelpCommand("Root rights successfully",Brushes.LightGreen);
                             textBoxCommands.Clear();
-                            textBoxSuffixAddText("#");                           
+                            textBoxSuffixAddText("#");
+                            x2command = false;
                             return;
                         }
                         else
@@ -445,6 +455,7 @@ namespace Robot
                             textBoxSuffixAddText("#");
                             sudoNotsudo = false;
                             beeper();
+                            x2command = false;
                             return;
                         }
                     }
@@ -463,16 +474,47 @@ namespace Robot
                         sudoNotsudo = false;
                         textBoxSuffixAddText("#");
                         textBoxCommands.Clear();
+                        x2command = false;
                         return;
                     }
-                    else
+                    else if (textBoxSuffix.Text.Trim() == "Proceed with reboot?")
                     {
                         textBoxSuffixAddText("#");
                         textBoxCommands.Clear();
+                        x2command = false;
                         return;
                     }
 
+                    if (nameCommand == null)
+                    {
+                        textBoxSuffixAddText("#");
+                        printHelpCommand("unindentified command. Please use YES or NO", Brushes.Red);
+                        textBoxCommands.Clear();
+                        x2command = false;
+                        return;
+                    }
 
+                    if (command == "no")
+                    {
+                        printHelpCommand("team suspended", Brushes.Red);
+                        x2command = false;
+                        return;
+                    }
+                    else if (command != "yes")
+                    {
+                        printHelpCommand("unindentified command. Please use YES or NO", Brushes.LightGreen);
+                        x2command = false;
+                        return;
+                    }
+
+                    x2command = false;
+                    textBoxCommands.Clear();
+                    //вывод текста команды и справки
+                    printHelpCommand(nameCommand, Brushes.LightGreen);
+                    addTextToRich(nameCommand, Brushes.White);
+                    return;
+
+                    #endregion подверждение команд
                 }
                 else
                 {
@@ -648,7 +690,13 @@ namespace Robot
                     // textBoxSuffix.Text = "Flash drive is not empty, all data will delete?";
                     textBoxSuffixAddText("Flash drive is not empty, all data will delete?");
                     printHelpCommand("Flash drive is not empty, all data will delete?",Brushes.Red);
+                    x2command = true;
                     return;
+                }
+                else if(GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == false && nameCommand.FirstOrDefault().command == "backup"
+                    && searchLastCommand() != "yes" )
+                {
+                    GetScenarioOfFlashDrive.greateFileForBackup();
                 }
                 
                 if(nameCommand.FirstOrDefault().command == "save" && searchLastCommand() != "yes")
@@ -657,6 +705,7 @@ namespace Robot
                    // textBoxSuffix.Text = "Proceed with save?";
                     textBoxSuffixAddText("Proceed with save?");
                     printHelpCommand("Proceed with save?",Brushes.Red);
+                    x2command = true;
                     return;
                 } 
                 
@@ -665,6 +714,7 @@ namespace Robot
                     //textBoxSuffix.Text = "Password: ";
                     textBoxSuffixAddText("Password: ");
                     printHelpCommand("Password: ",Brushes.Red);
+                    x2command = true;
                     return;
                    }  
                  
@@ -681,6 +731,7 @@ namespace Robot
                    // textBoxSuffix.Text = "Proceed with reboot?";
                     textBoxSuffixAddText("Proceed with reboot? ");
                     printHelpCommand("Proceed with reboot?",Brushes.LightGreen);
+                    x2command = true;
                     return;
                 }         
                            

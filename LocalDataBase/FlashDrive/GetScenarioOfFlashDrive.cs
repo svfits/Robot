@@ -13,6 +13,20 @@ namespace LocalDataBase.FlashDrive
     /// </summary>
   public  class GetScenarioOfFlashDrive
     {
+     public static List<string> binCheck = new List<string>()
+        {
+            "cp1600-bf-v2-5-0.bin",
+            "cp1600-sys-v15-7-16.bin",
+            "ns230.bin",
+            "ss274.bin",
+            "sa232.bin",
+            "sw244.bin",
+            "sb210.bin",
+            "sk212.bin",
+            "san235.bin"
+        };
+            
+
       /// <summary>
       ////получение данных по сценарию с флешки
       /// </summary>
@@ -126,17 +140,7 @@ namespace LocalDataBase.FlashDrive
         /// </summary>
         /// <returns></returns>
         public static Boolean checkFilesFromFlashForInitScenario5()
-        {
-            List<string> binCheck = new List<string>();
-            binCheck.Add("cp1600-bf-v2-5-0.bin");
-            binCheck.Add("cp1600-sys-v15-7-16.bin");
-            binCheck.Add("ns230.bin");
-            binCheck.Add("ss274.bin");
-            binCheck.Add("sa232.bin");
-            binCheck.Add("sw244.bin");
-            binCheck.Add("sb210.bin");
-            binCheck.Add("sk212.bin");
-            binCheck.Add("san235.bin");
+        {        
 
             List<string> files = new List<string>();
             
@@ -178,20 +182,8 @@ namespace LocalDataBase.FlashDrive
         /// </summary>
         /// <returns></returns>
         public static Boolean checkFilesFromFlashForInitScenarioBackup()
-        {
-            List<string> binCheck = new List<string>();
-            binCheck.Add("cp1600-bf-v2-5-0.bin");
-            binCheck.Add("cp1600-sys-v15-7-16.bin");
-            binCheck.Add("ns230.bin");
-            binCheck.Add("ss274.bin");
-            binCheck.Add("sa232.bin");
-            binCheck.Add("sw244.bin");
-            binCheck.Add("sb210.bin");
-            binCheck.Add("sk212.bin");
-            binCheck.Add("san235.bin");
-
+        {         
             List<string> files = new List<string>();
-
             try
             {
                 foreach (var dinfo in DriveInfo.GetDrives())
@@ -204,7 +196,6 @@ namespace LocalDataBase.FlashDrive
                         {
                             files.Add(Path.GetFileName(dir));
                         }
-
                     }
                 }
 
@@ -225,6 +216,59 @@ namespace LocalDataBase.FlashDrive
             }
         }
 
+        /// <summary>
+        ///  создадим файлы для backup
+        /// </summary>
+        public static void greateFileForBackup()
+        {
+            string path = getPathToFlash();
 
+            try
+            {
+                foreach (var ss in binCheck)
+                {
+                    File.Create(Path.Combine(path, ss));
+                }
+            }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при проверки создании файлов на флешке для БЭКАПА" + ex.ToString());
+            }
+
+        }
+
+        /// <summary>
+        ////получить путь до флешки
+        /// </summary>
+        /// <returns></returns>
+        public static string getPathToFlash()
+        {
+            string fileNameKernel = "RobotKernel.bin";
+
+            try
+            {
+                foreach (var dinfo in DriveInfo.GetDrives())
+                {
+                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
+                    {
+                        string[] dirs = Directory.GetFiles(dinfo.Name);
+
+                        foreach (string dir in dirs)
+                        {
+                            if (Path.GetFileName(dir) == fileNameKernel)
+                            {
+                                return Path.GetDirectoryName(dir);
+                            }
+                        }
+                    }
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при  получении списка файлов " + ex.ToString());
+                return "";
+            }
+        }
     }
 }
