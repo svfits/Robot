@@ -77,15 +77,15 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
+                            <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
                         <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
                                FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="25"
                                HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
-                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
+                        <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="3,3,3,3"
                                  Grid.Column="3"  />
                     </Grid>
                 </GroupBox>
