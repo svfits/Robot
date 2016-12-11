@@ -349,22 +349,6 @@ namespace Robot
             }
         }
 
-     
-
-        /// <summary>
-        /// редактирование списка команд
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.F12)
-            {
-                AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
-                addNewHelp.Show();
-            }
-        }
-
         /// <summary>
         /// ввод команды в консоль
         /// </summary>
@@ -805,61 +789,7 @@ namespace Robot
 
             return false;
 
-        }
-
-        /// <summary>
-        /// раскрасим модули bkb yfxytv dsdjlbnm byajhvfwb. d yb[
-        /// </summary>
-        /// <param name="scenarioDiagnosticRobot">номер сценария</param>
-        /// <param name="color">цвет</param>
-        private void colorizeModule(int scenarioDiagnosticRobot, SolidColorBrush color)
-        {
-            switch (scenarioDiagnosticRobot)
-            {
-                case 1:
-                    SystemTXB.Background = color;
-                    break;
-                case 2:
-                    NeuroTXB.Background = color;
-                    break;
-                case 3:
-                    ServoTXB.Background = color;                 
-                    break;
-                case 4:
-                    ServoTXB.Background = color;
-                    CommunicationTXB.Background = color;
-                    NeuroTXB.Background = color;
-                    SystemTXB.Background = color;
-                    ModulesTXB.Background = color;
-                    break;
-                case 5:
-                  
-                    break;
-                case 199:
-                    printInModulesDateTimer();                   
-                    break;
-
-            }
-        }
-
-        private void printInModulesDateTimer()
-        {     
-            timerRobotWorkPrintModules.Elapsed += addTexttoModules;
-            timerRobotWorkPrintModules.Interval = 1000;
-            timerRobotWorkPrintModules.Start();
         }      
-
-        /// <summary>
-        ////почистить модули вывода сделать пустыми
-        /// </summary>
-        private void emptyModules()
-        {       
-            ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.Clear(); }));
-            CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.Clear(); }));
-            NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.Clear(); }));
-            SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.Clear(); }));
-            ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.Clear(); }));
-        }
 
         /// <summary>
         /// вывод сообщения об ошибке в подсказки
@@ -958,45 +888,7 @@ namespace Robot
             richTextBox.ScrollToEnd();
         }
         
-        /// <summary>
-        /// получим случайную строку и выведем ее в модули 
-        /// </summary>
-        private void addTexttoModules(object sender, ElapsedEventArgs e)
-        {
-            timerRobotWorkPrintModules.Stop();
-            
-            Random r = new Random();                        
-            int randomString = r.Next(1, 6);
-
-            int randomTime = r.Next(200,1500);
-            timerRobotWorkPrintModules.Interval = randomTime;
-
-            switch (randomString)
-            {
-                case 1:
-                    string str0 = RepositoryLocalSQLite.getStringForModules(r);
-                    conclusionInModulesCommunicationTXB(str0);
-                    break;
-                case 2:
-                    string str1 = RepositoryLocalSQLite.getStringForModules(r);
-                    conclusionInModulesModulesTXB(str1);
-                    break;
-                case 3:
-                    string str2 = RepositoryLocalSQLite.getStringForModules(r);
-                    conclusionInModulesNeuroTXB(str2);
-                    break;
-                case 4:
-                    string str3 = RepositoryLocalSQLite.getStringForModules(r);
-                    conclusionInModulesServoTXB(str3);
-                    break;
-                case 5:
-                    string str4 = RepositoryLocalSQLite.getStringForModules(r);
-                    conclusionInModulesSystemTXB(str4);
-                    break;
-            }
-
-            timerRobotWorkPrintModules.Start();
-        }
+        
 
         /// <summary>
         /// вывод в консоль данных
@@ -1036,6 +928,100 @@ namespace Robot
         }
 
         #region работа модулей
+
+        /// <summary>
+        /// раскрасим модули bkb yfxytv dsdjlbnm byajhvfwb. d yb[
+        /// </summary>
+        /// <param name="scenarioDiagnosticRobot">номер сценария</param>
+        /// <param name="color">цвет</param>
+        private void colorizeModule(int scenarioDiagnosticRobot, SolidColorBrush color)
+        {
+            switch (scenarioDiagnosticRobot)
+            {
+                case 1:
+                    SystemTXB.Background = color;
+                    break;
+                case 2:
+                    NeuroTXB.Background = color;
+                    break;
+                case 3:
+                    ServoTXB.Background = color;
+                    break;
+                case 4:
+                    ServoTXB.Background = color;
+                    CommunicationTXB.Background = color;
+                    NeuroTXB.Background = color;
+                    SystemTXB.Background = color;
+                    ModulesTXB.Background = color;
+                    break;
+                case 5:
+
+                    break;
+                case 199:
+                    printInModulesDateTimer();
+                    break;
+
+            }
+        }
+
+        private void printInModulesDateTimer()
+        {
+            timerRobotWorkPrintModules.Elapsed += addTexttoModules;
+            timerRobotWorkPrintModules.Interval = 1000;
+            timerRobotWorkPrintModules.Start();
+        }
+
+        /// <summary>
+        ////почистить модули вывода сделать пустыми
+        /// </summary>
+        private void emptyModules()
+        {
+            ServoTXB.Dispatcher.Invoke(new Action(delegate { ServoTXB.Clear(); }));
+            CommunicationTXB.Dispatcher.Invoke(new Action(delegate { CommunicationTXB.Clear(); }));
+            NeuroTXB.Dispatcher.Invoke(new Action(delegate { NeuroTXB.Clear(); }));
+            SystemTXB.Dispatcher.Invoke(new Action(delegate { SystemTXB.Clear(); }));
+            ModulesTXB.Dispatcher.Invoke(new Action(delegate { ModulesTXB.Clear(); }));
+        }
+
+        /// <summary>
+        /// получим случайную строку и выведем ее в модули 
+        /// </summary>
+        private void addTexttoModules(object sender, ElapsedEventArgs e)
+        {
+            timerRobotWorkPrintModules.Stop();
+
+            Random r = new Random();
+            int randomString = r.Next(1, 6);
+
+            int randomTime = r.Next(200, 1500);
+            timerRobotWorkPrintModules.Interval = randomTime;
+
+            switch (randomString)
+            {
+                case 1:
+                    string str0 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesCommunicationTXB(str0);
+                    break;
+                case 2:
+                    string str1 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesModulesTXB(str1);
+                    break;
+                case 3:
+                    string str2 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesNeuroTXB(str2);
+                    break;
+                case 4:
+                    string str3 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesServoTXB(str3);
+                    break;
+                case 5:
+                    string str4 = RepositoryLocalSQLite.getStringForModules(r);
+                    conclusionInModulesSystemTXB(str4);
+                    break;
+            }
+
+            timerRobotWorkPrintModules.Start();
+        }
 
         private void conclusionInModulesCommunicationTXB(string str)
         {          
@@ -1118,10 +1104,10 @@ namespace Robot
 
         #endregion работа модулей
 
-        #region сочетание клавиш на закрытие окна
+        #region сочетание клавиш разное
         private void Executed_New(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            // MessageBox.Show("Вызов команды 'New'");
+           
             Application.Current.Dispatcher.Invoke( () =>
             {
                MainWindow window3 = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
@@ -1136,7 +1122,19 @@ namespace Robot
         private void CanExecute_New(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }       
+
+        private void CanExecute_New_F12(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
+      
+        private void CommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
+            addNewHelp.Show();
+        }
+
         #endregion сочетание клавиш на закрытие окна
     }
 }
