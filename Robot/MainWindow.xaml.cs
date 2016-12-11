@@ -58,6 +58,9 @@ namespace Robot
         /// </summary>
         private Boolean x2command = false;
 
+        FlowDocument objDoc = new FlowDocument();
+        Paragraph objParag1 = new Paragraph();
+
         public MainWindow()
         {
            // Topmost = true;
@@ -898,7 +901,9 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
-            if(sudoNotsudo && printLattice)
+           
+
+            if (sudoNotsudo && printLattice)
             {
                 v = "root" + v;
             }
@@ -906,13 +911,19 @@ namespace Robot
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-             
-                range.Text = v + Environment.NewLine;
 
-                range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-                //   range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                //range.Text = v + Environment.NewLine;
+
+                //range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
+
+              
+                objParag1.Inlines.Add(new Run(v + Environment.NewLine) {Foreground = color } );
+                //objParag1.Inlines.AddRange();
+                objDoc.Blocks.Add(objParag1);             
+               
             }
 
+            richTextBox.Document = objDoc;
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
         }       
