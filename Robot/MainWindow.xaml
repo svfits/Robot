@@ -13,10 +13,10 @@
         <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed"  CanExecute="CanExecute_New_F12"/>
     </Window.CommandBindings>
     <Window.InputBindings>
-        <KeyBinding Command="ApplicationCommands.New"  Gesture="Ctrl+F11"/>
-        <KeyBinding Command="ApplicationCommands.Open"  Gesture="Ctrl+F12"/>
+        <KeyBinding Command="ApplicationCommands.New"  Gesture="Shift+Ctrl+F11"/>
+        <KeyBinding Command="ApplicationCommands.Open"  Gesture="Shift+Ctrl+F12"/>
     </Window.InputBindings>
-
+    
     <Grid FocusManager.FocusedElement="{Binding ElementName=connectBtn}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -66,15 +66,7 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,0">
-                    <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="25" Padding="10" IsEnabled="False"  />
-                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center" FontFamily="ImageFonts/SpaceAge"
-                          FontSize="25"  HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl"/>
-                        <Button x:Name="connectToUSB" Content="connect to USB" Click="connectToUSB_Click" FontSize="10" Padding="10"   Margin="5,5,5,5"/>
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Center" HorizontalAlignment="Right" Height="100"  />
-                        </StackPanel>
-                    </StackPanel>-->
+                   
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -82,7 +74,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="15" Padding="10"
+                        <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="20" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
                         <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
                                FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="25"

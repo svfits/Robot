@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace Robot
@@ -19,7 +20,7 @@ namespace Robot
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {   
         /// <summary>
         /// заряд батареи
         /// </summary>
@@ -65,6 +66,9 @@ namespace Robot
         {
            // Topmost = true;
             InitializeComponent();
+
+            animaionLoad();
+
             dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); 
         }   
         
