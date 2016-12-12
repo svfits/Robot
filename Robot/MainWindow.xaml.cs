@@ -911,16 +911,8 @@ namespace Robot
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
-
-                //range.Text = v + Environment.NewLine;
-
-                //range.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-
-              
                 objParag1.Inlines.Add(new Run(v + Environment.NewLine) {Foreground = color } );
-                //objParag1.Inlines.AddRange();
                 objDoc.Blocks.Add(objParag1);             
-               
             }
 
             richTextBox.Document = objDoc;
