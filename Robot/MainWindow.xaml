@@ -16,7 +16,13 @@
         <KeyBinding Command="ApplicationCommands.New"  Gesture="Shift+Ctrl+F11"/>
         <KeyBinding Command="ApplicationCommands.Open"  Gesture="Shift+Ctrl+F12"/>
     </Window.InputBindings>
-    
+    <Window.Resources>
+        <Storyboard x:Key="animLabel">
+            <DoubleAnimation BeginTime="00:00:00.3" Duration="00:00:04" From="0" To="20" AutoReverse="True" Storyboard.TargetName="connectOrDisconnectLbl"
+                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
+        </Storyboard>        
+    </Window.Resources>
+
     <Grid FocusManager.FocusedElement="{Binding ElementName=connectBtn}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -30,8 +36,9 @@
             <RichTextBox x:Name="richTextBox"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Background="Black" Foreground="LightGreen" 
                          AcceptsTab="False" AllowDrop="False" BorderThickness="0" IsReadOnly="True"
-                        
-                         ScrollViewer.VerticalScrollBarVisibility="auto">
+                         Focusable="False"
+                         ScrollViewer.VerticalScrollBarVisibility="auto"
+                         PreviewMouseLeftButtonDown="richTextBox_PreviewMouseLeftButtonDown">
                 <!--<FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>
@@ -44,7 +51,8 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="textBoxSuffix" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black"
-                         BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"/>
+                         BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"
+                         Focusable="False" PreviewMouseLeftButtonDown="textBoxSuffix_PreviewMouseLeftButtonDown"/>
                 <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
                  Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
                          KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0"/>
@@ -76,9 +84,13 @@
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="20" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
-                        <Label Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
+                        <Label x:Name="connectOrDisconnectLbl" Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
                                FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="25"
-                               HorizontalAlignment="Stretch" x:Name="connectOrDisconnectLbl" Grid.Column="1"/>
+                               HorizontalAlignment="Stretch"  Grid.Column="1">
+                            <Label.Effect>
+                                <DropShadowEffect x:Name="lblConnectDropShadowEffect" BlurRadius="0" ShadowDepth="0" />
+                            </Label.Effect>
+                        </Label>
                         <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="3,3,3,3"
                                  Grid.Column="3"  />
                     </Grid>
@@ -120,7 +132,7 @@
                                 <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
                                     <TabItem Header="Communication">
                                         <TextBox x:Name="CommunicationTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                 Foreground="LightGreen" IsReadOnly="True"/>
+                                                 Foreground="LightGreen" IsReadOnly="True" PreviewMouseLeftButtonDown="CommunicationTXB_PreviewMouseLeftButtonDown"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

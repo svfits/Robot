@@ -34,11 +34,43 @@ namespace Robot
             logoImage.BeginAnimation(Image.WidthProperty, logoAnimation);
 
             DoubleAnimation robotAnimation = new DoubleAnimation();
-            robotAnimation.From = logoImage.ActualWidth;
+            robotAnimation.From = robotImage.ActualWidth;
             robotAnimation.To = 250;
             robotAnimation.Duration = TimeSpan.FromSeconds(5);
             robotImage.BeginAnimation(Image.WidthProperty, robotAnimation);
-          
+
+        }
+
+        /// <summary>
+        ////неизвестный робот постаим картинку с анимацией
+        /// </summary>
+        private void animationLoadUncRobot()
+        {
+            //robotImage.Width = 20;
+
+
+            //DoubleAnimation robotAnimation = new DoubleAnimation();
+            //robotAnimation.From = robotImage.ActualWidth;
+            //robotAnimation.To = 550;
+            //robotAnimation.Duration = TimeSpan.FromSeconds(5);
+            //robotImage.BeginAnimation(Image.WidthProperty, robotAnimation);
+            robotImage.Dispatcher.Invoke(new Action(delegate { robotImage.Width = 20; }));
+
+            DoubleAnimation robotAnimation = new DoubleAnimation();           
+            robotAnimation.From = robotImage.ActualWidth;
+            robotAnimation.To = 550;
+            robotAnimation.Duration = TimeSpan.FromSeconds(5);
+            //robotImage.BeginAnimation(Image.WidthProperty, robotAnimation);
+            robotImage.Dispatcher.Invoke(new Action(delegate { robotImage.BeginAnimation(Image.WidthProperty,robotAnimation); }));
+
+        }
+
+        /// <summary>
+        ////анимация конекта 
+        /// </summary>
+        private void animationLblConnect()
+        {
+            (Resources["animLabel"] as Storyboard).Begin();
         }
     }
 }

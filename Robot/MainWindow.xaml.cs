@@ -94,7 +94,7 @@ namespace Robot
 
             LocalDataBase.LocalDaBase.Create_Table_Events();           
 
-            searchFlashDriveandScenarioGet();            
+            searchFlashDriveandScenarioGet();
         }
 
         private void searchFlashDriveandScenarioGet()
@@ -124,7 +124,8 @@ namespace Robot
                         {
                             robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
                         }
-                    ));
+                    ));                 
+                  
                 }
                 catch(Exception ex)
                 {
@@ -221,7 +222,7 @@ namespace Robot
                     {
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
                         logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Robot ready for programming. Please use console."; }));
-                    }
+                    }                   
                              
                 }
                 catch(Exception ex)
@@ -300,6 +301,7 @@ namespace Robot
         {
             richTextBox.Document.Blocks.Clear();
             addTextToRich("", Brushes.Green, false);
+            animationLblConnect();
 
             try
             {
@@ -348,6 +350,8 @@ namespace Robot
                     errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
                     printInModulesDateTimer();
                 }
+
+                textBoxCommands.Focus();             
             }
             catch (Exception ex)
             {
@@ -1143,5 +1147,20 @@ namespace Robot
         }
 
         #endregion сочетание клавиш на закрытие окна
+
+        private void richTextBox_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            textBoxCommands.Focus();
+        }
+
+        private void textBoxSuffix_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            textBoxCommands.Focus();
+        }
+
+        private void CommunicationTXB_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            textBoxCommands.Focus();
+        }
     }
 }
