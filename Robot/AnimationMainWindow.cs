@@ -66,7 +66,7 @@ namespace Robot
         }
 
         /// <summary>
-        ////анимация конекта 
+        ////анимация конекта при нажатии кнопки
         /// </summary>
         private void animationLblConnect()
         {

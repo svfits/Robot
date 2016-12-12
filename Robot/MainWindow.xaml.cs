@@ -222,6 +222,7 @@ namespace Robot
                     {
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
                         logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Robot ready for programming. Please use console."; }));
+                        connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.Focus(); }));
                     }                   
                              
                 }
