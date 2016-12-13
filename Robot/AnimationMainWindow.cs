@@ -23,14 +23,14 @@ namespace Robot
 
             DoubleAnimation labelAnimation = new DoubleAnimation();
             labelAnimation.From = connectOrDisconnectLbl.ActualWidth;
-            labelAnimation.To = 250;
+            labelAnimation.To = 300;
             labelAnimation.Duration = TimeSpan.FromSeconds(3); 
             connectOrDisconnectLbl.BeginAnimation(Label.WidthProperty, labelAnimation);
 
             DoubleAnimation logoAnimation = new DoubleAnimation();
             logoAnimation.From = logoImage.ActualWidth;
             logoAnimation.To = 250;
-            logoAnimation.Duration = TimeSpan.FromSeconds(5);
+            logoAnimation.Duration = TimeSpan.FromSeconds(10);
             logoImage.BeginAnimation(Image.WidthProperty, logoAnimation);
 
             DoubleAnimation robotAnimation = new DoubleAnimation();

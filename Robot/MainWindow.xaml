@@ -85,7 +85,7 @@
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="20" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
                         <Label x:Name="connectOrDisconnectLbl" Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
-                               FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="25"
+                               FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="35"
                                HorizontalAlignment="Stretch"  Grid.Column="1">
                             <Label.Effect>
                                 <DropShadowEffect x:Name="lblConnectDropShadowEffect" BlurRadius="0" ShadowDepth="0" />

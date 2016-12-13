@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -214,8 +215,7 @@ namespace Robot
                     // modeLbl.Foreground = Brushes.Gray;
                     modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Content = "Standby"; }));
                     modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Foreground = Brushes.Green; }));
-
-
+                    
                     // logTXB.Text = "Robot ready for programming. Please use console.";
                  
                     if (!connectNotConnect)
@@ -332,8 +332,9 @@ namespace Robot
 
                 if (scenarioDiagnosticRobot == 4)
                 {
-                    addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);
-                    printHelpCommand("Connected not known robot can not recognize",Brushes.Red);
+                    //addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);
+                    //printHelpCommand("Connected not known robot can not recognize",Brushes.Red);
+                    printTextToHelp();
                     return;
                 }
 
@@ -383,7 +384,7 @@ namespace Robot
                     return;
                 }
 
-                if(connectNotConnect == false)
+                if(connectNotConnect == false && scenarioDiagnosticRobot != 4)
                 {
                   //  addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
                     printHelpCommand("НЕТ СОЕДИНЕНИЯ С РОБОТОМ",Brushes.Red);
@@ -394,10 +395,13 @@ namespace Robot
 
                 if(scenarioDiagnosticRobot == 4)
                 {
-                 //   addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
-                    printHelpCommand("Connected not known robot can not recognize", Brushes.Red);
-                    textBoxCommands.Clear();
-                    beeper();
+                    ////   addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);                   
+                    //   printHelpCommand("Connected not known robot can not recognize", Brushes.Red);
+                    //   textBoxCommands.Clear();
+                    //   beeper();
+                  
+
+                    printTextToHelp();
                     return;
                 } 
 
@@ -680,10 +684,16 @@ namespace Robot
 
                 // команда buckup
                 if(nameCommand.FirstOrDefault().command == "backup" && GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
-                    && searchLastCommand() != "yes" )
+                    && searchLastCommand() != "yes")
                 {
-                    //addTextToRich("Flash drive is not empty, all data will delete?", Brushes.Red, false);
-                    // textBoxSuffix.Text = "Flash drive is not empty, all data will delete?";
+                    if (scenarioDiagnosticRobot != 199)
+                    {
+                        // textBoxSuffixAddText("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary");
+                        addTextToRich("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red, false);
+                        printHelpCommand("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red);
+                        return;
+                    }
+
                     textBoxSuffixAddText("Flash drive is not empty, all data will delete?");
                     printHelpCommand("Flash drive is not empty, all data will delete?",Brushes.Red);
                     x2command = true;
@@ -692,6 +702,13 @@ namespace Robot
                 else if(GetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == false && nameCommand.FirstOrDefault().command == "backup"
                     && searchLastCommand() != "yes" )
                 {
+                    if (scenarioDiagnosticRobot != 199)
+                    {
+                        // textBoxSuffixAddText("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary");
+                        addTextToRich("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red, false);
+                        printHelpCommand("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red);
+                        return;
+                    }
                     GetScenarioOfFlashDrive.greateFileForBackup();
                 }
                 
@@ -748,6 +765,20 @@ namespace Robot
                 textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
             }         
 
+        }
+
+        private void printTextToHelp()
+        {
+            List<ListCommand> dataUncRobot = RepositoryLocalSQLite.searchCommandFromBD("datauncrobot", scenarioDiagnosticRobot);
+            if (dataUncRobot == null)
+            {
+                return;
+            }
+
+            addTextToRich(dataUncRobot.FirstOrDefault().monitorPrint, Brushes.Red, false);
+            printHelpCommand(dataUncRobot.FirstOrDefault().helpPrint, Brushes.Red);
+
+            textBoxCommands.Clear();
         }
 
         private void textBoxSuffixAddText(string v)
@@ -814,9 +845,27 @@ namespace Robot
 
             if (str.Contains("#RED"))
             {
-                string txt = str.Substring(4);
+                string txt = str.Substring(5);
                 logTXB.Text = txt;
                 logTXB.Foreground = Brushes.Red;
+            }
+            else if(str.Contains("#GREEN"))
+            {
+                string txt = str.Substring(7);
+                logTXB.Text = txt;
+                logTXB.Foreground = Brushes.LightGreen;
+            }
+            else if(str.Contains("#WHITE"))
+            {
+                string txt = str.Substring(7);
+                logTXB.Text = txt;
+                logTXB.Foreground = Brushes.White;
+            }
+            else if(str.Contains("#YELLOW"))
+            {
+                string txt = str.Substring(8);
+                logTXB.Text = txt;
+                logTXB.Foreground = Brushes.Yellow;
             }
             else
             {
@@ -863,16 +912,16 @@ namespace Robot
             }
                        
             return lineend;
-        }   
+        }
 
         /// <summary>
         /// разберем обьект на строки и выведем их в консоль
         /// </summary>
         /// <param name="nameCommand">обьект</param>
         /// <param name="color">цвет строки</param>
-        private void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
+        private async void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
-            if(nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
+            if (nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
             {
                 addTextToRich("", Brushes.White, false);
                 return;
@@ -883,24 +932,40 @@ namespace Robot
             {
                 if (line.Length > 0)
                 {
-                    if (line.IndexOf("#RED") != -1)
+                    if (line.Contains("#RED"))
                     {
-                      string txt = line.Substring(4);
-                      addTextToRich(txt, Brushes.Red, false);                
+                        string txt = line.Replace("#RED", "").Trim();
+                        addTextToRich(txt, Brushes.Red, false);
+                    }
+                    else if (line.Contains("#GREEN"))
+                    {
+                        string txt = line.Replace("#GREEN", "").Trim();
+                        addTextToRich(txt, Brushes.LightGreen, false);
+                    }
+                    else if (line.Contains("#WHITE"))
+                    {
+                        string txt = line.Replace("#WHITE", "").Trim();
+                        addTextToRich(txt, Brushes.White, false);
+                    }
+                    else if (line.Contains("#YELLOW"))
+                    {
+                        string txt = line.Replace("#YELLOW", "").Trim();
+                        addTextToRich(txt, Brushes.Yellow, false);
                     }
                     else
                     {
-                      addTextToRich(line, color, false);                     
+                        addTextToRich(line, color, false);
                     }
-                  
+
                 }
+                await Task.Delay(300);
             }
 
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
         }
-        
-        
+
+
 
         /// <summary>
         /// вывод в консоль данных
