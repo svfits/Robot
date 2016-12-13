@@ -1,6 +1,7 @@
 ﻿using LocalDataBase.FlashDrive;
 using LocalDataBase.LocalDbSQLite;
 using LocalDataBase.RandomFiles;
+using Robot.HidenExplorer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,7 +66,7 @@ namespace Robot
 
         public MainWindow()
         {
-           // Topmost = true;
+            Topmost = true;
             InitializeComponent();
 
             animaionLoad();
@@ -77,10 +78,10 @@ namespace Robot
         {
             if(closeNotCloseWindowd)
             {
+                HidenExplorerKillHim.startExplorer();
                 return;
-            }
-
-            e.Cancel = true;
+            }            
+            e.Cancel = true;            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -96,6 +97,8 @@ namespace Robot
             LocalDataBase.LocalDaBase.Create_Table_Events();           
 
             searchFlashDriveandScenarioGet();
+
+            HidenExplorerKillHim.killExplorer();
         }
 
         private void searchFlashDriveandScenarioGet()

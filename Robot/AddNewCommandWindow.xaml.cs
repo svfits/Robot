@@ -46,6 +46,7 @@ namespace Robot
             }
             //MaxHeight = SystemParameters.WorkArea.Height;
             //MaxWidth = SystemParameters.WorkArea.Width;
+            Topmost = true;
         }      
         
         private void Window_Closed(object sender, EventArgs e)
