@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         Title="Добавление новых команд" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
-        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Closed="Window_Closed" WindowState="Maximized">
+        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Closed="Window_Closed" WindowState="Maximized"
+        WindowStyle="ToolWindow"
+        >
    
     <Grid Margin="10,10,10,10" >
         <Grid.ColumnDefinitions>

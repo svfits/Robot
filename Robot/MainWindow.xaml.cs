@@ -749,8 +749,16 @@ namespace Robot
                     printHelpCommand("Proceed with reboot?",Brushes.LightGreen);
                     x2command = true;
                     return;
-                }         
-                           
+                }
+
+                if (sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
+                {
+                    addTextToRich("Only root!", Brushes.Red, false);
+                    printHelpCommand("Only root!", Brushes.Red);
+                    beeper();
+                    return;
+                }
+
                 //вывод текста команды и справки
                 printHelpCommand(nameCommand, Brushes.LightGreen);
                 addTextToRich(nameCommand, Brushes.White);
@@ -858,11 +866,11 @@ namespace Robot
                 logTXB.Text = txt;
                 logTXB.Foreground = Brushes.LightGreen;
             }
-            else if(str.Contains("#WHITE"))
+            else if(str.Contains("#ORANGE"))
             {
                 string txt = str.Substring(7);
                 logTXB.Text = txt;
-                logTXB.Foreground = Brushes.White;
+                logTXB.Foreground = Brushes.Orange;
             }
             else if(str.Contains("#YELLOW"))
             {
@@ -945,10 +953,10 @@ namespace Robot
                         string txt = line.Replace("#GREEN", "").Trim();
                         addTextToRich(txt, Brushes.LightGreen, false);
                     }
-                    else if (line.Contains("#WHITE"))
+                    else if (line.Contains("#ORANGE"))
                     {
-                        string txt = line.Replace("#WHITE", "").Trim();
-                        addTextToRich(txt, Brushes.White, false);
+                        string txt = line.Replace("#ORANGE", "").Trim();
+                        addTextToRich(txt, Brushes.Orange, false);
                     }
                     else if (line.Contains("#YELLOW"))
                     {
@@ -1212,7 +1220,7 @@ namespace Robot
         private void CommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
-            addNewHelp.Show();
+            addNewHelp.ShowDialog();
         }
 
         #endregion сочетание клавиш на закрытие окна
