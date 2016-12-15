@@ -204,7 +204,7 @@ namespace Robot
             }
 
             // usb подключено 
-            if(scenarioDiagnosticRobot > 0 && scenarioDiagnosticRobot != 4 )
+            if(scenarioDiagnosticRobot > 0 && scenarioDiagnosticRobot != 4 && connectNotConnect != true)
             {
                 try
                 {
@@ -541,6 +541,9 @@ namespace Robot
                 // очистка консоли
                 if (nameCommand.FirstOrDefault().command == "clear")
                 {
+                    objDoc = new FlowDocument();
+                    objParag1 = new Paragraph();
+
                     richTextBox.Document.Blocks.Clear();
                     addTextToRich("", Brushes.Green, false);
                     return;
@@ -854,6 +857,11 @@ namespace Robot
         {
             string str = nameCommand.FirstOrDefault().helpPrint;
 
+            if(str == null || nameCommand == null)
+            {
+                return;
+            }
+
             if (str.Contains("#RED"))
             {
                 string txt = str.Substring(5);
@@ -986,8 +994,6 @@ namespace Robot
         /// <param name="printLattice">надо ли в конце вывести знак решетки</param>
         private void addTextToRich(string v, SolidColorBrush color,Boolean printLattice)
         {
-           
-
             if (sudoNotsudo && printLattice)
             {
                 v = "root" + v;
@@ -1048,7 +1054,6 @@ namespace Robot
                 case 199:
                     printInModulesDateTimer();
                     break;
-
             }
         }
 
