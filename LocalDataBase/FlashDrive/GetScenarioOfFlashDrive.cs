@@ -11,7 +11,7 @@ namespace LocalDataBase.FlashDrive
     /// <summary>
     ////класс для работы с флешками
     /// </summary>
-  public  class GetScenarioOfFlashDrive
+  public  class GetSetScenarioOfFlashDrive
     {
      public static List<string> binCheck = new List<string>()
         {
@@ -234,7 +234,29 @@ namespace LocalDataBase.FlashDrive
             {
                 LogInFile.addFileLog("ошибка при проверки создании файлов на флешке для БЭКАПА" + ex.ToString());
             }
+        }
 
+        /// <summary>
+        /// сохранить сценарий на флешки когда выполнен
+        /// </summary>
+        /// <param name="text"></param>
+        public static void saveScenariy(string text)
+        {
+            string path = getPathToFlash();
+            string fileName = Path.Combine(path, "StatusRobot.bin");
+
+            try
+            {               
+               File.Create(fileName);
+                using (StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при сохранении статуса " + ex.ToString());
+            }
         }
 
         /// <summary>
@@ -269,6 +291,15 @@ namespace LocalDataBase.FlashDrive
                 LogInFile.addFileLog("ошибка при  получении списка файлов " + ex.ToString());
                 return "";
             }
+        }
+
+        /// <summary>
+        /// получить сценарий с флешки
+        /// </summary>
+        /// <returns></returns>
+        public static int? getScenarioApplyNotapplyscenario()
+        {
+            throw new NotImplementedException();
         }
     }
 }
