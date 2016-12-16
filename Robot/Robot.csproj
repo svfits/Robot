@@ -112,6 +112,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ScenarioDiagnosticRobotMainWindow.cs" />
     <Page Include="AddNewCommandWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,7 +129,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="HidenExplorer\HidenExplorerKillHim.cs" />
-    <Compile Include="KeyUP.cs" />
+    <Compile Include="KeyUPMainWindow.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

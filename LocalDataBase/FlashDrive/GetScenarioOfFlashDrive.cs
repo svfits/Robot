@@ -304,13 +304,18 @@ namespace LocalDataBase.FlashDrive
         public static int? getScenarioApplyNotapplyscenario()
         {
             try
-            {
-                //string path = getPathToFlash();
-                //string fileName = Path.Combine(path, "StatusRobot.bin");
+            {       
 
                 string path = getPathToFlash();
-                string fileName = Path.Combine(path, "StatusRobot.bin");
-                StreamReader file = new StreamReader(fileName);
+                string pathFile = Path.Combine(path, "StatusRobot.bin");
+
+                if (!File.Exists(pathFile))
+                {
+                    File.Create(pathFile);
+                    return 0;
+                }
+
+                StreamReader file = new StreamReader(pathFile);
 
                 string value = file.ReadLine();
                 file.Close();
@@ -319,7 +324,7 @@ namespace LocalDataBase.FlashDrive
             catch(Exception ex )
             {
                 LogInFile.addFileLog(DateTime.Now + " ошибка при  получении данных во временном файле выполнения задания " + ex.ToString());
-                return null;
+                return 0;
             }
            
         }

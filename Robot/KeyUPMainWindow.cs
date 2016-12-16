@@ -202,7 +202,14 @@ namespace Robot
                 //диагностика
                 if (nameCommand.FirstOrDefault().command == "diag all")
                 {
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
+                    if (scenarioDiagnosticRobot == 199)
+                    {
+                        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                    }
+                    else
+                    {
+                        colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
+                    }
                 }
 
                 // установка ПО
