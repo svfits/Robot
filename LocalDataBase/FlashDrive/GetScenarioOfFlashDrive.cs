@@ -246,9 +246,13 @@ namespace LocalDataBase.FlashDrive
             string fileName = Path.Combine(path, "StatusRobot.bin");
 
             try
-            {               
-               File.Create(fileName);
-                using (StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+            {       
+                if(!File.Exists(fileName))
+                {
+                    File.Create(fileName);
+                }        
+                
+                using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.Default))
                 {
                     sw.WriteLine(text);
                 }
@@ -299,7 +303,25 @@ namespace LocalDataBase.FlashDrive
         /// <returns></returns>
         public static int? getScenarioApplyNotapplyscenario()
         {
-            throw new NotImplementedException();
+            try
+            {
+                //string path = getPathToFlash();
+                //string fileName = Path.Combine(path, "StatusRobot.bin");
+
+                string path = getPathToFlash();
+                string fileName = Path.Combine(path, "StatusRobot.bin");
+                StreamReader file = new StreamReader(fileName);
+
+                string value = file.ReadLine();
+                file.Close();
+                return Convert.ToInt32(value);
+            }
+            catch(Exception ex )
+            {
+                LogInFile.addFileLog(DateTime.Now + " ошибка при  получении данных во временном файле выполнения задания " + ex.ToString());
+                return null;
+            }
+           
         }
     }
 }
