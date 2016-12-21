@@ -177,8 +177,8 @@ namespace Robot
 
                 if (nameCommand == null)
                 {
-                    addTextToRich(command + ":    " + "команда не найдена", Brushes.Red, false);
-                    printHelpCommand("команда не найдена", Brushes.Red);
+                    addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
+                    printHelpCommand("command not found", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -421,7 +421,7 @@ namespace Robot
                 }
 
                 //вывод текста команды и справки
-                printHelpCommand(nameCommand, Brushes.LightGreen);
+             //   printHelpCommand(nameCommand, Brushes.LightGreen);
                 addTextToRich(nameCommand, Brushes.White);
 
                 #endregion конец команд

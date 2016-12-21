@@ -89,13 +89,10 @@ namespace Robot
         {
             if(closeNotCloseWindowd)
             {
-#if false
                 HidenExplorerKillHim.startExplorer();
-#endif
                 return;
             }            
-            e.Cancel = true; 
-                      
+            e.Cancel = true;                       
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -112,9 +109,12 @@ namespace Robot
 
             searchFlashDriveandScenarioGet();
 
-#if false
+#if DEBUG
+             
+#else
             HidenExplorerKillHim.killExplorer();
 #endif
+
         }
 
         /// <summary>
@@ -196,16 +196,32 @@ namespace Robot
                 }
 
                 if (scenarioDiagnosticRobot == 5)
-                {
-                    // connectNotConnect = true;
-                    // addTextToRich("Connected robot without software", Brushes.Red, false);
-                    printHelpCommand("Connected not known robot can not recognize", Brushes.Red);
+                {                 
+                    printHelpCommand("Not detect software of the Robot", Brushes.Red);
 
                     connectOrDisconnectLbl.Content = "CONNECTED";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
-                    connectBtn.IsEnabled = false;
+                                    
+                    textBoxCommands.Focus();
+
+                    randomBatteryCharge();
+                    statusBataryLbl.Content = batteryCharge;
+                    modeLbl.Content = "Prog";
+                    modeLbl.Foreground = Brushes.Green;
+
+                    versionProgrammLbl.Foreground = Brushes.Green;                  
+                                      
+                    if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                    {
+                        addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    }
+
                     connectNotConnect = true;
+
+                    connectBtn.IsEnabled = false;
+                    printInModulesDateTimer();
                     return;
+
                 }
 
                 if (scenarioDiagnosticRobot > 0)
@@ -454,6 +470,9 @@ namespace Robot
                 await Task.Delay(300);
             }
 
+            Task.WaitAll();
+            //вывод текста команды и справки
+            printHelpCommand(nameCommand, Brushes.LightGreen);
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
         }
@@ -481,11 +500,7 @@ namespace Robot
             }
 
             try
-            {
-                //richTextBox.Document = objDoc;
-                //richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
-                //richTextBox.ScrollToEnd();
-                //objDoc.Dispatcher.Invoke(new Action (delegate {objDoc = objDoc ; }));
+            {                
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
