@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" 
         WindowState="Maximized"  WindowStyle="None">
-   
+
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  CanExecute="CanExecute_New"/>
         <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed"  CanExecute="CanExecute_New_F12"/>
@@ -20,7 +20,7 @@
         <Storyboard x:Key="animLabel">
             <DoubleAnimation BeginTime="00:00:00.3" Duration="00:00:04" From="0" To="10" AutoReverse="True" Storyboard.TargetName="connectOrDisconnectLbl"
                              Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
-        </Storyboard>        
+        </Storyboard>
     </Window.Resources>
 
     <Grid FocusManager.FocusedElement="{Binding ElementName=connectBtn}">
@@ -62,7 +62,7 @@
             <Separator  />
         </StackPanel>-->
 
-        <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Background="LightGray">
+        <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Background="LightGray" Header=".">
             <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -74,7 +74,7 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox  Grid.Row="0" Grid.Column="0" Margin="10,10,10,0">
-                   
+                 
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -129,7 +129,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                                <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0">
                                     <TabItem Header="Communication">
                                         <TextBox x:Name="CommunicationTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                  Foreground="LightGreen" IsReadOnly="True" PreviewMouseLeftButtonDown="CommunicationTXB_PreviewMouseLeftButtonDown"/>
@@ -147,13 +147,11 @@
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="1" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                    <TabItem Header="System" HorizontalAlignment="Center">
-                                        <TextBox x:Name="SystemTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                 Foreground="LightGreen"  IsReadOnly="True"/>
+                                    <TabItem Header="System" HorizontalAlignment="Left" VerticalAlignment="Stretch"  >
+                                        <TextBox x:Name="SystemTXB" Background="Black"  Foreground="LightGreen"  IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
-                                <TabControl Grid.Column="0" Grid.Row="4" MinHeight="150" MinWidth="150" HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch">
+                                <TabControl Grid.Column="0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <TabItem Header="Servo" x:Name="tabItemServo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" >
                                         <TextBox x:Name="ServoTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                                  Foreground="LightGreen"  IsReadOnly="True"/>

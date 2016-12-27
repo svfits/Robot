@@ -89,7 +89,10 @@ namespace Robot
         {
             if(closeNotCloseWindowd)
             {
-                HidenExplorerKillHim.startExplorer();
+#if DEBUG
+#else
+                          HidenExplorerKillHim.startExplorer();
+#endif
                 return;
             }            
             e.Cancel = true;                       

@@ -31,7 +31,7 @@ namespace Robot
             logoAnimation.From = logoImage.ActualWidth;
             logoAnimation.To = 250;
             logoAnimation.Duration = TimeSpan.FromSeconds(10);
-            logoImage.BeginAnimation(Image.WidthProperty, logoAnimation);
+            logoImage.BeginAnimation(WidthProperty, logoAnimation);
 
             DoubleAnimation robotAnimation = new DoubleAnimation();
             robotAnimation.From = robotImage.ActualWidth;
