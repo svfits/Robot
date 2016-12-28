@@ -40,7 +40,7 @@ namespace LocalDataBase.LocalDbSQLite
             {
                 using (HContext dbL = new HContext())
                 {                 
-                    if(textCommand.Contains("make modules install") && scenarioDiagnosticRobot == 3)
+                    if(scenarioDiagnosticRobot == 3 && textCommand.Contains("make modules install ") )
                     {
                         var makeModulesInstall = dbL.ListCommand
                     .AsEnumerable()
@@ -80,6 +80,28 @@ namespace LocalDataBase.LocalDbSQLite
             catch(Exception ex)
             {
                 LogInFile.addFileLog("поиск справки в таблице " + ex.ToString());
+                return null;
+            }
+        }
+
+        public static List<ListCommand> searchCommandFromBD(string textCommand, int scenarioDiagnosticRobot, string errorFile3)
+        {
+            try
+            {
+                using (HContext dbL = new HContext())
+                {
+                   
+                 var makeModulesInstall = dbL.ListCommand
+                    .AsEnumerable()
+                    .Where(c => c.command.ToLower().Trim() == "make modules install " + errorFile3  && c.scenario == scenarioDiagnosticRobot)
+                    .ToList()
+                    ;
+                 return makeModulesInstall;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("поиск справки для сценария 3" + ex.ToString());
                 return null;
             }
         }

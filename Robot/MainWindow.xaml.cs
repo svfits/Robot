@@ -35,7 +35,7 @@ namespace Robot
         /// <summary>
         /// ошибка в файле для сценария 3
         /// </summary>
-        string errorFileScenario3;
+        public  string errorFileScenario3;
 
         /// <summary>
         /// номер сценария
@@ -313,32 +313,40 @@ namespace Robot
         /// <returns></returns>
         private Boolean parsingCompareString(string v)
         {
-            string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-            
-            string lineend = "";
-
-            str = str.ToLower().Trim();
-            if (str == "")
+            try
             {
+                string str = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+
+                string lineend = "";
+
+                str = str.ToLower().Trim();
+                if (str == "")
+                {
+                    return false;
+                }
+                str = str.Substring(1);
+
+                foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+                {
+                    if (line.Length >= 0)
+                    {
+                        lineend = line;
+                    }
+                }
+
+                if (lineend.Contains(v) == true)
+                {
+                    return true;
+                }
+
                 return false;
             }
-            str = str.Substring(1);
-             
-            foreach (string line in str.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
+            catch (Exception ex)
             {
-                if (line.Length >= 0)
-                {
-                    lineend = line;
-                }
+                LogInFile.addFileLog("поиск конектинг  " + ex.ToString());
+
+                return false;
             }
-
-            if(lineend.Contains(v) == true)
-            {
-                return true;
-            }
-
-            return false;
-
         }      
 
         /// <summary>
