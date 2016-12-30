@@ -191,7 +191,7 @@ namespace Robot
                     //addTextToRich("Connected not known robot can not recognize", Brushes.Red, false);
                     //printHelpCommand("Connected not known robot can not recognize",Brushes.Red);
                     printTextToHelp();
-                    connectOrDisconnectLbl.Content = "CONNECTED";
+                    connectOrDisconnectLbl.Content = "CONNECTING";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
                     connectBtn.IsEnabled = false;
                     connectNotConnect = true;
@@ -208,7 +208,7 @@ namespace Robot
                 {                 
                     printHelpCommand("Not detect software of the Robot", Brushes.Red);
 
-                    connectOrDisconnectLbl.Content = "CONNECTED";
+                    connectOrDisconnectLbl.Content = "CONNECTING";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
                                     
                     textBoxCommands.Focus();
@@ -243,7 +243,7 @@ namespace Robot
                     versionProgrammLbl.Foreground = Brushes.Green;
                     versionProgrammLbl.Content = "v.15.7.16";
 
-                    connectOrDisconnectLbl.Content = "CONNECTED";
+                    connectOrDisconnectLbl.Content = "CONNECTING";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
 
                     if(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)

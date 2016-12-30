@@ -61,6 +61,14 @@ namespace Robot
 
                     if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
                     {
+                        if (sudoNotsudo == false)
+                        {
+                            addTextToRich("Only root!", Brushes.Red, false);
+                            printHelpCommand("Only root!", Brushes.Red);
+                            beeper();
+                            return;
+                        }
+
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("save", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
                         x2command = false;
@@ -68,6 +76,13 @@ namespace Robot
                         if (scenarioDiagnosticRobot == 199)
                         {
                             GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
+                        }
+                        else
+                        {
+                            addTextToRich("No changes in system detected", Brushes.LightGreen, false);
+                            printHelpCommand("No changes in system detected", Brushes.LightGreen);
+                            textBoxSuffixAddText("#");
+                            return;
                         }
                     }
 
@@ -212,7 +227,7 @@ namespace Robot
                 }
 
                 // установка ПО
-                if ( command == "init robot" && scenarioDiagnosticRobot == 5)
+                if ( command == "init robot" )
                 {
                     if (sudoNotsudo == false)
                     {
@@ -227,21 +242,21 @@ namespace Robot
                         // все стало хорошо ОС установлена
                         scenarioDiagnosticRobot = 199;
 
-                        randomBatteryCharge();
-                        statusBataryLbl.Content = batteryCharge;
-                        modeLbl.Content = "Prog";
-                        modeLbl.Foreground = Brushes.Green;
+                        //randomBatteryCharge();
+                        //statusBataryLbl.Content = batteryCharge;
+                        //modeLbl.Content = "Prog";
+                        //modeLbl.Foreground = Brushes.Green;
 
-                        versionProgrammLbl.Foreground = Brushes.Green;
-                        versionProgrammLbl.Content = "v.15.7.16";
+                        //versionProgrammLbl.Foreground = Brushes.Green;
+                        //versionProgrammLbl.Content = "v.15.7.16";
 
-                        connectOrDisconnectLbl.Content = "CONNECTED";
-                        connectOrDisconnectLbl.Foreground = Brushes.Green;
+                        //connectOrDisconnectLbl.Content = "CONNECTED";
+                        //connectOrDisconnectLbl.Foreground = Brushes.Green;
 
-                        if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
-                        {
-                            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-                        }
+                        //if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                        //{
+                        //    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                        //}
 
                         connectNotConnect = true;
                     }
