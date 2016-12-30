@@ -195,6 +195,12 @@ namespace Robot
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
                     connectBtn.IsEnabled = false;
                     connectNotConnect = true;
+                    modeLbl.Content = "Prog";
+                    modeLbl.Foreground = Brushes.Green;
+                    if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+                    {
+                        addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+                    }
                     return;
                 }
 
