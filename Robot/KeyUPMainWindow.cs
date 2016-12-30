@@ -171,16 +171,8 @@ namespace Robot
                     #endregion подверждение команд
                 }
                 else
-                {
-                    if(scenarioDiagnosticRobot == 3 )
-                    {
-                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command,scenarioDiagnosticRobot,errorFile3: errorFileScenario3);
-                    }
-                    else
-                    {
+                {                  
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
-                    }
-                    
                 }
 
                 if (nameCommand == null || nameCommand.Count == 0)
@@ -325,12 +317,20 @@ namespace Robot
                 }
 
                 // сценарий 3 
-                if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install") &&  command.Contains(errorFileScenario3))
+                if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install") )
                 {
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
                         printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    if(command.Contains(errorFileScenario3))
+                    {
+                        addTextToRich("Сломан дуругой модуль", Brushes.Red, false);
+                        printHelpCommand("Сломан дуругой модуль", Brushes.Red);
                         beeper();
                         return;
                     }
@@ -338,20 +338,20 @@ namespace Robot
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     scenarioDiagnosticRobot = 199;
                 }
-                else if (scenarioDiagnosticRobot == 3 && command == "make modules install " + errorFileScenario3)
-                {
-                    if (sudoNotsudo == false)
-                    {
-                        addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!", Brushes.Red);
-                        beeper();
-                        return;
-                    }
-                    addTextToRich("module not found", Brushes.Red, false);
-                    printHelpCommand("Модуль для сборки не найден", Brushes.Red);
-                    beeper();
-                    return;
-                }
+                //else if (scenarioDiagnosticRobot == 3 && command == "make modules install " + errorFileScenario3)
+                //{
+                //    if (sudoNotsudo == false)
+                //    {
+                //        addTextToRich("Only root!", Brushes.Red, false);
+                //        printHelpCommand("Only root!", Brushes.Red);
+                //        beeper();
+                //        return;
+                //    }
+                //    addTextToRich("module not found", Brushes.Red, false);
+                //    printHelpCommand("Модуль для сборки не найден", Brushes.Red);
+                //    beeper();
+                //    return;
+                //}
 
                 //// команда buckup
                 //if (nameCommand.FirstOrDefault().command == "backup" && GetSetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
