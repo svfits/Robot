@@ -458,24 +458,53 @@ namespace Robot
             {
                 if (line.Length > 0)
                 {
+                    if(line.Contains("<RED>") && line.Contains("</RED>"))
+                    {
+                       Boolean paint = true;
+                       foreach(var word in line.Split(new Char[] { }))
+                        {
+                            if( word == "<RED>")
+                            {
+                                paint = true;                               
+                            }
+
+                            if( word == "</RED>")
+                            {
+                                paint = false;
+                            }
+
+                            if(paint)
+                            {
+                                string txt = word.Replace("<RED>", "");
+                                addTextToRich(txt + " ", Brushes.Red);
+                            }
+                            else
+                            {
+                                string txt = word.Replace("</RED>", "");
+                                addTextToRich(txt + " ", Brushes.White);
+                            }
+                        }
+                        return;
+                    }
+
                     if (line.Contains("#RED"))
                     {
-                        string txt = line.Replace("#RED", "").Trim();
+                        string txt = line.Replace("#RED", "");
                         addTextToRich(txt, Brushes.Red, false);
                     }
                     else if (line.Contains("#GREEN"))
                     {
-                        string txt = line.Replace("#GREEN", "").Trim();
+                        string txt = line.Replace("#GREEN", "");
                         addTextToRich(txt, Brushes.LightGreen, false);
                     }
                     else if (line.Contains("#ORANGE"))
                     {
-                        string txt = line.Replace("#ORANGE", "").Trim();
+                        string txt = line.Replace("#ORANGE", "");
                         addTextToRich(txt, Brushes.Orange, false);
                     }
                     else if (line.Contains("#YELLOW"))
                     {
-                        string txt = line.Replace("#YELLOW", "").Trim();
+                        string txt = line.Replace("#YELLOW", "");
                         addTextToRich(txt, Brushes.Yellow, false);
                     }
                     else
@@ -492,6 +521,32 @@ namespace Robot
             printHelpCommand(nameCommand, Brushes.LightGreen);
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
+        }
+
+        private void addTextToRich(string v, SolidColorBrush color)
+        {
+            if (sudoNotsudo )
+            {
+                v = "root" + v;
+            }
+
+            if (v != String.Empty)
+            {
+                TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+                objParag1.Inlines.Add(new Run(v) { Foreground = color });
+                objDoc.Blocks.Add(objParag1);
+            }
+
+            try
+            {
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при добавлении консоль цветных слов " + ex.ToString());
+            }
         }
 
 
