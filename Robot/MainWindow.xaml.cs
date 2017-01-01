@@ -453,38 +453,22 @@ namespace Robot
                 return;
             }
 
-            // nameCommand.FirstOrDefault().monitorPrint.Length
+            // по строкам
             foreach (string line in nameCommand.FirstOrDefault().monitorPrint.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
                 if (line.Length > 0)
                 {
-                    if(line.Contains("<RED>") && line.Contains("</RED>"))
+                    if(line.Contains("<") && line.Contains("</") && line.Contains(">"))
                     {
-                       Boolean paint = true;
-                       foreach(var word in line.Split(new Char[] { }))
+                        try
                         {
-                            if( word == "<RED>")
-                            {
-                                paint = true;                               
-                            }
-
-                            if( word == "</RED>")
-                            {
-                                paint = false;
-                            }
-
-                            if(paint)
-                            {
-                                string txt = word.Replace("<RED>", "");
-                                addTextToRich(txt + " ", Brushes.Red);
-                            }
-                            else
-                            {
-                                string txt = word.Replace("</RED>", "");
-                                addTextToRich(txt + " ", Brushes.White);
-                            }
+                            await PaintWord(line);
+                            continue;
                         }
-                        return;
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show("что то случилось со строками   "   + ex.ToString());
+                        }
                     }
 
                     if (line.Contains("#RED"))
@@ -523,7 +507,149 @@ namespace Robot
             richTextBox.ScrollToEnd();
         }
 
-        private void addTextToRich(string v, SolidColorBrush color)
+        List<string> listBrushes = new List<string>()
+        {
+
+        };
+
+        /// <summary>
+        /// раскрасим каждое слово своим цветом
+        /// </summary>
+        /// <param name="line">строка</param>
+        /// <returns></returns>
+        private async Task PaintWord(string line)
+        {           
+            SolidColorBrush color = Brushes.White;
+
+            foreach (var word in line.Split(new Char[] { }))
+            {
+                if(word == String.Empty)
+                {
+                    addTextToRich("      " + Environment.NewLine, Brushes.LightBlue);
+                    return;
+                }
+
+                checkStringStart(word, ref color);
+
+                checkStringEnd(word, ref color);
+                
+                string txt = word.Replace("<RED>", "").Replace("</RED>","");
+                txt = txt.Replace("<GREEN>", "").Replace("</GREEN>", "");
+                txt = txt.Replace("<ORANGE>", "").Replace("</ORANGE>", "");
+                txt = txt.Replace("<BLUE>", "").Replace("</BLUE>", "");
+                txt = txt.Replace("<CYAN>", "").Replace("</CYAN>", "");
+                txt = txt.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
+                addTextToRich(txt + " ", color);          
+                
+                await Task.Delay(100);
+            }
+            addTextToRich("\n", Brushes.White);
+        }
+
+        /// <summary>
+        /// найдти конец где должен закончится цвет
+        /// </summary>
+        /// <param name="word">Метка</param>
+        /// <param name="color">Цвет</param>
+        /// <returns></returns>
+        private bool checkStringEnd(string word, ref SolidColorBrush color)
+        {
+            string txtStart = word.Substring(0, 2);
+          //  color = Brushes.White;
+
+            if (txtStart == "</")
+            {
+                string txt = word.Replace("<", "").Replace(">", "").Replace("/","");
+                switch (txt)
+                {
+                    case "RED":
+                        color = Brushes.Red;
+                        return true;
+                        break;
+                    case "GREEN":
+                        color = Brushes.LightGreen;
+                        return true;
+                        break;
+                    case "ORANGE":
+                        color = Brushes.Orange;
+                        return true;
+                        break;
+                    case "YELLOW":
+                        color = Brushes.Yellow;
+                        return true;
+                        break;
+                    case "BLUE":
+                        color = Brushes.Blue;
+                        return true;
+                        break;
+                    case "CYAN":
+                        color = Brushes.Cyan;
+                        return true;
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private bool checkStringStart(string word, ref SolidColorBrush color)
+        {
+            string txtStart = word.Substring(0,1);          
+          //  color = Brushes.White;        
+
+            if (txtStart == "<")
+            {
+                string txt = word.Replace("<","").Replace(">","");
+                switch (txt)
+                {
+                    case "RED":
+                        color = Brushes.Red;
+                        return true;
+                        break;
+                    case "GREEN":
+                        color = Brushes.LightGreen;
+                        return true;
+                        break;
+                    case "ORANGE":
+                        color = Brushes.Orange;
+                        return true;
+                        break;
+                    case "YELLOW":
+                        color = Brushes.Yellow;
+                        return true;
+                        break;
+                    case "BLUE":
+                        color = Brushes.Blue;
+                        return true;
+                        break;
+                    case "CYAN":
+                        color = Brushes.Cyan;
+                        return true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return false;
+        }
+     
+
+    /// <summary>
+    /// добовляем слова или группу слов разными цветами
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="color"></param>
+    private void addTextToRich(string v, SolidColorBrush color)
         {
             if (sudoNotsudo )
             {
