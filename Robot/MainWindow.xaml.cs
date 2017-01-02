@@ -465,9 +465,9 @@ namespace Robot
                             await PaintWord(line);
                             continue;
                         }
-                        catch (Exception ex)
+                        catch
                         {
-                            LogInFile.addFileLog("Произошла ошибка при раскраске слов в командах " + ex.ToString());
+                          //  LogInFile.addFileLog("Произошла ошибка при раскраске слов в командах " + ex.ToString());
                         }
                     }
 
@@ -534,8 +534,8 @@ namespace Robot
                 }
                 else
                 {
-                  //  addTextToRich("  " + " ", color);
-                    return;
+                    addTextToRich(" ", color);
+                   // return;
                 }             
 
                 string txt = word.Replace("<RED>", "").Replace("</RED>","");
@@ -658,17 +658,14 @@ namespace Robot
             if (sudoNotsudo )
             {
                 v = "root" + v;
-            }
+            }          
 
-            if (v != String.Empty)
+            try
             {
                 TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
                 objParag1.Inlines.Add(new Run(v) { Foreground = color });
                 objDoc.Blocks.Add(objParag1);
-            }
 
-            try
-            {
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
