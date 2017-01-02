@@ -1,5 +1,6 @@
 ﻿using LocalDataBase.FlashDrive;
 using LocalDataBase.LocalDbSQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -190,7 +191,8 @@ namespace Robot
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
                 }
 
-                if (nameCommand == null || nameCommand.Count == 0)
+                //    if (nameCommand == null || nameCommand.Count == 0 || exceptionCommand.Where(a => a ==  command.Split(new Char[] { })[0] ).Count() == 0)
+                if ( (nameCommand == null || nameCommand.Count == 0) && exceptionCommand.Where(a => a == "play" ) == null)
                 {
                     addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
                     printHelpCommand("command not found", Brushes.Red);
@@ -475,6 +477,18 @@ namespace Robot
                     return;
                 }
 
+                try
+                {
+                    if ( command.Split(new Char[] { }).Count() ==2  &&  command.Split(new Char[] { })[0] == "play" && command.Split(new Char[] { })[1] == "111")
+                    {
+                        return;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    
+                }
+
                 if (sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {
                     addTextToRich("Only root!", Brushes.Red, false);
@@ -501,5 +515,10 @@ namespace Robot
             }
 
         }
+
+        List<string> exceptionCommand = new List<string>()
+        {
+            "play"
+        };
     }
 }

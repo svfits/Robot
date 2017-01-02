@@ -517,7 +517,7 @@ namespace Robot
         {           
             SolidColorBrush color = Brushes.White;           
             
-            foreach (string word in line.Split(new Char[] { }))
+            foreach (string word in line.Split(new Char[] { }) )
             {
                 if(word != String.Empty)
                 {
