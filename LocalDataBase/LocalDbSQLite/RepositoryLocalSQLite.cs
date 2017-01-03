@@ -44,7 +44,7 @@ namespace LocalDataBase.LocalDbSQLite
                     {
                         var makeModulesInstall = dbL.ListCommand
                     .AsEnumerable()
-                    .Where(c => c.command.ToLower().Trim() == "make modules install" && c.scenario == scenarioDiagnosticRobot)
+                    .Where(c => c.command.ToLower().Trim().Contains(textCommand) && c.scenario == scenarioDiagnosticRobot)
                     .ToList()
                     ;
                         return makeModulesInstall;
