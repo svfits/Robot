@@ -55,7 +55,9 @@
                          Focusable="False" PreviewMouseLeftButtonDown="textBoxSuffix_PreviewMouseLeftButtonDown"/>
                 <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
                  Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
-                         KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0"/>
+                         KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0" CaretBrush="LightGreen"
+                         >               
+                </TextBox>
             </Grid>
         </Grid>
         <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,10,10,10">

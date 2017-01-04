@@ -713,8 +713,8 @@ namespace Robot
          
         private  void beeper()
         {
-         //   SystemSounds.Beep.Play();
-              SystemSounds.Asterisk.Play();
+            SystemSounds.Beep.Play();
+         //     SystemSounds.Asterisk.Play();
           //  SystemSounds.Exclamation.Play();
          //   SystemSounds.Question.Play();
           //  SystemSounds.Hand.Play();

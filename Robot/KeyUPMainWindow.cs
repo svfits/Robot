@@ -515,8 +515,24 @@ namespace Robot
                     return;
                 }
 
+               if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "cat")
+                {
+                    string fileName = command.Split(new Char[] { })[1];
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
 
-                if (sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
+                    if (nameCommand == null)
+                    {
+                        addTextToRich("Unknown file format", Brushes.Red, false);
+                        printHelpCommand("Unknown file format", Brushes.Red);
+                        return;
+                    }
+
+                    addTextToRich(nameCommand, Brushes.White);
+                    return;
+                }
+
+
+                if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {
                     addTextToRich("Only root!", Brushes.Red, false);
                     printHelpCommand("Only root!", Brushes.Red);
@@ -545,7 +561,8 @@ namespace Robot
 
         List<string> exceptionCommands = new List<string>()
         {
-            "play"
+            "play",
+            "cat"
         };
      
     }

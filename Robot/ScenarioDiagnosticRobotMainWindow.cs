@@ -51,7 +51,8 @@ namespace Robot
                             robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
                         }
                     ));
-
+                    // бипер при подклюении флешки
+                    beeperLoadFlash();
                 }
                 catch (Exception ex)
                 {
@@ -119,6 +120,9 @@ namespace Robot
 
                     textBoxSuffix.Dispatcher.Invoke(new Action(delegate { textBoxSuffix.Text = "#"; }));
 
+                    // бипер при подклюении флешки
+                    beeperLoadFlash();
+
                 }
                 catch (Exception ex)
                 {
@@ -150,6 +154,9 @@ namespace Robot
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.Focus(); }));
                     }
 
+                    // бипер при подклюении флешки
+                    beeperLoadFlash();
+
                 }
                 catch (Exception ex)
                 {
@@ -158,6 +165,18 @@ namespace Robot
 
             }
             timerGetDataFlashDrive.Start();
+        }
+             
+        /// <summary>
+        /// бипер при подключении флешки
+        /// </summary>
+        private void beeperLoadFlash()
+        {
+            //SystemSounds.Beep.Play();
+            //SystemSounds.Asterisk.Play();
+            //SystemSounds.Exclamation.Play();
+               SystemSounds.Question.Play();
+            //SystemSounds.Hand.Play();
         }
 
         private void searchFlashDriveandScenarioGet()

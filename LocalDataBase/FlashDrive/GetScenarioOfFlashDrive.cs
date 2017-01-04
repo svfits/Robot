@@ -242,7 +242,7 @@ namespace LocalDataBase.FlashDrive
         /// <param name="text"></param>
         public static void saveScenariy(string text)
         {
-            string path = getPathToFlash();
+            string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             string fileName = Path.Combine(path, "StatusRobot.bin");
 
             try
@@ -298,15 +298,14 @@ namespace LocalDataBase.FlashDrive
         }
 
         /// <summary>
-        /// получить сценарий с флешки
+        /// получить сценарий откуда то
         /// </summary>
         /// <returns></returns>
         public static int? getScenarioApplyNotapplyscenario()
         {
             try
-            {       
-
-                string path = getPathToFlash();
+            {     
+                string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
                 string pathFile = Path.Combine(path, "StatusRobot.bin");
 
                 if (!File.Exists(pathFile))
