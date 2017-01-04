@@ -2,8 +2,10 @@
 using LocalDataBase.LocalDbSQLite;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
@@ -186,19 +188,29 @@ namespace Robot
 
                     #endregion подверждение команд
                 }
-                                                 
+                
+                //поиск описания команды                               
                 nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
                 
-                var yy = command.Split(new Char[] { })[0].Count();
+                // сколько слов в команде
+                var yy = command.Split(new Char[] { }).Count();
+                // первая команда
+                var tt = command.Split(new Char[] { })[0];
+                //если такая команда в списке исключений
+                var zz = exceptionCommands.Find(a => a.Contains(tt));
 
                 //    if (nameCommand == null || nameCommand.Count == 0 || exceptionCommand.Where(a => a ==  command.Split(new Char[] { })[0] ).Count() == 0)
-                if ( nameCommand == null || nameCommand.Count == 0 )
+                if ( nameCommand == null )
                 {
-                    addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
-                    printHelpCommand("command not found", Brushes.Red);
-                    textBoxCommands.Clear();
-                    beeper();
-                    return;
+                    if (zz == null)
+                    {
+                        addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
+                        printHelpCommand("command not found", Brushes.Red);
+                        textBoxCommands.Clear();
+                        beeper();
+                        return;
+                    }
+                    
                 }
 
                 addTextToRich("# " + command, Brushes.LightGreen, false);
@@ -477,8 +489,28 @@ namespace Robot
                     return;
                 }
 
-                if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" && command.Split(new Char[] { })[1] == "111")
+               // if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" && command.Split(new Char[] { })[1] == "111")
+               if((command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" ))
                 {
+                    string fileName = command.Split(new Char[] { })[1];
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("play", scenarioDiagnosticRobot);
+
+                    if(nameCommand == null)
+                    {
+                        return;
+                    }
+                    
+                    if (! nameCommand.FirstOrDefault().monitorPrint.Contains(fileName) )
+                    {
+                        addTextToRich("Unable to find a file to play", Brushes.Red, false);
+                        printHelpCommand("Unable to find a file to play", Brushes.Red);
+                        return;
+                    }
+
+                  //  System.Windows.Resources.StreamResourceInfo res = Application.GetResourceStream(new Uri("Sounds/trrr.mp3", UriKind.Relative));
+
+                    string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
+                    MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
                     return;
                 }
 
@@ -509,6 +541,11 @@ namespace Robot
             }
 
         }
+
+        List<string> exceptionCommands = new List<string>()
+        {
+            "play"
+        };
      
     }
 }
