@@ -504,6 +504,7 @@ namespace Robot
                     {
                         addTextToRich("Unable to find a file to play", Brushes.Red, false);
                         printHelpCommand("Unable to find a file to play", Brushes.Red);
+
                         return;
                     }
 
