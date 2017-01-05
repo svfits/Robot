@@ -115,6 +115,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MediaPlayer\MediaPlayer.cs" />
+    <Compile Include="PlaySoundsWindow.xaml.cs">
+      <DependentUpon>PlaySoundsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScenarioDiagnosticRobotMainWindow.cs" />
     <Page Include="AddNewCommandWindow.xaml">
       <SubType>Designer</SubType>
@@ -137,6 +140,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PlaySoundsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationMainWindow.cs" />

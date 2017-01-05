@@ -512,6 +512,9 @@ namespace Robot
 
                     string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
                     MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
+
+                    PlaySoundsWindow plw = new PlaySoundsWindow(pathSounds);
+                    plw.ShowDialog();
                     return;
                 }
 
