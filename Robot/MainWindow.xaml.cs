@@ -456,13 +456,38 @@ namespace Robot
             // по строкам
             foreach (string line in nameCommand.FirstOrDefault().monitorPrint.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
+                int pause = 300;
+                string newline = line;
+
                 if (line.Length > 0)
                 {
-                    if(line.Contains("<") && line.Contains("</") && line.Contains(">"))
+                    //pause
+                    string[] stringSeparators = new string[] { "<PAUSE>" };
+                    string[] stringSeparatorsEnd = new string[] { "</PAUSE>" };
+                    if (line.Contains("<PAUSE>") && line.Contains("</PAUSE>"))
+                    {
+                       string txt =  line.Split(stringSeparators,StringSplitOptions.None)[1].Split(stringSeparatorsEnd,StringSplitOptions.None)[0];
+
+                       try
+                        {
+                            pause = Int32.Parse(txt);
+                        } 
+                        catch
+                        {
+                           
+                        }
+
+                        newline = line.Replace("<PAUSE>" + txt + "</PAUSE>", "");
+                    }
+
+                    await Task.Delay(pause);
+
+                    // раскраска по словам
+                    if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
                     {
                         try
                         {                           
-                            await PaintWord(line);
+                            await PaintWord(newline);
                             continue;
                         }
                         catch
@@ -471,33 +496,38 @@ namespace Robot
                         }
                     }
 
-                    if (line.Contains("#RED"))
+                    if (newline.Contains("#RED"))
                     {
-                        string txt = line.Replace("#RED", "");
+                        string txt = newline.Replace("#RED", "");
                         addTextToRich(txt, Brushes.Red, false);
                     }
-                    else if (line.Contains("#GREEN"))
+                    else if (newline.Contains("#GREEN"))
                     {
-                        string txt = line.Replace("#GREEN", "");
+                        string txt = newline.Replace("#GREEN", "");
                         addTextToRich(txt, Brushes.LightGreen, false);
                     }
-                    else if (line.Contains("#ORANGE"))
+                    else if (newline.Contains("#ORANGE"))
                     {
-                        string txt = line.Replace("#ORANGE", "");
+                        string txt = newline.Replace("#ORANGE", "");
                         addTextToRich(txt, Brushes.Orange, false);
                     }
-                    else if (line.Contains("#YELLOW"))
+                    else if (newline.Contains("#YELLOW"))
                     {
-                        string txt = line.Replace("#YELLOW", "");
+                        string txt = newline.Replace("#YELLOW", "");
                         addTextToRich(txt, Brushes.Yellow, false);
                     }
                     else
                     {
-                        addTextToRich(line, color, false);
+                        addTextToRich(newline, color, false);
                     }
 
                 }
-                await Task.Delay(300);
+                else
+                {
+                    addTextToRich("", color, false);
+                }
+                
+             
             }
 
             Task.WaitAll();
