@@ -168,7 +168,7 @@ namespace Robot
             {
                 timerBatttery.Stop();
             }            
-            statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Content = batteryCharge; }));
+            statusBataryLbl.Dispatcher.Invoke(new Action(delegate { statusBataryLbl.Content = batteryCharge + " %"; }));
         }
 
         /// <summary>
@@ -193,6 +193,7 @@ namespace Robot
                     printTextToHelp();
                     connectOrDisconnectLbl.Content = "CONNECTING";
                     connectOrDisconnectLbl.Foreground = Brushes.Green;
+                    statusBataryLbl.Content = batteryCharge + "%";
                     connectBtn.IsEnabled = false;
                     connectNotConnect = true;
                     modeLbl.Content = "Prog";
@@ -214,7 +215,7 @@ namespace Robot
                     textBoxCommands.Focus();
 
                     randomBatteryCharge();
-                    statusBataryLbl.Content = batteryCharge;
+                    statusBataryLbl.Content = batteryCharge + "%";
                     modeLbl.Content = "Prog";
                     modeLbl.Foreground = Brushes.Green;
 
@@ -236,7 +237,7 @@ namespace Robot
                 if (scenarioDiagnosticRobot > 0)
                 {
                     randomBatteryCharge();
-                    statusBataryLbl.Content = batteryCharge;
+                    statusBataryLbl.Content = batteryCharge + "%";
                     modeLbl.Content = "Prog";
                     modeLbl.Foreground = Brushes.Green;
 

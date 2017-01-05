@@ -207,7 +207,7 @@
                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">
                                 <Label Content="Battery:"  FontSize="15" VerticalAlignment="Center"/>
                                 <Label x:Name="statusBataryLbl" Content="OFF" FontSize="15" VerticalAlignment="Center"/>
-                                <Label   Content="%" FontSize="15" VerticalAlignment="Center"/>
+                                <!--<Label   Content="%" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>-->
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="3" Margin="0,0,10,0">
