@@ -315,7 +315,7 @@ namespace LocalDataBase.FlashDrive
                 }
 
                 StreamReader file = new StreamReader(pathFile);
-
+                
                 string value = file.ReadLine();
                 file.Close();
                 return Convert.ToInt32(value);
