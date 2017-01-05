@@ -205,9 +205,17 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">
-                                <Label Content="Battery:"  FontSize="15" VerticalAlignment="Center"/>
-                                <Label x:Name="statusBataryLbl" Content="OFF" FontSize="15" VerticalAlignment="Center"/>
-                                <!--<Label   Content="%" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>-->
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto" ></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>                                                                            
+                                    </Grid.ColumnDefinitions>
+                                    <Image  Source="ImageFonts/battery.png" Height="23" VerticalAlignment="Stretch" 
+                                        HorizontalAlignment="Stretch"   Grid.Column="0"/>
+                                <Label Content="Battery:"  FontSize="15" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Label x:Name="statusBataryLbl" Content="Off" FontSize="15" VerticalAlignment="Center" Grid.Column="2"/>
+                                </Grid>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="3" Margin="0,0,10,0">
@@ -223,53 +231,7 @@
                         </Grid>
                     </Grid>
                 </Border>
-
-                <!--<Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="10,10,10,10">
-                   <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>                    
-                    </Grid.RowDefinitions>
-
-                    <GroupBox Grid.Row="0" Grid.ColumnSpan="5">
-                        <TextBox ></TextBox>
-                    </GroupBox>
-
-                  
-                  
-                        -->
-                <!--<StackPanel Orientation="Horizontal">
-
-                            <Label Content="Link" />
-                            <Label x:Name="statusConnectionLbl" Content="Disconnect"  />
-
-                        </StackPanel>
-                        <Label Content="Mode" Grid.Row="0" Grid.Column="2"/>
-                        <Label x:Name="statusConnectionUsbLbl" Content="OFF" />
-
-                        <Label Content="Статус режима робота:" />
-                        <Label x:Name="statusRegimeRobotaLbl" Content="N/A" />
-                
-                        <Label Content="Статус заряда батареи:"  />
-                        <Label x:Name="statusBataryLbl" Content="OFF" />
-
-                        <Label Content="Версия программного обеспечения:" />
-                        <Label x:Name="versionProgrammLbl" Content="N/A" />
-                
-                        <Label Content="Текущая дата и время"  />
-                        <Label x:Name="dateTimeLbl" Content="OFF" />-->
-                <!--
-                  
-                </Grid>-->
-
             </Grid>
-
-
         </Border>
-
-
-
-
-
-
     </Grid>
 </Window>

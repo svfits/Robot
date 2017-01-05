@@ -203,9 +203,14 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageFonts\UncRobot.png" />
+    <Resource Include="ImageFonts\UncRobot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ImageFonts\battery.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Sounds\oneTwoFhree.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
