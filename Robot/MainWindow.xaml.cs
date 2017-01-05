@@ -448,6 +448,12 @@ namespace Robot
         /// <param name="color">цвет строки</param>
         private async void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
+            if(nameCommand == null)
+            {
+                addTextToRich("Fatall Error!!!", Brushes.White, false);
+                return;
+            }
+
             if (nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
             {
                 addTextToRich("", Brushes.White, false);
