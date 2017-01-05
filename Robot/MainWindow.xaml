@@ -207,12 +207,11 @@
                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,10,0">
                                 <Grid >
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="23"></ColumnDefinition>
                                         <ColumnDefinition Width="auto" ></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>                                                                            
                                     </Grid.ColumnDefinitions>
-                                    <Image  Source="ImageFonts/battery.png" Height="23" VerticalAlignment="Stretch" 
-                                        HorizontalAlignment="Stretch"   Grid.Column="0"/>
+                                    <Image  Source="ImageFonts/battery.png" Width="23" Height="23" Grid.Column="0"/>
                                 <Label Content="Battery:"  FontSize="15" VerticalAlignment="Center" Grid.Column="1"/>
                                 <Label x:Name="statusBataryLbl" Content="Off" FontSize="15" VerticalAlignment="Center" Grid.Column="2"/>
                                 </Grid>
