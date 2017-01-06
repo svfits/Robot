@@ -487,6 +487,16 @@ namespace Robot
                         newline = line.Replace("<PAUSE>" + txt + "</PAUSE>", "");
                     }
 
+                    if(newline.Contains("<MESSAGE>"))
+                    {
+                        //вывод текста команды и справки
+                        printHelpCommand(nameCommand, Brushes.LightGreen);
+                        richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
+                        richTextBox.ScrollToEnd();
+
+                        newline =  newline.Replace("<MESSAGE>","");
+                    }
+
                     await Task.Delay(pause);
 
                     // раскраска по словам
