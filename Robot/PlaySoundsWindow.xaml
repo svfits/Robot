@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
-        Title="PlaySoundsWindow" Height="300" Width="300">
+        Title="Music Player" Height="100" Width="290" Loaded="Window_Loaded">
     <Grid>
         <StackPanel Margin="5">
             <StackPanel.Resources>
@@ -14,9 +14,9 @@
                     <Setter Property="Padding" Value="5"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <MediaElement UnloadedBehavior="Close" LoadedBehavior="Manual" Source="Sounds/trrr.mp3" Name="my_media"></MediaElement>
+            <MediaElement UnloadedBehavior="Close" LoadedBehavior="Manual"  Name="my_media"></MediaElement>
             <StackPanel Orientation="Horizontal">
-                <StackPanel.Triggers>
+                <!--<StackPanel.Triggers>
                     <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_play">
                         <EventTrigger.Actions>
                             <BeginStoryboard Name="MediaStoryboard">
@@ -41,11 +41,11 @@
                             <ResumeStoryboard BeginStoryboardName="MediaStoryboard"></ResumeStoryboard>
                         </EventTrigger.Actions>
                     </EventTrigger>
-                </StackPanel.Triggers>
-                <Button Name="cmd_play">Play</Button>
-                <Button Name="cmd_stop">Stop</Button>
-                <Button Name="cmd_pause">Pause</Button>
-                <Button Name="cmd_resume">Resume</Button>
+                </StackPanel.Triggers>-->
+                <Button Name="cmd_play" Click="cmd_play_Click">Play</Button>
+                <Button Name="cmd_stop" Click="cmd_stop_Click">Stop</Button>
+                <Button Name="cmd_pause" Click="cmd_pause_Click">Pause</Button>
+                <Button Name="cmd_resume" Click="cmd_resume_Click">Resume</Button>
             </StackPanel>
 
         </StackPanel>

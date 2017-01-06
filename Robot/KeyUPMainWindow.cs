@@ -510,9 +510,9 @@ namespace Robot
                   //  System.Windows.Resources.StreamResourceInfo res = Application.GetResourceStream(new Uri("Sounds/trrr.mp3", UriKind.Relative));
 
                     string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
-                    MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
+                  //  MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
 
-                    PlaySoundsWindow plw = new PlaySoundsWindow(fileName);
+                    PlaySoundsWindow plw = new PlaySoundsWindow(pathSounds);
                     plw.ShowDialog();
                     return;
                 }
