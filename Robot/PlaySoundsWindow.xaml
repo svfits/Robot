@@ -14,14 +14,14 @@
                     <Setter Property="Padding" Value="5"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <MediaElement UnloadedBehavior="Close" LoadedBehavior="Manual" Name="my_media"></MediaElement>
+            <MediaElement UnloadedBehavior="Close" LoadedBehavior="Manual" Source="Sounds/trrr.mp3" Name="my_media"></MediaElement>
             <StackPanel Orientation="Horizontal">
                 <StackPanel.Triggers>
                     <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_play">
                         <EventTrigger.Actions>
                             <BeginStoryboard Name="MediaStoryboard">
                                 <Storyboard>
-                                    <MediaTimeline Storyboard.TargetName="my_media" Source="Sounds/trrr.mp3"></MediaTimeline>
+                                    <MediaTimeline Storyboard.TargetName="my_media" ></MediaTimeline>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger.Actions>

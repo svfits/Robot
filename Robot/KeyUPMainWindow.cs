@@ -504,7 +504,6 @@ namespace Robot
                     {
                         addTextToRich("Unable to find a file to play", Brushes.Red, false);
                         printHelpCommand("Unable to find a file to play", Brushes.Red);
-
                         return;
                     }
 
@@ -513,7 +512,7 @@ namespace Robot
                     string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
                     MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
 
-                    PlaySoundsWindow plw = new PlaySoundsWindow(pathSounds);
+                    PlaySoundsWindow plw = new PlaySoundsWindow(fileName);
                     plw.ShowDialog();
                     return;
                 }

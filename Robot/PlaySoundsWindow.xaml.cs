@@ -23,8 +23,10 @@ namespace Robot
         {            
             InitializeComponent();
             //robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
-            my_media.Source = new Uri("Sounds/robotServo2", UriKind.Relative);
-           // MessageBox.Show(idSounds);
+            my_media.Source = new Uri("Sounds/trrr.mp3",UriKind.Relative);
+            // MessageBox.Show(idSounds);
+            //Source="Sounds/trrr.mp3"
+            Topmost = true;
         }
     }
 }

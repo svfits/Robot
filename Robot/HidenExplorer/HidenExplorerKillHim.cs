@@ -13,7 +13,7 @@ namespace Robot.HidenExplorer
         ////убить эксплорер
         /// </summary>
         public static void killExplorer()
-        {
+        {           
             try
             {
                 Process.Start("taskkill", "/im explorer.exe /f");

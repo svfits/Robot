@@ -572,6 +572,7 @@ namespace Robot
                     {
                         checkStringStart(word, ref color);
                         checkStringEnd(word, ref color);
+                        await Task.Delay(100);
                     }
                     catch (Exception ex)
                     {
@@ -592,8 +593,6 @@ namespace Robot
                 txt = txt.Replace("<CYAN>", "").Replace("</CYAN>", "");
                 txt = txt.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
                 addTextToRich(txt + " ", color);          
-                
-                await Task.Delay(100);
             }
             addTextToRich("\n", Brushes.White);
         }
@@ -702,10 +701,10 @@ namespace Robot
     /// <param name="color"></param>
     private void addTextToRich(string v, SolidColorBrush color)
         {
-            if (sudoNotsudo )
-            {
-                v = "root" + v;
-            }          
+            //if (sudoNotsudo )
+            //{
+            //    v = "root" + v;
+            //}          
 
             try
             {
