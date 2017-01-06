@@ -22,7 +22,9 @@ namespace Robot
         public PlaySoundsWindow(string idSounds)
         {            
             InitializeComponent();
-            MessageBox.Show(idSounds);
+            //robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
+            my_media.Source = new Uri("Sounds/robotServo2", UriKind.Relative);
+           // MessageBox.Show(idSounds);
         }
     }
 }

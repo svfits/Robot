@@ -7,6 +7,47 @@
         mc:Ignorable="d"
         Title="PlaySoundsWindow" Height="300" Width="300">
     <Grid>
-        
+        <StackPanel Margin="5">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="5,5,0,5"></Setter>
+                    <Setter Property="Padding" Value="5"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <MediaElement UnloadedBehavior="Close" LoadedBehavior="Manual" Name="my_media"></MediaElement>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_play">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard Name="MediaStoryboard">
+                                <Storyboard>
+                                    <MediaTimeline Storyboard.TargetName="my_media" Source="Sounds/trrr.mp3"></MediaTimeline>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_stop">
+                        <EventTrigger.Actions>
+                            <StopStoryboard BeginStoryboardName="MediaStoryboard"></StopStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_pause">
+                        <EventTrigger.Actions>
+                            <PauseStoryboard BeginStoryboardName="MediaStoryboard"></PauseStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.Click" SourceName="cmd_resume">
+                        <EventTrigger.Actions>
+                            <ResumeStoryboard BeginStoryboardName="MediaStoryboard"></ResumeStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </StackPanel.Triggers>
+                <Button Name="cmd_play">Play</Button>
+                <Button Name="cmd_stop">Stop</Button>
+                <Button Name="cmd_pause">Pause</Button>
+                <Button Name="cmd_resume">Resume</Button>
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </Window>
