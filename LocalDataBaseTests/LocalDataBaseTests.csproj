@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2BBAF465-4B93-447A-8704-D80939FBE994}</ProjectGuid>
+    <ProjectGuid>{93EBC69C-F846-490B-9296-DA276E447619}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTestRobot</RootNamespace>
-    <AssemblyName>UnitTestRobot</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>LocalDataBaseTests</RootNamespace>
+    <AssemblyName>LocalDataBaseTests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,19 +52,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FlashDrive\GetSetScenarioOfFlashDriveTests.cs" />
-    <Compile Include="HidenExplorer\UnitTest1.cs" />
-    <Compile Include="MainWindowTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalDataBase\LocalDataBase.csproj">
       <Project>{F1B34171-4126-496C-A303-26D5F998E04C}</Project>
       <Name>LocalDataBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Robot\Robot.csproj">
-      <Project>{CA150EE4-D47D-4F7B-89E8-602C1B45016F}</Project>
-      <Name>Robot</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -517,20 +517,70 @@ namespace Robot
                     return;
                 }
 
-               if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "cat")
+                if (command.Split(new Char[] { }).Count() > 0 && command.Split(new Char[] { })[0] == "ls")
                 {
-                    string fileName = command.Split(new Char[] { })[1];
-                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
+                    List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
 
-                    if (nameCommand == null)
+                    if(files == null)
                     {
-                        addTextToRich("Unknown file format", Brushes.Red, false);
-                        printHelpCommand("Unknown file format", Brushes.Red);
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
                         return;
                     }
 
-                    addTextToRich(nameCommand, Brushes.White);
+                    foreach(var file in files)
+                    {
+                        addTextToRich(file, Brushes.White, false);
+                    }
+                    addTextToRich("Total files: " + files.Count(), Brushes.White, false);
                     return;
+                }
+
+               if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "cat")
+                {
+                    // имя файла для команды
+                    string fileName = command.Split(new Char[] { })[1];
+                    // список файлов на флешке
+                    List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
+
+                    if (files == null)
+                    {
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
+                        return;
+                    }
+                                        
+                    if (files.Find(a => a == fileName) == null)
+                    {
+                        addTextToRich("File not found", Brushes.Red, false);
+                        printHelpCommand("File not found", Brushes.Red);
+                        return;
+                    }
+                    try
+                    {
+                        string[] fileFormat = fileName.Split(new Char[] { '.' });
+
+                        if(fileFormat.Count() > 2 || fileFormat[1].Trim().ToLower() != "txt" )
+                        {
+                            addTextToRich("Unknown file format", Brushes.Red, false);
+                            printHelpCommand("Unknown file format", Brushes.Red);
+                            return;
+                        }
+
+                        string[] contentFile = GetSetScenarioOfFlashDrive.getFileContents(fileName);
+
+                        foreach (var s in contentFile)
+                        {
+                            addTextToRich(s, Brushes.White, false);
+                        }
+
+                        addTextToRich("Total Lines: " + contentFile.Count(), Brushes.White, false);
+                        return;
+                    }
+                    catch(Exception ex)
+                    {
+                        LogInFile.addFileLog("Произошла ошибка при выводе команды cat " + ex.ToString());
+                        MessageBox.Show("Произошла ошибка в файле: " + fileName +  ex.ToString());
+                        return;
+                    }                
                 }
 
 
@@ -559,12 +609,16 @@ namespace Robot
                 textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
             }
 
-        }
+        }      
 
+        /// <summary>
+        ////список исключений в командах
+        /// </summary>
         List<string> exceptionCommands = new List<string>()
         {
             "play",
-            "cat"
+            "cat" ,
+            "ls"
         };
      
     }

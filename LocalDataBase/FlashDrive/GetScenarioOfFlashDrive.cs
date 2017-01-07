@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LocalDataBase.FlashDrive
 {
     /// <summary>
     ////класс для работы с флешками
     /// </summary>
-  public  class GetSetScenarioOfFlashDrive
+    public  class GetSetScenarioOfFlashDrive
     {
      public static List<string> binCheck = new List<string>()
         {
@@ -34,7 +33,10 @@ namespace LocalDataBase.FlashDrive
       public  static int getNameFlashisAlive()
         {
             string fileNameKernel = "RobotKernel.bin";
-
+#if DEBUG
+            return 3;
+#else
+#endif
             try
             {
                 foreach (var dinfo in DriveInfo.GetDrives())
@@ -74,7 +76,7 @@ namespace LocalDataBase.FlashDrive
         /// <returns></returns>
       public static string[] getFilesFromFlash()
         {
-            string[] files = new string[100];
+            string[] files = new string[1000];
             int i = 0;
             try
             {
@@ -221,7 +223,7 @@ namespace LocalDataBase.FlashDrive
         /// </summary>
         public static void greateFileForBackup()
         {
-            string path = getPathToFlash();
+            string path = getPathToFlashRobotKernel();
 
             try
             {
@@ -267,7 +269,7 @@ namespace LocalDataBase.FlashDrive
         ////получить путь до флешки
         /// </summary>
         /// <returns></returns>
-        public static string getPathToFlash()
+        public static string getPathToFlashRobotKernel()
         {
             string fileNameKernel = "RobotKernel.bin";
 
@@ -294,6 +296,72 @@ namespace LocalDataBase.FlashDrive
             {
                 LogInFile.addFileLog("ошибка при  получении списка файлов " + ex.ToString());
                 return "";
+            }
+        }
+
+        /// <summary>
+        ////получить путь до флешки та которая не ядро
+        /// </summary>
+        /// <returns></returns>
+        public static string getPathToFlashAliens()
+        {
+            string fileNameKernel = "RobotKernel.bin";
+            Boolean whetherThereisaFile = false;
+
+            try
+            {
+                foreach (var dinfo in DriveInfo.GetDrives())
+                {
+                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
+                    {
+                        string[] dirs = Directory.GetFiles(dinfo.Name);
+
+                        foreach (string dir in dirs)
+                        {
+                            if (Path.GetFileName(dir) == fileNameKernel)
+                            {
+                                whetherThereisaFile = true;
+                                break;
+                            }
+                        }
+
+                        if (!whetherThereisaFile)
+                        {
+                            return Path.GetDirectoryName(dirs[0]);
+                        }
+                    }
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при  получении пути к другой флешке " + ex.ToString());
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// получение списка файлов не из ядра (без файла kernelRobot)
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> getFilesFromFlashAliens()
+        {
+            List<string> lstFiles = new List<string>();
+            try
+            {
+                var getFileName = Directory.GetFiles(getPathToFlashAliens());
+                //return getFileName;
+                foreach(string file in getFileName )
+                {
+                    lstFiles.Add( Path.GetFileName(file));                    
+                }
+
+                return lstFiles;
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("не удалось получить список файлов с флешки без ядра" + ex.ToString());
+                return null;
             }
         }
 
@@ -326,6 +394,19 @@ namespace LocalDataBase.FlashDrive
                 return 0;
             }
            
+        }
+
+        /// <summary>
+        ////получить содержимое файла по его имени на флешке 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static string[] getFileContents(string fileName)
+        {
+            string pathFile = Path.Combine(getPathToFlashAliens(),fileName);
+
+            string[] readText = File.ReadAllLines(pathFile, Encoding.GetEncoding("windows-1251"));
+            return readText;
         }
     }
 }
