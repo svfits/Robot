@@ -558,7 +558,7 @@ namespace Robot
                     {
                         string[] fileFormat = fileName.Split(new Char[] { '.' });
 
-                        if(fileFormat.Count() > 2 || fileFormat.Count() > 2 || fileFormat[1].Trim().ToLower() != "txt" )
+                        if(fileFormat.Count() > 2 || fileFormat.Count() < 2 || fileFormat[1].Trim().ToLower() != "txt" )
                         {
                             addTextToRich("Unknown file format", Brushes.Red, false);
                             printHelpCommand("Unknown file format", Brushes.Red);
