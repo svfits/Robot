@@ -572,7 +572,7 @@ namespace Robot
                     {
                         checkStringStart(word, ref color);
                         checkStringEnd(word, ref color);
-                        await Task.Delay(100);
+                        await Task.Delay(30);
                     }
                     catch (Exception ex)
                     {
