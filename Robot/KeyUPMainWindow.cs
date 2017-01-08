@@ -507,8 +507,17 @@ namespace Robot
                         printHelpCommand("File not found", Brushes.Red);
                         return;
                     }
-                               
-                   //  string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
+
+                    string[] fileFormat = fileName.Split(new Char[] { '.' });
+
+                    if (( fileFormat.Count() > 2 || fileFormat.Count() < 2) || ( fileFormat[1].Trim().ToLower() != "wav" && fileFormat[1].Trim().ToLower() != "mp3"))
+                    {
+                        addTextToRich("Unknown file format", Brushes.Red, false);
+                        printHelpCommand("Unknown file format", Brushes.Red);
+                        return;
+                    }
+
+                    //  string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
                     string pathSounds = Path.Combine(GetSetScenarioOfFlashDrive.getPathToFlashAliens(), fileName);
 
                     //  MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);

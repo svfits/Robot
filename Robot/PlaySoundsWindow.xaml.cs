@@ -35,7 +35,8 @@ namespace Robot
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {            
             try
-            {             
+            {
+                this.Title = "Music Player  " + _muzik;
                 my_media.Source = new Uri(_muzik);
                 my_media.Play();                           
 
