@@ -36,7 +36,7 @@ namespace Robot
         {            
             try
             {
-                this.Title = "Music Player  " + _muzik;
+                //this.Title = "Music Player  " + _muzik;
                 my_media.Source = new Uri(_muzik);
                 my_media.Play();                           
 

@@ -33,7 +33,7 @@ namespace Robot
                 if (connectNotConnect == false && scenarioDiagnosticRobot != 4)
                 {
                     //  addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
-                    printHelpCommand("НЕТ СОЕДИНЕНИЯ С РОБОТОМ", Brushes.Red);
+                    printHelpCommand("Robot is not Connected", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
@@ -255,29 +255,13 @@ namespace Robot
                     {
                         // все стало хорошо ОС установлена
                         scenarioDiagnosticRobot = 199;
-
-                        //randomBatteryCharge();
-                        //statusBataryLbl.Content = batteryCharge;
-                        //modeLbl.Content = "Prog";
-                        //modeLbl.Foreground = Brushes.Green;
-
-                        //versionProgrammLbl.Foreground = Brushes.Green;
-                        //versionProgrammLbl.Content = "v.15.7.16";
-
-                        //connectOrDisconnectLbl.Content = "CONNECTED";
-                        //connectOrDisconnectLbl.Foreground = Brushes.Green;
-
-                        //if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
-                        //{
-                        //    addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-                        //}
-
+                                         
                         connectNotConnect = true;
                     }
                     else
                     {
-                        addTextToRich("Init flash drive not detect", Brushes.Red, false);
-                        printHelpCommand("Init flash drive not detect", Brushes.Red);
+                        addTextToRich("Not detect all the necessary files on flash drive", Brushes.Red, false);
+                        printHelpCommand("Not detect all the necessary files on flash drive", Brushes.Red);
                         beeper();
                         return;
                     }
@@ -366,51 +350,7 @@ namespace Robot
                     // переустановлен модуль сбойный
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     scenarioDiagnosticRobot = 199;
-                }
-                //else if (scenarioDiagnosticRobot == 3 && command == "make modules install " + errorFileScenario3)
-                //{
-                //    if (sudoNotsudo == false)
-                //    {
-                //        addTextToRich("Only root!", Brushes.Red, false);
-                //        printHelpCommand("Only root!", Brushes.Red);
-                //        beeper();
-                //        return;
-                //    }
-                //    addTextToRich("module not found", Brushes.Red, false);
-                //    printHelpCommand("Модуль для сборки не найден", Brushes.Red);
-                //    beeper();
-                //    return;
-                //}
-
-                //// команда buckup
-                //if (nameCommand.FirstOrDefault().command == "backup" && GetSetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == true
-                //    && searchLastCommand() != "yes")
-                //{
-                //    if (scenarioDiagnosticRobot != 199)
-                //    {
-                //        // textBoxSuffixAddText("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary");
-                //        addTextToRich("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red, false);
-                //        printHelpCommand("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red);
-                //        return;
-                //    }
-
-                //    textBoxSuffixAddText("Flash drive is not empty, all data will delete?");
-                //    printHelpCommand("Flash drive is not empty, all data will delete?", Brushes.Red);
-                //    x2command = true;
-                //    return;
-                //}
-                //else if (GetSetScenarioOfFlashDrive.checkFilesFromFlashForInitScenarioBackup() == false && nameCommand.FirstOrDefault().command == "backup"
-                //    && searchLastCommand() != "yes")
-                //{
-                //    if (scenarioDiagnosticRobot != 199)
-                //    {
-                //        // textBoxSuffixAddText("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary");
-                //        addTextToRich("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red, false);
-                //        printHelpCommand("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red);
-                //        return;
-                //    }
-                //    GetSetScenarioOfFlashDrive.greateFileForBackup();
-                //}
+                }             
 
                 if( command == "backup")
                 {
@@ -448,6 +388,13 @@ namespace Robot
 
                 if (command == "save" && searchLastCommand() != "yes")
                 {
+                    if (sudoNotsudo)
+                    {
+                        addTextToRich("Already logged as Administrator ", Brushes.Red, false);
+                        printHelpCommand("Already logged as Administrator ", Brushes.Red);
+                        return;
+                    }
+
                     // addTextToRich("Proceed with save?", Brushes.Red, false);
                     // textBoxSuffix.Text = "Proceed with save?";
                     textBoxSuffixAddText("Proceed with save?");
