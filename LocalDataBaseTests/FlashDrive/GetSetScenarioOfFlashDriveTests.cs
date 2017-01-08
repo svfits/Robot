@@ -35,5 +35,17 @@ namespace LocalDataBase.FlashDrive.Tests
             string[] contentFile = GetSetScenarioOfFlashDrive.getFileContents("doc.txt");
 
         }
+
+        [TestMethod()]
+        public void checkFilesFromFlashForInitScenario5Test()
+        {
+            GetSetScenarioOfFlashDrive.checkFilesFromFlashForInitScenario5();
+        }
+
+        [TestMethod()]
+        public void greateFileForBackupTest()
+        {
+            GetSetScenarioOfFlashDrive.greateFileForBackup();
+        }
     }
 }

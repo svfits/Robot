@@ -33,10 +33,7 @@ namespace LocalDataBase.FlashDrive
       public  static int getNameFlashisAlive()
         {
             string fileNameKernel = "RobotKernel.bin";
-#if DEBUG
-            return 3;
-#else
-#endif
+
             try
             {
                 foreach (var dinfo in DriveInfo.GetDrives())
@@ -143,24 +140,16 @@ namespace LocalDataBase.FlashDrive
         /// <returns></returns>
         public static Boolean checkFilesFromFlashForInitScenario5()
         {        
-
             List<string> files = new List<string>();
             
             try
             {
-                foreach (var dinfo in DriveInfo.GetDrives())
-                {
-                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
-                    {
-                        string[] dirs = Directory.GetFiles(dinfo.Name);
+                        string[] dirs = Directory.GetFiles(getPathToFlashAliens());
 
                         foreach (string dir in dirs)
                         {
                             files.Add(Path.GetFileName(dir));                           
                         }
-                       
-                    }
-                }
 
                 List<string> resultList = binCheck.Where(t => files.Contains(t)).ToList<string>();
                 if(binCheck.Count == resultList.Count)
@@ -188,19 +177,13 @@ namespace LocalDataBase.FlashDrive
             List<string> files = new List<string>();
             try
             {
-                foreach (var dinfo in DriveInfo.GetDrives())
-                {
-                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
-                    {
-                        string[] dirs = Directory.GetFiles(dinfo.Name);
+                        string[] dirs = Directory.GetFiles(getPathToFlashAliens());
 
                         foreach (string dir in dirs)
                         {
                             files.Add(Path.GetFileName(dir));
                         }
-                    }
-                }
-
+             
                 List<string> resultList = binCheck.Where(t => files.Contains(t)).ToList();
                 if ( resultList.Count > 0)
                 {
@@ -223,7 +206,7 @@ namespace LocalDataBase.FlashDrive
         /// </summary>
         public static void greateFileForBackup()
         {
-            string path = getPathToFlashRobotKernel();
+            string path = getPathToFlashAliens();
 
             try
             {
