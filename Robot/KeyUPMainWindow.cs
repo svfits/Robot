@@ -352,7 +352,7 @@ namespace Robot
                     scenarioDiagnosticRobot = 199;
                 }             
 
-                if( command == "backup")
+                if( command == "backup system")
                 {
                     if (sudoNotsudo == false)
                     {
@@ -376,8 +376,7 @@ namespace Robot
                             printHelpCommand("Flash drive is not empty, all data will delete?", Brushes.Red);
                             x2command = true;
                             x2command = true;
-                            return;
-                            
+                            return;                            
                         }
                         else
                         {
