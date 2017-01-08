@@ -493,24 +493,25 @@ namespace Robot
                if((command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" ))
                 {
                     string fileName = command.Split(new Char[] { })[1];
-                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("play", scenarioDiagnosticRobot);
+                    List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
 
-                    if(nameCommand == null)
+                    if (files == null)
                     {
-                        return;
-                    }
-                    
-                    if (! nameCommand.FirstOrDefault().monitorPrint.Contains(fileName) )
-                    {
-                        addTextToRich("Unable to find a file to play", Brushes.Red, false);
-                        printHelpCommand("Unable to find a file to play", Brushes.Red);
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
                         return;
                     }
 
-                  //  System.Windows.Resources.StreamResourceInfo res = Application.GetResourceStream(new Uri("Sounds/trrr.mp3", UriKind.Relative));
+                    if (files.Find(a => a == fileName) == null)
+                    {
+                        addTextToRich("File not found", Brushes.Red, false);
+                        printHelpCommand("File not found", Brushes.Red);
+                        return;
+                    }
+                               
+                   //  string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
+                    string pathSounds = Path.Combine(GetSetScenarioOfFlashDrive.getPathToFlashAliens(), fileName);
 
-                    string pathSounds = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "/Sounds/" + fileName;
-                  //  MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
+                    //  MediaPlayer.MediaPlayer.startMediaPlayer(pathSounds);
 
                     PlaySoundsWindow plw = new PlaySoundsWindow(pathSounds);
                     plw.ShowDialog();
@@ -554,6 +555,7 @@ namespace Robot
                         printHelpCommand("File not found", Brushes.Red);
                         return;
                     }
+
                     try
                     {
                         string[] fileFormat = fileName.Split(new Char[] { '.' });

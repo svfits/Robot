@@ -25,23 +25,20 @@ namespace Robot
         {            
             InitializeComponent();
             _muzik = idSounds;
-            //robotImage.Source = new BitmapImage(new Uri("ImageFonts/UncRobot.png", UriKind.Relative));
-            //my_media.Source = new Uri("Sounds/trrr.mp3",UriKind.Relative);
-            // MessageBox.Show(idSounds);
-            //Source="Sounds/trrr.mp3"
-         //   Topmost = true;
+         
+#if DEBUG
+#else
+            Topmost = true;
+#endif
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Source = "Sounds/trrr.mp3"
+        {            
             try
-            {
-                // my_media.Source = new Uri("Sounds/trrr.mp3", UriKind.Relative);
+            {             
                 my_media.Source = new Uri(_muzik);
-                my_media.Play();
-                            
-               //MediaPlayer.MediaPlayer.startMediaPlayer(_muzik);
+                my_media.Play();                           
+
             }
             catch (Exception ex)
             {
