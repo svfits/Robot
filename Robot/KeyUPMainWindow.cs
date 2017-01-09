@@ -1,5 +1,6 @@
 ﻿using LocalDataBase.FlashDrive;
 using LocalDataBase.LocalDbSQLite;
+using LocalDataBase.RandomFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -487,7 +488,7 @@ namespace Robot
 
                     foreach(var file in files)
                     {
-                        addTextToRich(file, Brushes.White, false);
+                        addTextToRich("root  " + WarningCheckFilesRandom.RandomSizeFile() + " " + WarningCheckFilesRandom.RandomTime() + "  " +  file, Brushes.White, false);
                     }
                     addTextToRich("Total files: " + files.Count(), Brushes.White, false);
                     return;

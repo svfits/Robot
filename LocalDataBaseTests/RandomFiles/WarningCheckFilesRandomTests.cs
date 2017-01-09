@@ -16,5 +16,31 @@ namespace LocalDataBase.RandomFiles.Tests
         {
 
         }
+
+        [TestMethod()]
+        public void RandomSizeTest()
+        {
+            WarningCheckFilesRandom.RandomSizeFile();
+        }
+
+        [TestMethod()]
+        public void RandomMonthTest()
+        {
+            string[] dd = new string[1000];
+            for (int i = 0; i <= 999; i++)
+            {
+                dd[i] = WarningCheckFilesRandom.RandomMonth();
+            }
+        }
+
+        [TestMethod()]
+        public void RandomTimeTest()
+        {
+            string[] dd = new string[1000];
+            for (int i = 0; i <= 999; i++)
+            {
+                dd[i] = WarningCheckFilesRandom.RandomTime().ToString();
+            }
+        }
     }
 }
