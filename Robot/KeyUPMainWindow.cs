@@ -39,7 +39,7 @@ namespace Robot
                 base.OnKeyDown(e);
             }
 
-            if (Keyboard.Modifiers == ModifierKeys.Control && e.SystemKey == Key.O)
+            if ( (Keyboard.Modifiers == ModifierKeys.Control && e.SystemKey == Key.O ) || (Keyboard.Modifiers == ModifierKeys.Control && e.SystemKey == Key.O))
             {
                 e.Handled = true;
             }

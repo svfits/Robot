@@ -450,8 +450,9 @@ namespace Robot
         private async void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
             // сделаем курсор задумчивым
-            Cursor oldCursor = this.Cursor;
-            this.Cursor = Cursors.Wait;
+            Cursor oldCursorTextbox = textBoxCommands.Cursor;
+            textBoxCommands.Cursor = Cursors.Wait;
+            richTextBox.Cursor = Cursors.Wait;
 
             if (nameCommand == null)
             {
@@ -558,7 +559,8 @@ namespace Robot
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
 
-          //  this.Cursor = oldCursor;
+            richTextBox.Cursor = Cursors.Arrow;
+            textBoxCommands.Cursor = oldCursorTextbox;
         }
         
             
