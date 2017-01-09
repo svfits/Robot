@@ -24,7 +24,7 @@ namespace Robot
             DoubleAnimation labelAnimation = new DoubleAnimation();
             labelAnimation.From = connectOrDisconnectLbl.ActualWidth;
             labelAnimation.To = 300;
-            labelAnimation.Duration = TimeSpan.FromSeconds(3); 
+            labelAnimation.Duration = TimeSpan.FromSeconds(3);            
             connectOrDisconnectLbl.BeginAnimation(Label.WidthProperty, labelAnimation);
 
             DoubleAnimation logoAnimation = new DoubleAnimation();
@@ -39,6 +39,11 @@ namespace Robot
             robotAnimation.Duration = TimeSpan.FromSeconds(5);
             robotImage.BeginAnimation(Image.WidthProperty, robotAnimation);
 
+        }
+
+        private void LabelAnimation_Comleted(object sender, EventArgs e)
+        {
+            connectOrDisconnectLbl.Content = "CONNECTED";
         }
 
         /// <summary>

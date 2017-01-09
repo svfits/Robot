@@ -32,7 +32,7 @@ namespace Robot
         Timer timerDateTime = new Timer();
         Timer timerGetDataFlashDrive = new Timer();
         Timer timerRobotWorkPrintModules = new Timer();
-
+        
         /// <summary>
         /// ошибка в файле для сценария 3
         /// </summary>

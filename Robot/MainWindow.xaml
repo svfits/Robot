@@ -19,7 +19,7 @@
     <Window.Resources>
         <Storyboard x:Key="animLabel">
             <DoubleAnimation BeginTime="00:00:00.3" Duration="00:00:04" From="0" To="10" AutoReverse="True" Storyboard.TargetName="connectOrDisconnectLbl"
-                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
+                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Completed="LabelAnimation_Comleted"/>
         </Storyboard>
     </Window.Resources>
 
