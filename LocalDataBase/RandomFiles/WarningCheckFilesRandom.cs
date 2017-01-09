@@ -116,12 +116,12 @@ namespace LocalDataBase.RandomFiles
             return rnd.main();
         }
 
-        public static  DateTime RandomTime()
+        public static  string RandomTime()
         {
             Random gen = random();
             DateTime start = new DateTime(2016, 1, 1);
             int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range)).AddHours(gen.Next(range)).AddMinutes(gen.Next(range));
+            return start.AddDays(gen.Next(range)).AddHours(gen.Next(range)).AddMinutes(gen.Next(range)).ToString();
         }
     }
 

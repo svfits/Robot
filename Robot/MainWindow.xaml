@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" 
-        WindowState="Maximized"  WindowStyle="None">
+        WindowState="Maximized"  WindowStyle="None" ResizeMode="NoResize">
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  CanExecute="CanExecute_New"/>

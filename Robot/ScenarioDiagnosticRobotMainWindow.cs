@@ -151,7 +151,7 @@ namespace Robot
                         modeLbl.Dispatcher.Invoke(new Action(delegate { modeLbl.Content = "Standby"; }));
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.IsEnabled = true; }));
                         logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Text = "Link established. Use CONNECT button."; }));
-                        logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Foreground = Brushes.Green; }));
+                        logTXB.Dispatcher.Invoke(new Action(delegate { logTXB.Foreground = Brushes.LightGreen; }));
                         connectBtn.Dispatcher.Invoke(new Action(delegate { connectBtn.Focus(); }));
                     }
 

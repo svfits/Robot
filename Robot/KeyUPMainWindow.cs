@@ -15,6 +15,51 @@ namespace Robot
 {
     public partial class MainWindow
     {
+        /// <summary>
+        ////заблокируем все что нажимается 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Alt && e.SystemKey == Key.Space)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                base.OnKeyDown(e);
+            }
+
+            if (Keyboard.Modifiers == ModifierKeys.Shift && e.SystemKey == Key.F10)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                base.OnKeyDown(e);
+            }
+
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.SystemKey == Key.O)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                base.OnKeyDown(e);
+            }
+
+            if (e.Key == Key.Tab && (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                e.Handled = true;
+            }
+
+            if (e.Key == Key.Tab && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                e.Handled = true;
+            }
+
+        }
+
         private async void richTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // строка которую получили из консоли
@@ -558,6 +603,8 @@ namespace Robot
                                
                 #endregion конец команд
             }
+
+
 
             //press key up
             if (e.Key == System.Windows.Input.Key.Up)
