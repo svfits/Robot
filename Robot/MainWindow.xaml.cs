@@ -12,6 +12,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -448,7 +449,11 @@ namespace Robot
         /// <param name="color">цвет строки</param>
         private async void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
-            if(nameCommand == null)
+            // сделаем курсор задумчивым
+            Cursor oldCursor = this.Cursor;
+            this.Cursor = Cursors.Wait;
+
+            if (nameCommand == null)
             {
                 addTextToRich("Fatall Error!!!", Brushes.White, false);
                 return;
@@ -552,6 +557,8 @@ namespace Robot
             printHelpCommand(nameCommand, Brushes.LightGreen);
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
             richTextBox.ScrollToEnd();
+
+          //  this.Cursor = oldCursor;
         }
         
             

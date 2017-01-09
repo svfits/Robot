@@ -306,12 +306,16 @@ namespace LocalDataBase.FlashDrive
                                 whetherThereisaFile = true;
                                 break;
                             }
+                            else
+                            {
+                                whetherThereisaFile = false;
+                            }
                         }
 
                         if (!whetherThereisaFile)
                         {
                             return Path.GetDirectoryName(dirs[0]);
-                        }
+                        }                      
                     }
                 }
                 return "";

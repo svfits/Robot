@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Robot
@@ -20,7 +21,8 @@ namespace Robot
 
             //press key enter
             if (e.Key == System.Windows.Input.Key.Enter)
-            {
+            {               
+
                 if (scenarioDiagnosticRobot == 0)
                 {
                     //  addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
@@ -552,7 +554,7 @@ namespace Robot
                 //вывод текста команды и справки
              //   printHelpCommand(nameCommand, Brushes.LightGreen);
                 addTextToRich(nameCommand, Brushes.White);
-
+                               
                 #endregion конец команд
             }
 

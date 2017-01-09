@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="FlashDrive\GetSetScenarioOfFlashDriveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomFiles\WarningCheckFilesRandomTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalDataBase\LocalDataBase.csproj">
