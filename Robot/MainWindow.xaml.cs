@@ -548,8 +548,7 @@ namespace Robot
                 else
                 {
                     addTextToRich("", color, false);
-                }
-                
+                }             
              
             }
 
