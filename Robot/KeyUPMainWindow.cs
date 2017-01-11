@@ -523,23 +523,11 @@ namespace Robot
 
                 if (command.Split(new Char[] { }).Count() > 0 && command.Split(new Char[] { })[0] == "ls")
                 {
-                    List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
-
-                    if(files == null)
-                    {
-                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
-                        return;
-                    }
-
-                    foreach(var file in files)
-                    {
-                        addTextToRich("root  " + WarningCheckFilesRandom.RandomSizeFile() + " " + WarningCheckFilesRandom.RandomTime() + "  " +  file, Brushes.White, false);
-                    }
-                    addTextToRich("Total files: " + files.Count(), Brushes.White, false);
+                    CommandsLs();
                     return;
                 }
 
-               if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "cat")
+                if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "cat")
                 {
                     // имя файла для команды
                     string fileName = command.Split(new Char[] { })[1];
@@ -616,7 +604,28 @@ namespace Robot
                 textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
             }
 
-        }      
+        }
+
+        /// <summary>
+        ////команда LS
+        /// </summary>
+        public void CommandsLs()
+        {
+            List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
+
+            if (files == null)
+            {
+                addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
+                return;
+            }
+
+            foreach (var file in files)
+            {
+                addTextToRich("root  " + WarningCheckFilesRandom.RandomSizeFile() + " " + WarningCheckFilesRandom.RandomTime() + "  " + file, Brushes.White, false);
+            }
+            addTextToRich("Total files: " + files.Count(), Brushes.White, false);
+            return;
+        }
 
         /// <summary>
         ////список исключений в командах

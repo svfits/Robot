@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfConsoleTest", "WpfConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalDataBaseTests", "LocalDataBaseTests\LocalDataBaseTests.csproj", "{93EBC69C-F846-490B-9296-DA276E447619}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotTests1", "RobotTests1\RobotTests1.csproj", "{15D4EBE5-D2B5-47D8-887E-813D19549563}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{93EBC69C-F846-490B-9296-DA276E447619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93EBC69C-F846-490B-9296-DA276E447619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93EBC69C-F846-490B-9296-DA276E447619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D4EBE5-D2B5-47D8-887E-813D19549563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D4EBE5-D2B5-47D8-887E-813D19549563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D4EBE5-D2B5-47D8-887E-813D19549563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D4EBE5-D2B5-47D8-887E-813D19549563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

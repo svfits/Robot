@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,7 +122,8 @@ namespace LocalDataBase.RandomFiles
             Random gen = random();
             DateTime start = new DateTime(2016, 1, 1);
             int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range)).AddHours(gen.Next(range)).AddMinutes(gen.Next(range)).ToString();
+            CultureInfo heIL = new CultureInfo("en-US");
+            return start.AddDays(gen.Next(range)).ToString("m",heIL);
         }
     }
 
