@@ -165,36 +165,7 @@ namespace Robot
 
                     if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
                     {
-                        objDoc = new FlowDocument();
-                        objParag1 = new Paragraph();
-
-                        richTextBox.Document.Blocks.Clear();
-
-                        addTextToRich("", Brushes.Green, false);
-                        timerRobotWorkPrintModules.Stop();
-                        // очистим модули
-                        emptyModules();
-                        addTextToRich("The system will rebooting . . .", Brushes.Red, false);
-                        printHelpCommand("The system will rebooting . . .", Brushes.Red);
-                        sudoNotsudo = false;
-                        textBoxSuffixAddText("#");
-                        textBoxCommands.Clear();
-
-                        await Task.Delay(2000);
-
-                        if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
-                        {
-                            addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
-                        }
-
-                        if ((GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == null) || (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199))
-                        {
-                            scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
-                        }
-
-                        x2command = false;
-                        printHelpCommand("", Brushes.Green);
-                        timerRobotWorkPrintModules.Start();
+                        await commandsReboot();
                         return;
                     }
                     else if (textBoxSuffix.Text.Trim() == "Proceed with reboot?")
@@ -410,6 +381,13 @@ namespace Robot
                         return;
                     }
 
+                    if( GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
+                    {
+                        addTextToRich("Flash drive is not found", Brushes.Red, false);
+                        printHelpCommand("Flash drive is not found", Brushes.Red);
+                        return;
+                    }
+
                     if (scenarioDiagnosticRobot != 199)
                     {
                         addTextToRich("Robot status does not allow backups. Please diagnose and repair any errors in the robot, if it’s necessary", Brushes.Red, false);
@@ -422,8 +400,7 @@ namespace Robot
                         {
                             textBoxSuffixAddText("Flash drive is not empty, all data will delete?");
                             printHelpCommand("Flash drive is not empty, all data will delete?", Brushes.Red);
-                            x2command = true;
-                            x2command = true;
+                            x2command = true;                           
                             return;                            
                         }
                         else
@@ -435,10 +412,11 @@ namespace Robot
 
                 if (command == "save" && searchLastCommand() != "yes")
                 {
-                    if (sudoNotsudo)
+                    if (sudoNotsudo == false)
                     {
-                        addTextToRich("Already logged as Administrator ", Brushes.Red, false);
-                        printHelpCommand("Already logged as Administrator ", Brushes.Red);
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
                         return;
                     }
 
@@ -604,6 +582,45 @@ namespace Robot
                 textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
             }
 
+        }
+
+        /// <summary>
+        ////команда перезагрузки
+        /// </summary>
+        /// <returns></returns>
+        private async Task commandsReboot()
+        {
+            objDoc = new FlowDocument();
+            objParag1 = new Paragraph();
+
+            richTextBox.Document.Blocks.Clear();
+
+            addTextToRich("", Brushes.Green, false);
+            timerRobotWorkPrintModules.Stop();
+            // очистим модули
+            emptyModules();
+            addTextToRich("The system will rebooting . . .", Brushes.Red, false);
+            printHelpCommand("The system will rebooting . . .", Brushes.Red);
+            sudoNotsudo = false;
+            textBoxSuffixAddText("#");
+            textBoxCommands.Clear();
+
+            await Task.Delay(2000);
+
+            if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
+            {
+                addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
+            }
+
+            if ((GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == null) || (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199))
+            {
+                scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+            }
+
+            x2command = false;
+            printHelpCommand("", Brushes.Green);
+            timerRobotWorkPrintModules.Start();
+            return;
         }
 
         /// <summary>

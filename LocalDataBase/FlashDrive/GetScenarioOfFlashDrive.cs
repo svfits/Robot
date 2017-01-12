@@ -299,6 +299,11 @@ namespace LocalDataBase.FlashDrive
                     {
                         string[] dirs = Directory.GetFiles(dinfo.Name);
 
+                        if(dirs == null || dirs.Length == 0)
+                        {
+                            return dinfo.ToString();
+                        }
+
                         foreach (string dir in dirs)
                         {
                             if (Path.GetFileName(dir) == fileNameKernel)
@@ -318,12 +323,12 @@ namespace LocalDataBase.FlashDrive
                         }                      
                     }
                 }
-                return "";
+                return String.Empty;
             }
             catch (Exception ex)
             {
                 LogInFile.addFileLog("ошибка при  получении пути к другой флешке " + ex.ToString());
-                return "";
+                return String.Empty;
             }
         }
 

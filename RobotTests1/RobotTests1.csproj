@@ -51,10 +51,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FlashDrive\GetSetScenarioOfFlashDriveTests.cs" />
     <Compile Include="MainWindowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LocalDataBase\LocalDataBase.csproj">
+      <Project>{F1B34171-4126-496C-A303-26D5F998E04C}</Project>
+      <Name>LocalDataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Robot\Robot.csproj">
       <Project>{CA150EE4-D47D-4F7B-89E8-602C1B45016F}</Project>
       <Name>Robot</Name>

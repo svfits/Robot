@@ -20,7 +20,8 @@ namespace LocalDataBase.FlashDrive.Tests
         [TestMethod()]
         public void getPathToFlashAliensTest()
         {
-            var ttt = GetSetScenarioOfFlashDrive.getPathToFlashAliens();
+            string ttt = GetSetScenarioOfFlashDrive.getPathToFlashAliens();
+            string ttt1 = GetSetScenarioOfFlashDrive.getPathToFlashAliens();
         }
 
         [TestMethod()]
@@ -47,5 +48,15 @@ namespace LocalDataBase.FlashDrive.Tests
         {
             GetSetScenarioOfFlashDrive.greateFileForBackup();
         }
+
+        [TestMethod()]
+        public void getScenarioApplyNotapplyscenarioTest()
+        {
+            if ((GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == null) || (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199))
+            {
+            var   scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+            }
+        }
+      
     }
 }
