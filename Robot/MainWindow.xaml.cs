@@ -503,7 +503,28 @@ namespace Robot
                         richTextBox.ScrollToEnd();
 
                         newline =  newline.Replace("<MESSAGE>","");
-                    }                  
+                    }
+                    
+                    // метка для сценария 3 
+                    if(newline.Contains("[ss274.bin"))
+                    {
+                        addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
+                        newline = newline.Replace("[ss274.bin", "");
+                    } 
+                    
+                    if(newline.Contains("[markColorizeModule]"))
+                    {
+                        if (scenarioDiagnosticRobot == 199)
+                        {
+                            colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                        }
+                        else
+                        {
+                            colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
+                        }
+
+                        newline = newline.Replace("[markColorizeModule]", "");
+                    }                
 
                     // раскраска по словам
                     if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
@@ -616,7 +637,6 @@ namespace Robot
                    // return;
                 }
 
-                
                 addTextToRich(txt + " ", color);
             }
             addTextToRich("\n", Brushes.White);

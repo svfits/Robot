@@ -246,18 +246,19 @@ namespace Robot
                     addTextToRich("", Brushes.Green, false);
                     return;
                 }
-                //диагностика
-                if ( command == "diag all")
-                {
-                    if (scenarioDiagnosticRobot == 199)
-                    {
-                        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
-                    }
-                    else
-                    {
-                        colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
-                    }
-                }
+
+                ////диагностика
+                //if ( command == "diag all")
+                //{
+                //    if (scenarioDiagnosticRobot == 199)
+                //    {
+                //        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                //    }
+                //    else
+                //    {
+                //        colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
+                //    }
+                //}
 
                 // установка ПО
                 if ( command == "init robot" )
@@ -296,7 +297,7 @@ namespace Robot
                         return;
                     }
 
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
                 }
@@ -311,7 +312,7 @@ namespace Robot
                         return;
                     }
 
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
@@ -322,7 +323,7 @@ namespace Robot
                     {
                         if (sudoNotsudo == true)
                         {
-                            colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                            //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                             scenarioDiagnosticRobot = 199;
                             GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                         }
@@ -343,10 +344,10 @@ namespace Robot
                     }
                 }
 
-                if (scenarioDiagnosticRobot == 3 && command == "diag servo")
-                {
-                    addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
-                }
+                //if (scenarioDiagnosticRobot == 3 && command == "diag servo")
+                //{
+                //    addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
+                //}
 
                 // сценарий 3 
                 if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install") )
@@ -367,7 +368,7 @@ namespace Robot
                         return;
                     }
                     // переустановлен модуль сбойный
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     scenarioDiagnosticRobot = 199;
                 }             
 
@@ -383,8 +384,8 @@ namespace Robot
 
                     if( GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
                     {
-                        addTextToRich("Flash drive is not found", Brushes.Red, false);
-                        printHelpCommand("Flash drive is not found", Brushes.Red);
+                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
+                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
                         return;
                     }
 
