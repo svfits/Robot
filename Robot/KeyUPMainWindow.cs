@@ -599,13 +599,18 @@ namespace Robot
             timerRobotWorkPrintModules.Stop();
             // очистим модули
             emptyModules();
-            addTextToRich("The system will rebooting . . .", Brushes.Red, false);
-            printHelpCommand("The system will rebooting . . .", Brushes.Red);
+
+            addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
+            addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
+            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems", Brushes.White, false);
+            addTextToRich("Corp.The system will booting…", Brushes.White, false);
+            addTextToRich("     ", Brushes.White, false);
+
             sudoNotsudo = false;
             textBoxSuffixAddText("#");
             textBoxCommands.Clear();
 
-            await Task.Delay(2000);
+            await Task.Delay(3000);
 
             if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
             {

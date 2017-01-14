@@ -472,7 +472,7 @@ namespace Robot
                 int pause = 300;
                 string newline = line;
 
-                if (line.Length > 0)
+                if (!String.IsNullOrEmpty(line))
                 {
                     //pause
                     string[] stringSeparators = new string[] { "<PAUSE>" };
@@ -493,7 +493,9 @@ namespace Robot
                         newline = line.Replace("<PAUSE>" + txt + "</PAUSE>", "");
                     }
 
-                    if(newline.Contains("<MESSAGE>"))
+                    await Task.Delay(pause);
+
+                    if (newline.Contains("<MESSAGE>"))
                     {
                         //вывод текста команды и справки
                         printHelpCommand(nameCommand, Brushes.LightGreen);
@@ -501,9 +503,7 @@ namespace Robot
                         richTextBox.ScrollToEnd();
 
                         newline =  newline.Replace("<MESSAGE>","");
-                    }
-
-                    await Task.Delay(pause);
+                    }                  
 
                     // раскраска по словам
                     if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
@@ -547,12 +547,12 @@ namespace Robot
                 }
                 else
                 {
-                    addTextToRich("", color, false);
+                    addTextToRich(" ", color, false);
                 }             
              
             }
 
-            Task.WaitAll();
+        //    Task.WaitAll();
             //вывод текста команды и справки
             printHelpCommand(nameCommand, Brushes.LightGreen);
             richTextBox.CaretPosition = richTextBox.Document.ContentEnd;
@@ -570,37 +570,54 @@ namespace Robot
         /// <returns></returns>
         private async Task PaintWord(string line)
         {           
-            SolidColorBrush color = Brushes.White;           
+            SolidColorBrush color = Brushes.White;
+            string txt;        
             
             foreach (string word in line.Split(new Char[] { }) )
             {
-                if(word != String.Empty)
+                if(!String.IsNullOrEmpty(word))
                 {
                     try
                     {
-                        checkStringStart(word, ref color);
-                        checkStringEnd(word, ref color);
-                        await Task.Delay(30);
+                        if(word.Length > 4)
+                        {
+                            checkStringStart(word, ref color);
+                            checkStringEnd(word, ref color);
+                        }                                                                                  
+
+                        if(word.Contains("<RED>") || word.Contains("</RED>") || word.Contains("<GREEN>") || word.Contains("</GREEN>") || word.Contains("<ORANGE>") || word.Contains("</ORANGE>") || word.Contains("<BLUE>") || word.Contains("</BLUE>") || word.Contains("<CYAN>") || word.Contains("</CYAN>") || word.Contains("<YELLOW>") || word.Contains("</YELLOW>"))
+                        {
+                            txt = word.Replace("<RED>", "").Replace("</RED>", "");
+                            txt = txt.Replace("<GREEN>", "").Replace("</GREEN>", "");
+                            txt = txt.Replace("<ORANGE>", "").Replace("</ORANGE>", "");
+                            txt = txt.Replace("<BLUE>", "").Replace("</BLUE>", "");
+                            txt = txt.Replace("<CYAN>", "").Replace("</CYAN>", "");
+                            txt = txt.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
+                            continue;
+                        }
+                        else
+                        {
+                           txt = word;
+                           await Task.Delay(30);
+                        }
+                             
                     }
                     catch (Exception ex)
                     {
-                      //  MessageBox.Show("Произошла ошибка , иcправьте команду, тэги должны быть по отдельности \n Сама строка " + line + " ошибка в слове " + word);
-                        LogInFile.addFileLog("Произошла ошибка поиска вхождения Тэгов цветов команды, иправтье команду тэги должны быть по отдельности " + ex.ToString());
+                        txt = "";
+                          MessageBox.Show("Произошла ошибка " + line + " ошибка в слове " + word + "  " + ex);
+                     //   LogInFile.addFileLog("Произошла ошибка поиска вхождения Тэгов цветов команды, иправтье команду тэги должны быть по отдельности " + ex.ToString());
                     }
                 }
                 else
                 {
-                    addTextToRich(" ", color);
+                   txt = "";
+                   addTextToRich(" ", color);
                    // return;
-                }             
+                }
 
-                string txt = word.Replace("<RED>", "").Replace("</RED>","");
-                txt = txt.Replace("<GREEN>", "").Replace("</GREEN>", "");
-                txt = txt.Replace("<ORANGE>", "").Replace("</ORANGE>", "");
-                txt = txt.Replace("<BLUE>", "").Replace("</BLUE>", "");
-                txt = txt.Replace("<CYAN>", "").Replace("</CYAN>", "");
-                txt = txt.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
-                addTextToRich(txt + " ", color);          
+                
+                addTextToRich(txt + " ", color);
             }
             addTextToRich("\n", Brushes.White);
         }
