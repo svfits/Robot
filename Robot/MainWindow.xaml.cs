@@ -524,7 +524,31 @@ namespace Robot
                         }
 
                         newline = newline.Replace("[markColorizeModule]", "");
-                    }                
+                    }
+                    
+                    if(newline.Contains("#beep"))
+                    {
+                        beeper("#beep");
+                        newline = newline.Replace("#beep", "");
+                    }
+
+                    if (newline.Contains("#bells"))
+                    {
+                        beeper("#bells");
+                        newline = newline.Replace("#bells", "");
+                    }
+
+                    if (newline.Contains("#ring"))
+                    {
+                        beeper("#ring");
+                        newline = newline.Replace("#ring", "");
+                    }
+
+                    if (newline.Contains("#alert"))
+                    {
+                        beeper("#alert");
+                        newline = newline.Replace("#alert", "");
+                    }
 
                     // раскраска по словам
                     if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
@@ -540,6 +564,7 @@ namespace Robot
                         }
                     }
 
+                    // раскраска по строкам
                     if (newline.Contains("#RED"))
                     {
                         string txt = newline.Replace("#RED", "");
@@ -582,8 +607,36 @@ namespace Robot
             richTextBox.Cursor = Cursors.Arrow;
             textBoxCommands.Cursor = oldCursorTextbox;
         }
-        
-            
+
+        private void beeper(string v)
+        {
+            switch (v)
+            {
+                case "#beep":
+                    SystemSounds.Beep.Play();
+                    break;
+                case "#bells":
+                    SystemSounds.Exclamation.Play();
+                    break;
+                case "#ring":
+                    SystemSounds.Question.Play();
+                    break;
+                case "#alert":
+                    SystemSounds.Hand.Play();
+                    break;
+                default:
+                    break;
+            }
+
+
+            //SystemSounds.Beep.Play();
+            ////     SystemSounds.Asterisk.Play();
+            ////  SystemSounds.Exclamation.Play();
+            ////   SystemSounds.Question.Play();
+            ////  SystemSounds.Hand.Play();
+        }
+
+
         /// <summary>
         /// раскрасим каждое слово своим цветом
         /// </summary>
