@@ -342,12 +342,7 @@ namespace Robot
                         beeper();
                         return;
                     }
-                }
-
-                //if (scenarioDiagnosticRobot == 3 && command == "diag servo")
-                //{
-                //    addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
-                //}
+                }              
 
                 // сценарий 3 
                 if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install") )
@@ -361,9 +356,9 @@ namespace Robot
                     }
 
                     if(!command.Contains(errorFileScenario3))
-                    {
-                        addTextToRich("Сломан дуругой модуль", Brushes.Red, false);
-                        printHelpCommand("Сломан дуругой модуль", Brushes.Red);
+                    {                   
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("help make modules install", scenarioDiagnosticRobot);
+                        addTextToRich(nameCommand, Brushes.White);
                         beeper();
                         return;
                     }
