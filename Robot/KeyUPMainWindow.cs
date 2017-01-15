@@ -66,13 +66,13 @@ namespace Robot
             string command = textBoxCommands.Text.Trim();
 
             //press key enter
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == Key.Enter)
             {               
 
                 if (scenarioDiagnosticRobot == 0)
                 {
                     //  addTextToRich("Робот не найден, подключите его к USB", Brushes.Red,false);
-                    printHelpCommand("Робот не найден, подключите его к USB", Brushes.Red);
+                    printHelpCommand("Robot Disconnected. Please connect the Robot.", Brushes.Red);
                     textBoxCommands.Clear();
                     beeper();
                     return;
