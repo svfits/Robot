@@ -110,22 +110,17 @@ namespace LocalDataBase.FlashDrive
         {          
            try
             {
-                foreach (var dinfo in DriveInfo.GetDrives())
-                {
-                    if (dinfo.DriveType == DriveType.Removable && dinfo.IsReady == true)
-                    {
-                        string[] dirs = Directory.GetFiles(dinfo.Name);
+                string[] dirs = Directory.GetFiles(getPathToFlashAliens());
 
-                        foreach (string dir in dirs)
-                        {
-                            if (Path.GetFileName(dir) == nameFile)
-                            {
-                                return true;
-                            }
-                        }
+                foreach(var rr in dirs)
+                {
+                   string ff = Path.GetFileName(rr);
+                    if (ff == nameFile)
+                    {
+                        return true;
                     }
                 }
-                return false;
+                return false;               
             }
             catch(Exception ex)
             {

@@ -54,9 +54,21 @@ namespace LocalDataBase.FlashDrive.Tests
         {
             if ((GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == null) || (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199))
             {
-            var   scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                var scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
             }
         }
-      
+
+        [TestMethod()]
+        public void checkFilesFromFlashTest()
+        {
+           if( GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+            {
+                string fff = "ghjghj";
+            }
+           else
+            {
+                string fff = "ghjghjjjjjj";
+            }
+        }
     }
 }

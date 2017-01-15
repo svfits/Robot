@@ -263,19 +263,7 @@ namespace Robot
                     addTextToRich("", Brushes.Green, false);
                     return;
                 }
-
-                ////диагностика
-                //if ( command == "diag all")
-                //{
-                //    if (scenarioDiagnosticRobot == 199)
-                //    {
-                //        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
-                //    }
-                //    else
-                //    {
-                //        colorizeModule(scenarioDiagnosticRobot, Brushes.Red);
-                //    }
-                //}
+                             
 
                 // установка ПО
                 if ( command == "init robot" )
@@ -334,28 +322,25 @@ namespace Robot
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
 
-                if ((command == "make module install ns230.bin") && scenarioDiagnosticRobot == 2)
+                if ((command == "make modules install ns230.bin") && scenarioDiagnosticRobot == 2)
                 {
-                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+                    if (sudoNotsudo == false)
                     {
-                        if (sudoNotsudo == true)
-                        {
-                            //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+                    {                     
                             scenarioDiagnosticRobot = 199;
                             GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
-                        }
-                        else
-                        {
-                            addTextToRich("Only root!", Brushes.Red, false);
-                            printHelpCommand("Only root!", Brushes.Red);
-                            beeper();
-                            return;
-                        }
                     }
                     else
                     {
-                        addTextToRich("Ошибка ненайден файл ns230.bin", Brushes.Red, false);
-                        printHelpCommand("Ошибка ненайден файл ns230.bin", Brushes.Red);
+                        addTextToRich("Error file not found ns230.bin", Brushes.Red, false);
+                        printHelpCommand("Error file not found ns230.bin", Brushes.Red);
                         beeper();
                         return;
                     }
