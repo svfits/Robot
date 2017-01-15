@@ -40,16 +40,6 @@ namespace LocalDataBase.LocalDbSQLite
             {
                 using (HContext dbL = new HContext())
                 {                 
-                    if( textCommand.Contains("make modules install ") )
-                    {
-                        var makeModulesInstall = dbL.ListCommand
-                    .AsEnumerable()
-                    .Where(c => c.command.ToLower().Trim().Contains(textCommand) && c.scenario == scenarioDiagnosticRobot)
-                    .ToList()
-                    ;
-                        return makeModulesInstall;
-                    }
-
                       var helpList = dbL.ListCommand
                       .AsEnumerable()
                       .Where(c => c.command.ToLower().Trim() == textCommand && c.scenario == scenarioDiagnosticRobot)

@@ -217,8 +217,7 @@ namespace Robot
                 var tt = command.Split(new Char[] { })[0];
                 //если такая команда в списке исключений
                 var zz = exceptionCommands.Find(a => a.Contains(tt));
-
-                //    if (nameCommand == null || nameCommand.Count == 0 || exceptionCommand.Where(a => a ==  command.Split(new Char[] { })[0] ).Count() == 0)
+                       
                 if ( nameCommand == null )
                 {
                     if (zz == null)
@@ -230,6 +229,24 @@ namespace Robot
                         return;
                     }
                     
+                }
+
+                // если это справка
+                if(command.Contains("?"))
+                {
+                    if(nameCommand == null)
+                    {
+                        addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
+                        printHelpCommand("command not found", Brushes.Red);
+                        textBoxCommands.Clear();
+                        beeper();
+                        return;
+                    }
+
+                    addTextToRich("# " + command, Brushes.LightGreen, false);
+                    addTextToRich(nameCommand, Brushes.Red);
+                    textBoxCommands.Clear();
+                    return;
                 }
 
                 addTextToRich("# " + command, Brushes.LightGreen, false);
@@ -345,7 +362,7 @@ namespace Robot
                 }              
 
                 // сценарий 3 
-                if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install") )
+                if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install"))
                 {
                     if (sudoNotsudo == false)
                     {
@@ -566,8 +583,6 @@ namespace Robot
                 #endregion конец команд
             }
 
-
-
             //press key up
             if (e.Key == System.Windows.Input.Key.Up)
             {
@@ -577,7 +592,6 @@ namespace Robot
                 textBoxCommands.Text = lastCommand;
                 textBoxCommands.SelectionStart = textBoxCommands.Text.Length;
             }
-
         }
 
         /// <summary>
