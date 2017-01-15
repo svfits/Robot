@@ -105,9 +105,12 @@ namespace Robot
                     //backup 2 проверка на замену файлов
                     if (textBoxSuffix.Text == "Flash drive is not empty, all data will delete?" && command == "yes")
                     {
-                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup", scenarioDiagnosticRobot);
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("backup system", scenarioDiagnosticRobot);
                         textBoxSuffixAddText("#");
                         x2command = false;
+
+                        GetSetScenarioOfFlashDrive.deleteFilesFromFlash();
+                        GetSetScenarioOfFlashDrive.greateFileForBackup();
                     }
 
                     if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
@@ -285,8 +288,8 @@ namespace Robot
                     }
                     else
                     {
-                        addTextToRich("Not detect all the necessary files on flash drive", Brushes.Red, false);
-                        printHelpCommand("Not detect all the necessary files on flash drive", Brushes.Red);
+                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
+                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
                         beeper();
                         return;
                     }
@@ -586,7 +589,15 @@ namespace Robot
         private async Task commandsReboot()
         {
             objDoc = new FlowDocument();
-            objParag1 = new Paragraph();
+            objParag1 = new Paragraph();               
+
+            addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
+            addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
+            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems", Brushes.White, false);
+            addTextToRich("Corp.The system will booting…", Brushes.White, false);
+            addTextToRich("     ", Brushes.White, false);          
+
+            await Task.Delay(3000);
 
             richTextBox.Document.Blocks.Clear();
 
@@ -595,17 +606,9 @@ namespace Robot
             // очистим модули
             emptyModules();
 
-            addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
-            addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
-            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems", Brushes.White, false);
-            addTextToRich("Corp.The system will booting…", Brushes.White, false);
-            addTextToRich("     ", Brushes.White, false);
-
             sudoNotsudo = false;
             textBoxSuffixAddText("#");
             textBoxCommands.Clear();
-
-            await Task.Delay(3000);
 
             if (RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot) != null)
             {

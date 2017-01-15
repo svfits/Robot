@@ -12,6 +12,9 @@ namespace LocalDataBase.FlashDrive
     /// </summary>
     public  class GetSetScenarioOfFlashDrive
     {
+         /// <summary>
+         /// файлы на флешке
+         /// </summary>
      public static List<string> binCheck = new List<string>()
         {
             "cp1600-bf-v2-5-0.bin",
@@ -22,7 +25,9 @@ namespace LocalDataBase.FlashDrive
             "sw244.bin",
             "sb210.bin",
             "sk212.bin",
-            "san235.bin"
+            "san235.bin",
+            "vc144.bin",
+            "ac251.bin"
         };
             
 
@@ -127,6 +132,20 @@ namespace LocalDataBase.FlashDrive
                 LogInFile.addFileLog("ошибка при проверке наличия файла на флешке  " + ex.ToString());
                 return false;
             }
+        }
+
+        /// <summary>
+        ///  Удаление файлов с флешки
+        /// </summary>
+        public static void deleteFilesFromFlash()
+        {
+            string[] dirs = Directory.GetFiles(getPathToFlashAliens());
+
+            foreach (string dir in dirs)
+            {
+                File.Delete(dir);
+            }
+
         }
 
         /// <summary>

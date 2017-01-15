@@ -61,14 +61,20 @@ namespace LocalDataBase.FlashDrive.Tests
         [TestMethod()]
         public void checkFilesFromFlashTest()
         {
-           if( GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+            if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
             {
                 string fff = "ghjghj";
             }
-           else
+            else
             {
                 string fff = "ghjghjjjjjj";
             }
+        }
+
+        [TestMethod()]
+        public void deleteFilesFromFlashTest()
+        {
+            GetSetScenarioOfFlashDrive.deleteFilesFromFlash();
         }
     }
 }

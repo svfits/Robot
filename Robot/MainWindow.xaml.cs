@@ -506,10 +506,10 @@ namespace Robot
                     }
                     
                     // метка для сценария 3 
-                    if(newline.Contains("[ss274.bin"))
+                    if(newline.Contains("[illmodule]"))
                     {
                         addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
-                        newline = newline.Replace("[ss274.bin", "");
+                        newline = newline.Replace("[illmodule]", "");
                     } 
                     
                     if(newline.Contains("[markColorizeModule]"))
