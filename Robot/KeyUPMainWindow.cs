@@ -465,7 +465,7 @@ namespace Robot
 
                     if (files == null)
                     {
-                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.Red, false);
                         return;
                     }
 
@@ -510,7 +510,7 @@ namespace Robot
 
                     if (files == null)
                     {
-                        addTextToRich("USB flash drive or flash is not available yet", Brushes.White, false);
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.Red, false);
                         return;
                     }
                                         
@@ -633,7 +633,7 @@ namespace Robot
 
             if (files == null)
             {
-                addTextToRich("Usb flash drive is not available yet", Brushes.White, false);
+                addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
                 return;
             }
 

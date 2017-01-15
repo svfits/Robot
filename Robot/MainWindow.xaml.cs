@@ -686,8 +686,8 @@ namespace Robot
                 else
                 {
                    txt = "";
-                   addTextToRich(" ", color);
-                   // return;
+                   addTextToRich("  ", color);
+                   continue;
                 }
 
                 addTextToRich(txt + " ", color);
