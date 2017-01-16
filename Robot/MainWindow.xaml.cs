@@ -456,8 +456,11 @@ namespace Robot
 
             if (nameCommand == null)
             {
-                addTextToRich("Fatall Error!!!", Brushes.White, false);
-                return;
+                addTextToRich("command not found", Brushes.Red, false);
+                printHelpCommand("command not found", Brushes.Red);
+                textBoxCommands.Clear();
+                beeper();
+                return;              
             }
 
             if (nameCommand.Count == 0 || nameCommand.FirstOrDefault().monitorPrint == null)
@@ -1075,7 +1078,12 @@ namespace Robot
         {
             e.CanExecute = true;
         }
-      
+        
+        /// <summary>
+        /// Запуск окна для редактирования справки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             AddNewCommandWindow addNewHelp = new AddNewCommandWindow();
@@ -1093,10 +1101,6 @@ namespace Robot
         {
             textBoxCommands.Focus();
         }
-
-        private void CommunicationTXB_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            textBoxCommands.Focus();
-        }
+              
     }
 }

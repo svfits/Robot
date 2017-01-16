@@ -239,8 +239,8 @@ namespace Robot
                 {
                     if(nameCommand == null)
                     {
-                        addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
-                        printHelpCommand("command not found", Brushes.Red);
+                        addTextToRich(command + ":    " + "command not found", Brushes.White, false);
+                        printHelpCommand("command not found", Brushes.White);
                         textBoxCommands.Clear();
                         beeper();
                         return;
@@ -305,7 +305,7 @@ namespace Robot
                         return;
                     }
 
-                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
                 }
@@ -320,7 +320,7 @@ namespace Robot
                         return;
                     }
 
-                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
@@ -347,7 +347,31 @@ namespace Robot
                         beeper();
                         return;
                     }
-                }              
+                }
+
+                if ( command == "make modules install ns274.bin" )
+                {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns274.bin"))
+                    {
+                        scenarioDiagnosticRobot = 199;
+                        GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
+                    }
+                    else
+                    {
+                        addTextToRich("Error file not found ns274.bin", Brushes.Red, false);
+                        printHelpCommand("Error file not found ns274.bin", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+                }
 
                 // сценарий 3 
                 if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install"))
@@ -368,7 +392,7 @@ namespace Robot
                         return;
                     }
                     // переустановлен модуль сбойный
-                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                    colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     scenarioDiagnosticRobot = 199;
                 }             
 

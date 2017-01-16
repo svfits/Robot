@@ -9,12 +9,12 @@
         WindowState="Maximized"  WindowStyle="None" ResizeMode="NoResize">
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  CanExecute="CanExecute_New"/>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed"  CanExecute="CanExecute_New_F12"/>
+        <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed"/>       
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Command="ApplicationCommands.New"  Gesture="Shift+Ctrl+F11"/>
-        <KeyBinding Command="ApplicationCommands.Open"  Gesture="Shift+Ctrl+F12"/>
+        <KeyBinding Command="ApplicationCommands.Open"  Gesture="Shift+Ctrl+F12"/>    
     </Window.InputBindings>
     <Window.Resources>
         <Storyboard x:Key="animLabel">
@@ -139,16 +139,9 @@
                                 </Grid.RowDefinitions>
 
                                 <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0">
-                                    <TabItem >
-                                        <TabItem.Header>
-                                            <StackPanel Orientation="Horizontal" Margin="5">
-                                                <!--<Image Source="/WpfTutorialSamples;component/Images/bullet_blue.png" />-->
-
-                                                <TextBlock Text="Communication" Foreground="Black"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                                            </StackPanel>
-                                        </TabItem.Header>
+                                    <TabItem Header="Communication" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                         <TextBox x:Name="CommunicationTXB" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                 Foreground="LightGreen" IsReadOnly="True" PreviewMouseLeftButtonDown="CommunicationTXB_PreviewMouseLeftButtonDown"/>
+                                                 Foreground="LightGreen" IsReadOnly="True"/>
                                     </TabItem>
                                 </TabControl>
                                 <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
