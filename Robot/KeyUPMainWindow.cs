@@ -288,8 +288,8 @@ namespace Robot
                     }
                     else
                     {
-                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
-                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
+                        addTextToRich("There are no necessary files on a flash drive.", Brushes.Red, false);
+                        printHelpCommand("There are no necessary files on a flash drive.", Brushes.Red);
                         beeper();
                         return;
                     }
