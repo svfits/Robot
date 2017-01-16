@@ -113,6 +113,7 @@ namespace Robot
                         GetSetScenarioOfFlashDrive.greateFileForBackup();
                     }
 
+                    // save
                     if (textBoxSuffix.Text == "Proceed with save?" && command == "yes")
                     {
                         if (sudoNotsudo == false)
@@ -165,7 +166,7 @@ namespace Robot
                         }
                     }
 
-
+                    // reboot
                     if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
                     {
                         await commandsReboot();
@@ -325,7 +326,7 @@ namespace Robot
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
 
-                if ((command == "make modules install ns230.bin") && scenarioDiagnosticRobot == 2)
+                if (command == "make modules install ns230.bin")
                 {
                     if (sudoNotsudo == false)
                     {
@@ -612,8 +613,7 @@ namespace Robot
         /// <returns></returns>
         private async Task commandsReboot()
         {
-            objDoc = new FlowDocument();
-            objParag1 = new Paragraph();               
+            timerRobotWorkPrintModules.Stop();
 
             addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
             addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
@@ -623,10 +623,13 @@ namespace Robot
 
             await Task.Delay(3000);
 
+            objDoc = new FlowDocument();
+            objParag1 = new Paragraph();
+
             richTextBox.Document.Blocks.Clear();
 
             addTextToRich("", Brushes.Green, false);
-            timerRobotWorkPrintModules.Stop();
+          
             // очистим модули
             emptyModules();
 
