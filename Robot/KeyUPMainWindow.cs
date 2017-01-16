@@ -239,15 +239,15 @@ namespace Robot
                 {
                     if(nameCommand == null)
                     {
-                        addTextToRich(command + ":    " + "command not found", Brushes.White, false);
-                        printHelpCommand("command not found", Brushes.White);
+                        addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
+                        printHelpCommand("command not found", Brushes.Red);
                         textBoxCommands.Clear();
                         beeper();
                         return;
                     }
 
                     addTextToRich("# " + command, Brushes.LightGreen, false);
-                    addTextToRich(nameCommand, Brushes.Red);
+                    addTextToRich(nameCommand, Brushes.LightGreen);
                     textBoxCommands.Clear();
                     return;
                 }
