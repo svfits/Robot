@@ -642,7 +642,7 @@ namespace Robot
                 addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
             }
 
-            if ((GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == null) || (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199))
+            if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() > 0)
             {
                 scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
             }

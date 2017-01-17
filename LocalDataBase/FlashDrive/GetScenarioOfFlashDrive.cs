@@ -375,7 +375,7 @@ namespace LocalDataBase.FlashDrive
         /// получить сценарий откуда то
         /// </summary>
         /// <returns></returns>
-        public static int? getScenarioApplyNotapplyscenario()
+        public static int getScenarioApplyNotapplyscenario()
         {
             try
             {     

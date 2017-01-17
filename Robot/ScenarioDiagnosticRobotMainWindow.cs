@@ -28,13 +28,13 @@ namespace Robot
         private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
         {
             timerGetDataFlashDrive.Stop();
-            if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 199)
+            if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() > 0)
             {
-                scenarioDiagnosticRobot = 199;
+                scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
             }
             
             // проверим вылечен ли робот статус флешки 
-            if (GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0 || scenarioDiagnosticRobot != 199)
+            if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0 )
             {
                 scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
             }
