@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LocalDataBase.FlashDrive.Tests
 {
+    /// <summary>
+    /// для тестирования флешек
+    /// </summary>
     [TestClass()]
     public class GetSetScenarioOfFlashDriveTests
     {

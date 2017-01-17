@@ -280,6 +280,13 @@ namespace Robot
                         return;
                     }
 
+                    if (GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
+                    {
+                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
+                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
+                        return;
+                    }
+
                     if (GetSetScenarioOfFlashDrive.checkFilesFromFlashForInitScenario5())
                     {
                         // все стало хорошо ОС установлена
@@ -326,8 +333,8 @@ namespace Robot
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
 
-                if (command == "make modules install ns230.bin")
-                {
+                if (command.Contains("make modules install") && scenarioDiagnosticRobot != 3)
+                {                
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
@@ -336,44 +343,38 @@ namespace Robot
                         return;
                     }
 
-                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+                    int _qq = command.Split(new Char[] { }).Count();
+
+                    if(_qq != 4)
+                    {
+                        addTextToRich("Command is not correct", Brushes.Red, false);
+                        printHelpCommand("Command is not correct", Brushes.Red);
+                        return;
+                    }
+
+                    string _moduleName = command.Split(new Char[] { })[3];
+
+                    if (GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
+                    {
+                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
+                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
+                        return;
+                    }
+
+                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash(_moduleName))
                     {                     
                             scenarioDiagnosticRobot = 199;
                             GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     }
                     else
                     {
-                        addTextToRich("Error file not found ns230.bin", Brushes.Red, false);
-                        printHelpCommand("Error file not found ns230.bin", Brushes.Red);
+                        addTextToRich("Error file not found " + _moduleName, Brushes.Red, false);
+                        printHelpCommand("Error file not found " + _moduleName, Brushes.Red);
                         beeper();
                         return;
                     }
                 }
-
-                if ( command == "make modules install ns274.bin" )
-                {
-                    if (sudoNotsudo == false)
-                    {
-                        addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!", Brushes.Red);
-                        beeper();
-                        return;
-                    }
-
-                    if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns274.bin"))
-                    {
-                        scenarioDiagnosticRobot = 199;
-                        GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
-                    }
-                    else
-                    {
-                        addTextToRich("Error file not found ns274.bin", Brushes.Red, false);
-                        printHelpCommand("Error file not found ns274.bin", Brushes.Red);
-                        beeper();
-                        return;
-                    }
-                }
-
+                             
                 // сценарий 3 
                 if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install"))
                 {
@@ -614,12 +615,17 @@ namespace Robot
         private async Task commandsReboot()
         {
             timerRobotWorkPrintModules.Stop();
+            textBoxCommands.Clear();
 
+            addTextToRich("Proceed with reboot?  yes", Brushes.LightGreen, false);
+            addTextToRich("     ", Brushes.White, false);
             addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
             addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
             addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems", Brushes.White, false);
+            addTextToRich("     ", Brushes.White, false);
             addTextToRich("Corp.The system will booting…", Brushes.White, false);
-            addTextToRich("     ", Brushes.White, false);          
+            addTextToRich("     ", Brushes.White, false);
+            textBoxSuffixAddText("");
 
             await Task.Delay(3000);
 
