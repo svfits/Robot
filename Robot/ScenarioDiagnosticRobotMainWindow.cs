@@ -27,17 +27,50 @@ namespace Robot
         /// <param name="e"></param>
         private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
         {
-            timerGetDataFlashDrive.Stop();
-            if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() > 0)
+           timerGetDataFlashDrive.Stop();
+
+            // выличен робот или нет
+            if (scenarioDiagnosticRobot != 199)
             {
-                scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
+                // нет 1-й флешки
+               if( GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)
+                {
+                    // робот отключен
+                    scenarioDiagnosticRobot = 0;
+                }
+               else
+                {
+                    // нет 2-й флешки
+                    if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0)
+                    {
+                      scenarioDiagnosticRobot =  GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                    }
+                    else
+                    {
+                        // из 2-й флешки
+                        scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
+                    }
+                  
+                }
             }
-            
-            // проверим вылечен ли робот статус флешки 
-            if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0 )
+            else if (GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)
             {
-                scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                // робот отключен
+                scenarioDiagnosticRobot = 0;
             }
+           
+
+            //// 2-ая флешка 
+            //if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() > 0 && scenarioDiagnosticRobot != 199 && GetSetScenarioOfFlashDrive.getNameFlashisAlive() != 0)
+            //{
+            //    scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
+            //}
+
+            //// 1-ая проверим вылечен ли робот статус флешки 
+            //if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0 || GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
+            //{
+            //    scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+            //}
 
             // не известный робот поставим картинку
             if (scenarioDiagnosticRobot == 4)

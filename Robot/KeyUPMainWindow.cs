@@ -248,7 +248,7 @@ namespace Robot
                     }
 
                     addTextToRich("# " + command, Brushes.LightGreen, false);
-                    addTextToRich(nameCommand, Brushes.LightGreen);
+                    addTextToRich(nameCommand, Brushes.White);
                     textBoxCommands.Clear();
                     return;
                 }
@@ -364,7 +364,8 @@ namespace Robot
                     if (GetSetScenarioOfFlashDrive.checkFilesFromFlash(_moduleName))
                     {                     
                             scenarioDiagnosticRobot = 199;
-                            GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
+                        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                        GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     }
                     else
                     {
@@ -488,7 +489,7 @@ namespace Robot
                     return;
                 }
 
-               // if (command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" && command.Split(new Char[] { })[1] == "111")
+               // play
                if((command.Split(new Char[] { }).Count() == 2 && command.Split(new Char[] { })[0] == "play" ))
                 {
                     string fileName = command.Split(new Char[] { })[1];

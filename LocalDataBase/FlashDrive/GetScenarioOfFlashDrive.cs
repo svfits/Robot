@@ -372,7 +372,7 @@ namespace LocalDataBase.FlashDrive
         }
 
         /// <summary>
-        /// получить сценарий откуда то
+        /// получить сценарий из Статус Робота
         /// </summary>
         /// <returns></returns>
         public static int getScenarioApplyNotapplyscenario()
