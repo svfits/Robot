@@ -334,14 +334,14 @@ namespace Robot
                 }
 
                 if (command.Contains("make modules install") && scenarioDiagnosticRobot != 3)
-                {                
-                    if (sudoNotsudo == false)
-                    {
-                        addTextToRich("Only root!", Brushes.Red, false);
-                        printHelpCommand("Only root!", Brushes.Red);
-                        beeper();
-                        return;
-                    }
+                {
+                    //if (sudoNotsudo == false)
+                    //{
+                    //    addTextToRich("Only root!", Brushes.Red, false);
+                    //    printHelpCommand("Only root!", Brushes.Red);
+                    //    beeper();
+                    //    return;
+                    //}
 
                     int _qq = command.Split(new Char[] { }).Count();
 
@@ -622,9 +622,9 @@ namespace Robot
             addTextToRich("     ", Brushes.White, false);
             addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
             addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
-            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems", Brushes.White, false);
+            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems.Corp", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);
-            addTextToRich("Corp.The system will booting…", Brushes.White, false);
+            addTextToRich("The system will booting…", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);
             textBoxSuffixAddText("");
 
