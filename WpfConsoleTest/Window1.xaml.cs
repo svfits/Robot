@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocalDataBase.FlashDrive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LocalDataBase.FlashDrive;
 
 namespace WpfConsoleTest
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Window1 : Window
     {
-        public MainWindow()
+        public Window1()
         {
             InitializeComponent();
         }
@@ -29,15 +28,6 @@ namespace WpfConsoleTest
         private void button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(GetSetScenarioOfFlashDrive.getFilesFromFlashAliens().ToString());
-
-            if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
-            {
-                string fff = "ghjghj";
-            }
-            else
-            {
-                string fff = "ghjghjjjjjj";
-            }
         }
     }
 }

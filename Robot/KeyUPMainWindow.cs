@@ -333,6 +333,14 @@ namespace Robot
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                 }
 
+                if (command == "make modules install")
+                {
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("help make modules install", scenarioDiagnosticRobot);
+                    addTextToRich(nameCommand, Brushes.White);
+                    beeper();
+                    return;
+                }
+
                 if (command.Contains("make modules install") && scenarioDiagnosticRobot != 3)
                 {
                     //if (sudoNotsudo == false)
@@ -379,7 +387,7 @@ namespace Robot
                 // сценарий 3 
                 if (scenarioDiagnosticRobot == 3 && command.Contains("make modules install"))
                 {
-                    if (sudoNotsudo == false)
+                    if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);
                         printHelpCommand("Only root!", Brushes.Red);
@@ -387,13 +395,21 @@ namespace Robot
                         return;
                     }
 
-                    if(!command.Contains(errorFileScenario3))
+                    if (GetSetScenarioOfFlashDrive.getPathToFlashAliens() == String.Empty)
+                    {
+                        addTextToRich("Usb flash drive is not available yet", Brushes.Red, false);
+                        printHelpCommand("Usb flash drive is not available yet", Brushes.Red);
+                        return;
+                    }
+
+                    if (!command.Contains(errorFileScenario3))
                     {                   
                         nameCommand = RepositoryLocalSQLite.searchCommandFromBD("help make modules install", scenarioDiagnosticRobot);
                         addTextToRich(nameCommand, Brushes.White);
                         beeper();
                         return;
                     }
+
                     // переустановлен модуль сбойный
                     colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                     scenarioDiagnosticRobot = 199;
@@ -622,7 +638,7 @@ namespace Robot
             addTextToRich("     ", Brushes.White, false);
             addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
             addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
-            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems.Corp", Brushes.White, false);
+            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems Corp", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);
             addTextToRich("The system will booting…", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);

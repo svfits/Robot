@@ -106,7 +106,7 @@ namespace Robot
                     
             dateTimeUpdate();
             //  string datadb = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
-            string datadb = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            string datadb = Path.GetDirectoryName(@"C:\robot_comand\");
             AppDomain.CurrentDomain.SetData("DataDirectory", datadb);
 
             LocalDataBase.LocalDaBase.Create_Table_Events();           
