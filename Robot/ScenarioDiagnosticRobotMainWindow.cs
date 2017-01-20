@@ -27,30 +27,30 @@ namespace Robot
         /// <param name="e"></param>
         private void setScenarioDiagnosticRobot(object sender, ElapsedEventArgs e)
         {
-           timerGetDataFlashDrive.Stop();
+            timerGetDataFlashDrive.Stop();
 
             // выличен робот или нет
             if (scenarioDiagnosticRobot != 199)
             {
                 // нет 1-й флешки
-               if( GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)
+                if (GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)
                 {
                     // робот отключен
                     scenarioDiagnosticRobot = 0;
                 }
-               else
+                else
                 {
                     // нет 2-й флешки
-                    if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0)
+                    if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0)
                     {
-                      scenarioDiagnosticRobot =  GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                        scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
                     }
                     else
                     {
                         // из 2-й флешки
                         scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
                     }
-                  
+
                 }
             }
             else if (GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)
@@ -58,7 +58,6 @@ namespace Robot
                 // робот отключен
                 scenarioDiagnosticRobot = 0;
             }
-           
 
             //// 2-ая флешка 
             //if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() > 0 && scenarioDiagnosticRobot != 199 && GetSetScenarioOfFlashDrive.getNameFlashisAlive() != 0)
@@ -134,7 +133,7 @@ namespace Robot
 
                     // остоновим модули вывод
                     timerRobotWorkPrintModules.Stop();
-                    
+
                     // очистим модули
                     emptyModules();
 
@@ -199,8 +198,8 @@ namespace Robot
 
             }
             timerGetDataFlashDrive.Start();
-        }
-             
+        }     
+
         /// <summary>
         /// бипер при подключении флешки
         /// </summary>

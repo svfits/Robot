@@ -75,7 +75,7 @@ namespace Robot
 #endif
 
             InitializeComponent();
-
+            
             animaionLoad();
 
             dateTimeLbl.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); 
@@ -447,6 +447,7 @@ namespace Robot
         /// </summary>
         /// <param name="nameCommand">обьект</param>
         /// <param name="color">цвет строки</param>
+
         private async void addTextToRich(List<ListCommand> nameCommand, SolidColorBrush color)
         {
             // сделаем курсор задумчивым
@@ -511,7 +512,11 @@ namespace Robot
                     // метка для сценария 3 
                     if(newline.Contains("[illmodule]"))
                     {
-                        addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
+                        if(scenarioDiagnosticRobot != 199)
+                        {
+                            addTextToRich("Servo modules FAIL " + errorFileScenario3, Brushes.Red, false);
+                        }
+                        
                         newline = newline.Replace("[illmodule]", "");
                     } 
                     

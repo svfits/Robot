@@ -241,7 +241,7 @@ namespace LocalDataBase.FlashDrive
         /// <param name="text"></param>
         public static void saveScenariy(string text)
         {
-            string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            string path = Path.GetDirectoryName(@"C:\robot_comand\");
             string fileName = Path.Combine(path, "StatusRobot.bin");
 
             try
@@ -379,7 +379,7 @@ namespace LocalDataBase.FlashDrive
         {
             try
             {     
-                string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+                string path = Path.GetDirectoryName(@"C:\robot_comand\");
                 string pathFile = Path.Combine(path, "StatusRobot.bin");
 
                 if (!File.Exists(pathFile))

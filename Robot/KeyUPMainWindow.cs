@@ -402,10 +402,29 @@ namespace Robot
                         return;
                     }
 
+                    int _qq = command.Split(new Char[] { }).Count();
+
+                    if (_qq != 4)
+                    {
+                        addTextToRich("Command is not correct", Brushes.Red, false);
+                        printHelpCommand("Command is not correct", Brushes.Red);
+                        return;
+                    }
+
+                    string _moduleName = command.Split(new Char[] { })[3];
+
+                    if (!GetSetScenarioOfFlashDrive.checkFilesFromFlash(_moduleName))
+                    {
+                        addTextToRich("Error file not found " + _moduleName, Brushes.Red, false);
+                        printHelpCommand("Error file not found " + _moduleName, Brushes.Red);
+                        beeper();
+                        return;
+                    }
+                  
                     if (!command.Contains(errorFileScenario3))
-                    {                   
-                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("help make modules install", scenarioDiagnosticRobot);
-                        addTextToRich(nameCommand, Brushes.White);
+                    {
+                        addTextToRich("Module not Error", Brushes.Red, false);
+                        printHelpCommand("Module not Error", Brushes.Red);
                         beeper();
                         return;
                     }
@@ -655,7 +674,18 @@ namespace Robot
           
             // очистим модули
             emptyModules();
-
+                      
+                    // нет 2-й флешки
+                    if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0)
+                    {
+                        scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                    }
+                    else
+                    {
+                        // из 2-й флешки
+                        scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
+                    }      
+         
             sudoNotsudo = false;
             textBoxSuffixAddText("#");
             textBoxCommands.Clear();

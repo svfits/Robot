@@ -79,5 +79,11 @@ namespace LocalDataBase.FlashDrive.Tests
         {
             GetSetScenarioOfFlashDrive.deleteFilesFromFlash();
         }
+
+        [TestMethod()]
+        public void saveScenariyTest()
+        {
+            GetSetScenarioOfFlashDrive.saveScenariy("199");
+        }      
     }
 }
