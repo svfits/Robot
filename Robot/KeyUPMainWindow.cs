@@ -335,7 +335,7 @@ namespace Robot
 
                 if (command == "make modules install")
                 {
-                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("help make modules install", scenarioDiagnosticRobot);
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("make modules install", scenarioDiagnosticRobot);
                     addTextToRich(nameCommand, Brushes.White);
                     beeper();
                     return;
@@ -638,7 +638,7 @@ namespace Robot
             addTextToRich("     ", Brushes.White, false);
             addTextToRich("00:22:16: %SYS-5-REBOOT: Reboot requeste", Brushes.White, false);
             addTextToRich("System Bootstrap, Version 15.7.16", Brushes.White, false);
-            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems Corp", Brushes.White, false);
+            addTextToRich("ANDROID SOFTWARE Copyright (c) 2073 by CP Systems Corp.", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);
             addTextToRich("The system will booting…", Brushes.White, false);
             addTextToRich("     ", Brushes.White, false);

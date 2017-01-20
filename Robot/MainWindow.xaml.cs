@@ -88,15 +88,15 @@ namespace Robot
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(closeNotCloseWindowd)
+            if (closeNotCloseWindowd)
             {
-#if DEBUG
-#else
-                          HidenExplorerKillHim.startExplorer();
-#endif
+//#if DEBUG
+//#else
+//                          HidenExplorerKillHim.startExplorer();
+//#endif
                 return;
-            }            
-            e.Cancel = true;                       
+            }
+            e.Cancel = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -113,11 +113,11 @@ namespace Robot
 
             searchFlashDriveandScenarioGet();
 
-#if DEBUG
+//#if DEBUG
              
-#else
-            HidenExplorerKillHim.killExplorer();
-#endif
+//#else
+//            HidenExplorerKillHim.killExplorer();
+//#endif
 
         }
 
