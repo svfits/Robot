@@ -656,8 +656,27 @@ namespace Robot
         private async Task PaintWord(string line)
         {           
             SolidColorBrush color = Brushes.White;
-            string txt;        
-            
+            string txt;
+            int pause = 0;
+
+            //pause
+            string[] stringSeparators = new string[] { "<PAUSEWORD>" };
+            string[] stringSeparatorsEnd = new string[] { "</PAUSEWORD>" };
+
+            if (line.Contains("<PAUSEWORD>") && line.Contains("</PAUSEWORD>"))
+            {
+                try
+                {
+                    string pause1 = line.Split(stringSeparators, StringSplitOptions.None)[1].Split(stringSeparatorsEnd, StringSplitOptions.None)[0];
+                    pause = Int32.Parse(pause1);
+                }
+                catch
+                {
+
+                }            
+                
+            }
+
             foreach (string word in line.Split(new Char[] { }) )
             {
                 if(!String.IsNullOrEmpty(word))
@@ -668,9 +687,14 @@ namespace Robot
                         {
                             checkStringStart(word, ref color);
                             checkStringEnd(word, ref color);
-                        }                                                                                  
+                        }
 
-                        if(word.Contains("<RED>") || word.Contains("</RED>") || word.Contains("<GREEN>") || word.Contains("</GREEN>") || word.Contains("<ORANGE>") || word.Contains("</ORANGE>") || word.Contains("<BLUE>") || word.Contains("</BLUE>") || word.Contains("<CYAN>") || word.Contains("</CYAN>") || word.Contains("<YELLOW>") || word.Contains("</YELLOW>"))
+                        if(word.Contains("<PAUSEWORD>"))
+                        {
+                            await Task.Delay(pause);                          
+                        }                    
+
+                        if (word.Contains("<RED>") || word.Contains("</RED>") || word.Contains("<GREEN>") || word.Contains("</GREEN>") || word.Contains("<ORANGE>") || word.Contains("</ORANGE>") || word.Contains("<BLUE>") || word.Contains("</BLUE>") || word.Contains("<CYAN>") || word.Contains("</CYAN>") || word.Contains("<YELLOW>") || word.Contains("</YELLOW>") || word.Contains("<PAUSEWORD>") || word.Contains("</PAUSEWORD>"))
                         {
                             txt = word.Replace("<RED>", "").Replace("</RED>", "");
                             txt = txt.Replace("<GREEN>", "").Replace("</GREEN>", "");
@@ -678,12 +702,14 @@ namespace Robot
                             txt = txt.Replace("<BLUE>", "").Replace("</BLUE>", "");
                             txt = txt.Replace("<CYAN>", "").Replace("</CYAN>", "");
                             txt = txt.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
+                            txt = txt.Replace("<PAUSEWORD>" + pause + "</PAUSEWORD>", "");
                             continue;
                         }
                         else
                         {
                            txt = word;
-                           await Task.Delay(30);
+                         
+                            //  await Task.Delay(30);
                         }
                              
                     }
