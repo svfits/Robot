@@ -36,7 +36,7 @@ namespace Robot
         /// <summary>
         /// ошибка в файле для сценария 3
         /// </summary>
-        public  string errorFileScenario3;
+        public  string errorFileScenario3 = String.Empty;
 
         /// <summary>
         /// номер сценария
@@ -263,7 +263,10 @@ namespace Robot
                 // сценарий ошибка в одном из файлов
                 if (scenarioDiagnosticRobot == 3)
                 {
-                    errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();                  
+                    if(errorFileScenario3 == String.Empty)
+                    {
+                        errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+                    }                   
                 }
 
                 textBoxCommands.Focus();             
@@ -481,6 +484,7 @@ namespace Robot
                     //pause
                     string[] stringSeparators = new string[] { "<PAUSE>" };
                     string[] stringSeparatorsEnd = new string[] { "</PAUSE>" };
+
                     if (line.Contains("<PAUSE>") && line.Contains("</PAUSE>"))
                     {
                        string txt =  line.Split(stringSeparators,StringSplitOptions.None)[1].Split(stringSeparatorsEnd,StringSplitOptions.None)[0];
@@ -494,10 +498,9 @@ namespace Robot
                            
                         }
 
+                        await Task.Delay(pause);
                         newline = line.Replace("<PAUSE>" + txt + "</PAUSE>", "");
-                    }
-
-                    await Task.Delay(pause);
+                    }                
 
                     if (newline.Contains("<MESSAGE>"))
                     {

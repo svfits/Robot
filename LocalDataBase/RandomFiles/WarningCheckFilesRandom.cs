@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocalDataBase.FlashDrive;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,39 +20,12 @@ namespace LocalDataBase.RandomFiles
         /// <returns></returns>
         public static string RandomFiles()
         {
-            string str = "";
-            Random r = random();
-            int numFile = r.Next(1, 9);
-            
-            switch (numFile)
-            {
-                case 1:
-                    str = "vc144.bin";
-                    break;
-                case 2:
-                    str = "ac251.bin";
-                    break;
-                case 3:
-                    str = "ss274.bin";
-                    break;
-                case 4:
-                    str = "sa232.bin";
-                    break;
-                case 5:
-                    str = "sw244.bin";
-                    break;
-                case 6:
-                    str = "sb210.bin";
-                    break;
-                case 7:
-                    str = "sk212.bin";
-                    break;
-                case 8:
-                    str = "san235.bin";
-                    break;
-            }
+            Random r = random();            
 
-            return str;
+            List<string> list = GetSetScenarioOfFlashDrive.binCheck;
+            int numFile = r.Next(list.Count);
+            return (string)list[numFile];
+
         }
 
         public static int RandomSizeFile()

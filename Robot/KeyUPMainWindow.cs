@@ -137,6 +137,7 @@ namespace Robot
                             addTextToRich("No changes in system detected", Brushes.LightGreen, false);
                             printHelpCommand("No changes in system detected", Brushes.LightGreen);
                             textBoxSuffixAddText("#");
+                            textBoxCommands.Clear();
                             return;
                         }
                     }
@@ -174,6 +175,11 @@ namespace Robot
                     }
                     else if (textBoxSuffix.Text.Trim() == "Proceed with reboot?")
                     {
+                        if(command.ToLower() != "no")
+                        {
+                            printHelpCommand("unindentified command. Please use YES or NO", Brushes.Red);
+                        }
+
                         textBoxSuffixAddText("#");
                         textBoxCommands.Clear();
                         x2command = false;
@@ -617,6 +623,10 @@ namespace Robot
                     }                
                 }
 
+                if(command == "init system")
+                {
+                    scenarioDiagnosticRobot = 199;
+                }
 
                 if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {

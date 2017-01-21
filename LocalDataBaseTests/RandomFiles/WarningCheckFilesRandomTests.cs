@@ -42,5 +42,11 @@ namespace LocalDataBase.RandomFiles.Tests
                 dd[i] = WarningCheckFilesRandom.RandomTime().ToString();
             }
         }
+
+        [TestMethod()]
+        public void RandomFilesTest1()
+        {
+         string   errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+        }
     }
 }
