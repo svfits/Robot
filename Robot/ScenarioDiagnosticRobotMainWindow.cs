@@ -119,7 +119,7 @@ namespace Robot
 
                     //connectOrDisconnectLbl.Content = "CONNECTED";
                     //connectOrDisconnectLbl.Foreground = Brushes.Green;
-                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Content = "DISCONNECT"; }));
+                    connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Content = "DISCONNECTED"; }));
                     connectOrDisconnectLbl.Dispatcher.Invoke(new Action(delegate { connectOrDisconnectLbl.Foreground = Brushes.Red; }));
 
                     //versionProgrammLbl.Foreground = Brushes.Green;
