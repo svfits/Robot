@@ -54,9 +54,22 @@
                          BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"
                          Focusable="False" PreviewMouseLeftButtonDown="textBoxSuffix_PreviewMouseLeftButtonDown"/>
                 <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
-                 Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
+                         Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
                          KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0" CaretBrush="LightGreen"
                          >
+                    <!--<TextBox.CaretBrush>  
+                        
+                    <LinearGradientBrush MappingMode="RelativeToBoundingBox"
+                                    StartPoint="0,0"
+                                    EndPoint="0,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="Blue"    Offset="0" />
+                            <GradientStop Color="Magenta" Offset="0.5" />
+                            <GradientStop Color="Green"   Offset="1" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                    </TextBox.CaretBrush>-->
+                         
                 </TextBox>
             </Grid>
         </Grid>
