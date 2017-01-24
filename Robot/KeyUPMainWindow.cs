@@ -170,6 +170,17 @@ namespace Robot
                     // reboot
                     if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
                     {
+                        if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199 )
+                        {
+                            addTextToRich("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red, false);
+                            printHelpCommand("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red);
+                            textBoxCommands.Clear();
+                            textBoxSuffixAddText("#");                           
+                            beeper();
+                            x2command = false;
+                            return;
+                        }
+
                         await commandsReboot();
                         return;
                     }
@@ -177,7 +188,7 @@ namespace Robot
                     {
                         if(command.ToLower() != "no")
                         {
-                            printHelpCommand("unindentified command. Please use YES or NO", Brushes.Red);
+                            printHelpCommand("unknown command. Please use YES or NO", Brushes.Red);
                         }
 
                         textBoxSuffixAddText("#");
@@ -189,7 +200,7 @@ namespace Robot
                     if (nameCommand == null)
                     {
                         textBoxSuffixAddText("#");
-                        printHelpCommand("unindentified command. Please use YES or NO", Brushes.Red);
+                        printHelpCommand("unknown command. Please use YES or NO", Brushes.Red);
                         textBoxCommands.Clear();
                         x2command = false;
                         return;
@@ -203,7 +214,7 @@ namespace Robot
                     }
                     else if (command != "yes")
                     {
-                        printHelpCommand("unindentified command. Please use YES or NO", Brushes.LightGreen);
+                        printHelpCommand("unknown command. Please use YES or NO", Brushes.LightGreen);
                         x2command = false;
                         return;
                     }
@@ -626,6 +637,26 @@ namespace Robot
                 if(command == "init system")
                 {
                     scenarioDiagnosticRobot = 199;
+                }
+
+                if(command == "ucon")
+                {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    if ( ( scenarioDiagnosticRobot != 4 ) || ( scenarioDiagnosticRobot == 198 ))
+                    {
+                        addTextToRich("Robot Already Connected", Brushes.Red, false);
+                        printHelpCommand("Robot Already Connected", Brushes.Red);
+                        return;
+                    }
+
+                    scenarioDiagnosticRobot = 198;
                 }
 
                 if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
