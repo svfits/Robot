@@ -243,6 +243,7 @@ namespace Robot
                 {
                     if (zz == null)
                     {
+                        addTextToRich("# " + command, Brushes.LightGreen, false);
                         addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
                         printHelpCommand("command not found", Brushes.Red);
                         textBoxCommands.Clear();
@@ -257,6 +258,7 @@ namespace Robot
                 {
                     if(nameCommand == null)
                     {
+                        addTextToRich("# " + command , Brushes.LightGreen, false);
                         addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
                         printHelpCommand("command not found", Brushes.Red);
                         textBoxCommands.Clear();

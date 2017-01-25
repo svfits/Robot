@@ -500,7 +500,9 @@ namespace Robot
 
                         await Task.Delay(pause);
                         newline = line.Replace("<PAUSE>" + txt + "</PAUSE>", "");
-                    }                
+                    }
+
+                    await Task.Delay(pause);
 
                     if (newline.Contains("<MESSAGE>"))
                     {

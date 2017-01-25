@@ -33,7 +33,7 @@
     <SuiteName>Robot</SuiteName>
     <MinimumRequiredVersion>1.0.0.9</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>51</ApplicationRevision>
+    <ApplicationRevision>53</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -114,12 +114,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CryptoWindow.xaml.cs">
+      <DependentUpon>CryptoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MediaPlayer\MediaPlayer.cs" />
     <Compile Include="PlaySoundsWindow.xaml.cs">
       <DependentUpon>PlaySoundsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScenarioDiagnosticRobotMainWindow.cs" />
     <Page Include="AddNewCommandWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CryptoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
