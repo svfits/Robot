@@ -23,5 +23,15 @@ namespace Robot
         {
             InitializeComponent();
         }
+
+        private void EncryptBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DecryptBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

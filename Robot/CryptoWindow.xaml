@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
-        Title="CryptoWindow" Height="300" Width="300">
+        WindowStartupLocation="CenterScreen"
+        Title="CryptoWindow" Height="600" Width="600">
+    
     <Grid>
-        <Border Margin="10,10,10,10"/>
-        <Grid >
+        <Border Margin="10,10,10,10" />
+        <Grid Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -17,8 +19,41 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
+            <GroupBox Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Background="Gray">
+                <GroupBox.Header>
+                    <TextBlock FontWeight="Bold" Foreground="Azure" Text="Source"/>
+                </GroupBox.Header>
             <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen"></TextBox>
-            <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></TextBox>
-            </Grid>
+            </GroupBox>
+            <GroupBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+                <GroupBox.Header>
+                    <TextBlock FontWeight="Bold" Foreground="Azure" Text="Destination"/>
+                </GroupBox.Header>
+                <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></TextBox>
+            </GroupBox>
+            <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
+            <ComboBox Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="Hex">
+                <ComboBoxItem>Hex</ComboBoxItem>
+                <ComboBoxItem>Rotx</ComboBoxItem>
+                <ComboBoxItem>With Key</ComboBoxItem>
+            </ComboBox>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="EncryptBtn" Grid.Column="0" Grid.Row="0" Content="Encrypt" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="EncryptBtn_Click"  />
+                    <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
+                    <TextBox Text="wrong selection leads to the data lost Are you sure? Press again" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
+                             HorizontalAlignment="Stretch" Grid.Row="1" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" />
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
