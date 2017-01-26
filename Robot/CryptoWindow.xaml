@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CryptoWindow" Height="600" Width="600">
+        Title="Encryptor - Decryptor" Height="600" Width="680">
     
     <Grid>
         <Border Margin="10,10,10,10" />
@@ -32,11 +32,30 @@
                 <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></TextBox>
             </GroupBox>
             <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
-            <ComboBox Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="Hex">
-                <ComboBoxItem>Hex</ComboBoxItem>
-                <ComboBoxItem>Rotx</ComboBoxItem>
-                <ComboBoxItem>With Key</ComboBoxItem>
-            </ComboBox>
+                <Grid >
+
+                <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
+                    <TabItem Header="Choose crypto metod" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="cmb" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedIndex="0" SelectionChanged="cmb_SelectionChanged">
+                            <ComboBoxItem>Hex</ComboBoxItem>
+                            <ComboBoxItem>Rotx</ComboBoxItem>
+                            <ComboBoxItem>With Key</ComboBoxItem>
+                            </ComboBox>
+                    </TabItem>
+                </TabControl>
+                    <TabControl x:Name="RotxTbc" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
+                        <TabItem Header="Rotation Step" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <TextBox x:Name="rotxTxb" Text="text" />
+                        </TabItem>
+                    </TabControl>
+                    
+                    <TabControl x:Name="WithKeyTBC" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
+                        <TabItem Header="Rotation Step" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <TextBox x:Name="WithKeyTBX" Text="text" />
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
             </Border>
             <Border Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" >
                 <Grid>

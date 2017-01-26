@@ -32,6 +32,29 @@ namespace Robot
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }      
+
+        private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string cnbSelected = cmb.SelectedValue.ToString();
+
+            switch (cnbSelected)
+            {
+                case "Hex":
+                    RotxTbc.Visibility = Visibility.Collapsed;
+                    WithKeyTBC.Visibility = Visibility.Collapsed;
+                    break;
+                case "Rotx":
+                    RotxTbc.Visibility = Visibility.Visible;
+                    WithKeyTBC.Visibility = Visibility.Collapsed;
+                    break;
+                case "With Key":
+                    RotxTbc.Visibility = Visibility.Collapsed;
+                    WithKeyTBC.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
