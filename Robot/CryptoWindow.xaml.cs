@@ -55,6 +55,7 @@ namespace Robot
                     cryptotoHex();
                     break;
                 case "Rotx":
+                    cryptoCaesar();
                     break;
                 case "With Key":
                     cryptoWithKey();
@@ -62,6 +63,12 @@ namespace Robot
                 default:
                     break;
             }
+        }
+
+        private void cryptoCaesar()
+        {
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(readRichCrypto(), Int32.Parse("4"));
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);
         }
 
         private void cryptoWithKey()
@@ -89,6 +96,7 @@ namespace Robot
                     encryptoHextoString();
                     break;
                 case "Rotx":
+                    encryptoCeasar();
                     break;
                 case "With Key":
                     encryptorWithKey();
@@ -96,6 +104,12 @@ namespace Robot
                 default:
                     break;
             }
+        }
+
+        private void encryptoCeasar()
+        {
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(readRichCrypto(), Int32.Parse("4"));
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);
         }
 
         private void encryptorWithKey()

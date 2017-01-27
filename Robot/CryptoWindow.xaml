@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Encryptor - Decryptor" Height="600" Width="680" Loaded="Window_Loaded">
+        Title="Encryptor - Decryptor" Height="600" Width="750" Loaded="Window_Loaded">
     
     <Grid>
-        <Border Margin="10,10,10,10" />
+        <Border Margin="10,10,10,10"  />
         <Grid Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -19,19 +19,19 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-            <GroupBox Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Background="Gray">
+            <GroupBox Grid.Column="0" Grid.Row="0" Margin="10,10,10,10" Background="Gray">
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Source"/>
                 </GroupBox.Header>
             <RichTextBox x:Name="richForCrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen" ></RichTextBox>
             </GroupBox>
-            <GroupBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+            <GroupBox Grid.Column="0" Grid.Row="1" Margin="10,10,10,10">
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Destination"/>
                 </GroupBox.Header>
                 <RichTextBox x:Name="richEncrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></RichTextBox>
             </GroupBox>
-            <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
+            <Border Grid.Column="1" Grid.Row="0" Margin="5,20,10,10" BorderBrush="White" BorderThickness="3">
                 <StackPanel Margin="5,5,5,5">
                
                     <GroupBox Header="Choose crypto metod" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -50,7 +50,7 @@
 
                 </StackPanel>
             </Border>
-            <Border Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" >
+            <Border Grid.Column="1" Grid.Row="1" Margin="5,20,10,10" BorderBrush="White" BorderThickness="3">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>

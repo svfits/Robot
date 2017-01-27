@@ -158,5 +158,44 @@ namespace LocalDataBase.CryptoEncrypter
                 return "";
             }
         }
+
+        /// <summary>
+        ///  шифрование
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string encryptCaesar(string txt, int key)
+        {
+            byte[] arr = Encoding.Unicode.GetBytes(txt);
+            byte[] mass = new byte[txt.Length];
+            for(int i =0; i<mass.Length;i++)
+            {
+                mass[i] = (byte)(arr[i] ^ key);
+            }
+            return Encoding.Unicode.GetString(mass);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string decryptCaesar(string txt, int key)
+        {
+            byte[] arr = Encoding.Unicode.GetBytes(txt);
+            return encryptCaesar(arr, key);
+        }
+
+        private static string encryptCaesar(byte[] arr, int key)
+        {
+            byte[] mass = new byte[arr.Length];
+            for (int i = 0; i < mass.Length; i++)
+            {
+                mass[i] = (byte)(arr[i] ^ key);
+            }
+            return Encoding.Unicode.GetString(mass);
+        }
     }
 }
