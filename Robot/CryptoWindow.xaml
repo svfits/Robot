@@ -35,8 +35,8 @@
                 <StackPanel Margin="5,5,5,5">
                
                     <GroupBox Header="Choose crypto metod" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <ComboBox x:Name="cmb" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                                  SelectedIndex="0" SelectionChanged="cmb_SelectionChanged" SelectedValuePath="Content">
+                        <ComboBox Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                                  SelectedIndex="0" SelectionChanged="cmb_SelectionChanged">
                             <ComboBoxItem Content="Hex" />
                             <ComboBoxItem Content="Rotx" />
                             <ComboBoxItem Content="With Key"/>
