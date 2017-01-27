@@ -50,22 +50,61 @@ namespace Robot
                 case "Rotx":
                     break;
                 case "With Key":
+                    cryptoWithKey();
                     break;
                 default:
                     break;
             }
         }
 
+        private void cryptoWithKey()
+        {
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.stringToWithKey(readRichCrypto(), Key.Content.ToString());
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);
+        }
+
         private void cryptotoHex()
         {
             string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.stringToHEx(readRichCrypto());
             addTextToRichEnCrypto(ss, Brushes.LightGreen);      
-        }
+        }      
 
+        /// <summary>
+        ////Расшифровка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
+            switch (metodCrypto)
+            {
+                case "Hex":
+                    encryptoHextoString();
+                    break;
+                case "Rotx":
+                    break;
+                case "With Key":
+                    encryptorWithKey();
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        }      
+        private void encryptorWithKey()
+        {
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.withKeytoString(readRichCrypto(), Key.Content.ToString());
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);
+        }
+
+        /// <summary>
+        /// из Hex в string
+        /// </summary>
+        private void encryptoHextoString()
+        {
+           string ss =  LocalDataBase.CryptoEncrypter.CryptoEncrypter.hexToString(readRichCrypto());
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);
+        }
 
         private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            

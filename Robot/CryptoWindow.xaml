@@ -45,7 +45,7 @@
                 
                     <GroupBox Header="" x:Name="Key" Visibility="Hidden" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
                               HorizontalAlignment="Stretch"  Margin="5,5,5,5" Background="Gray">                       
-                            <TextBox x:Name="KeyTextBox" Text="text"/>                      
+                            <TextBox x:Name="KeyTextBox" Text=""/>                      
                     </GroupBox>
 
                 </StackPanel>
