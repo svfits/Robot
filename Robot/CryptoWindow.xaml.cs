@@ -19,20 +19,47 @@ namespace Robot
     /// </summary>
     public partial class CryptoWindow : Window
     {
+        string metodCrypto = "Hex";        
+
+        FlowDocument objDoc = new FlowDocument();
+        Paragraph objParag1 = new Paragraph();
+
         public CryptoWindow()
         {
             InitializeComponent();
         }
 
-        public CryptoWindow(string fileName)
+        public CryptoWindow(string fileNameContains)
         {
             InitializeComponent();
             richForCrypto.IsReadOnly = true;
+
+            if(!String.IsNullOrEmpty(fileNameContains))
+            {               
+                addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
+            }            
         }
 
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
         {
+            switch(metodCrypto)
+            {
+                case "Hex":
+                    cryptotoHex();
+                    break;
+                case "Rotx":
+                    break;
+                case "With Key":
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        private void cryptotoHex()
+        {
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.stringToHEx(readRichCrypto());
+            addTextToRichEnCrypto(ss, Brushes.LightGreen);      
         }
 
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
@@ -50,23 +77,25 @@ namespace Robot
                 var cnbSelected = selectedItem.Content.ToString();
 
                 System.Diagnostics.Debug.WriteLine(cnbSelected);
-                string fff = "dsfffffffffffff";
-
+                
                 switch (cnbSelected)
                 {
                     case "Hex":
                         System.Diagnostics.Debug.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEX");
                         Key.Visibility = Visibility.Hidden;
+                        metodCrypto = "Hex";
                         break;
                     case "Rotx":
                         System.Diagnostics.Debug.WriteLine("ROoooooooooooooooooooooooooooooooooooooooooooootx");
                         Key.Visibility = Visibility.Visible;
                         Key.Header = "Rotation Step";
+                        metodCrypto = "Rotx";
                         break;
                     case "With Key":
                         System.Diagnostics.Debug.WriteLine("Wiiiiiiiiiiiiiiiiiiiiiith Keeeeeeeeeeeeeeeeeeeeey");
                         Key.Visibility = Visibility.Visible;
                         Key.Header = "Key";
+                        metodCrypto = "With Key";
                         break;
                     default:
                         break;
@@ -82,6 +111,68 @@ namespace Robot
         {
           
         }
-            
+
+        /// <summary>
+        ////Добавление в Крипто исходный код
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="color"></param>
+        private void addTextToRichCrypto(string v, SolidColorBrush color)
+        {
+            if (v != String.Empty)
+            {
+                TextRange range = new TextRange(richForCrypto.Document.ContentEnd, richForCrypto.Document.ContentEnd);
+                objParag1.Inlines.Add(new Run(v + Environment.NewLine) { Foreground = color });
+                objDoc.Blocks.Add(objParag1);
+            }
+
+            try
+            {
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richForCrypto.Document = objDoc; }));
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richForCrypto.CaretPosition = richForCrypto.Document.ContentEnd; }));
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richForCrypto.ScrollToEnd(); }));
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при добавлении консоль крипто " + ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Добавление в richtexbox ENcryptor
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="color"></param>
+        private void addTextToRichEnCrypto(string v, SolidColorBrush color)
+        {
+
+            if (v != String.Empty)
+            {
+                TextRange range = new TextRange(richEncrypto.Document.ContentEnd, richEncrypto.Document.ContentEnd);
+                objParag1.Inlines.Add(new Run(v + Environment.NewLine) { Foreground = color });
+                objDoc.Blocks.Add(objParag1);
+            }
+
+            try
+            {
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richEncrypto.Document = objDoc; }));
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richEncrypto.CaretPosition = richEncrypto.Document.ContentEnd; }));
+                richForCrypto.Dispatcher.Invoke(new Action(delegate { richEncrypto.ScrollToEnd(); }));
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog("ошибка при добавлении консоль крипто Encrypto " + ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Содержимое Rich
+        /// </summary>
+        /// <returns></returns>
+        private string readRichCrypto()
+        {
+            return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text.Trim();
+        }
+
     }
 }

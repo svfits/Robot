@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoEncrypter\CryptoEncrypter.cs" />
     <Compile Include="FlashDrive\GetScenarioOfFlashDrive.cs" />
     <Compile Include="LocalDbSQLite\HContex.cs" />
     <Compile Include="LocalDbSQLite\ListCommand.cs" />

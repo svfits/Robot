@@ -23,13 +23,13 @@
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Source"/>
                 </GroupBox.Header>
-            <RichTextBox x:Name="richForCrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen"  IsReadOnly="True"></RichTextBox>
+            <RichTextBox x:Name="richForCrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen" ></RichTextBox>
             </GroupBox>
             <GroupBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Destination"/>
                 </GroupBox.Header>
-                <RichTextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></RichTextBox>
+                <RichTextBox x:Name="richEncrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></RichTextBox>
             </GroupBox>
             <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
                 <StackPanel Margin="5,5,5,5">
