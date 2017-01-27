@@ -680,13 +680,24 @@ namespace Robot
                         return;
                     }
 
+                    if(yyy == 3)
+                    {
+                        if(command.Split(new Char[] { })[1] == "main" && command.Split(new Char[] { })[2] == "tasks")
+                        {
+                            nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
+                            CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint);
+                            crw.ShowDialog();
+                            return;
+                        }
+                    }
+
                     // первая команда
                     var ttt = command.Split(new Char[] { })[1];
 
                     if (ttt == "new")
                     {                      
                         CryptoWindow crw = new CryptoWindow();
-                        crw.Show();
+                        crw.ShowDialog();
                         return;
                     }
 
@@ -711,13 +722,13 @@ namespace Robot
                         }
 
                         CryptoWindow crw = new CryptoWindow(strT);
-                        crw.Show();
+                        crw.ShowDialog();
                         return;
 
                     }
                     catch (Exception ex)
                     {
-                        LogInFile.addFileLog("Произошла ошибка при выводе команды cat " + ex.ToString());                      
+                        LogInFile.addFileLog("Произошла ошибка при выводе команды crypto " + ex.ToString());                      
                         return;
                     }
 

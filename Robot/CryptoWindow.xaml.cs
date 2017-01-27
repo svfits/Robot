@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocalDataBase.LocalDbSQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,12 @@ namespace Robot
             {               
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }            
+        }
+
+        public CryptoWindow(List<ListCommand> vv = null)
+        {
+            InitializeComponent();
+            MessageBox.Show("Command crypto main tasks not found");
         }
 
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
