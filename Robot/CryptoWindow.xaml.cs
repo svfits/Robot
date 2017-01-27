@@ -148,7 +148,7 @@ namespace Robot
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-          
+            Topmost = true;
         }
 
         /// <summary>
@@ -184,6 +184,10 @@ namespace Robot
         /// <param name="color"></param>
         private void addTextToRichEnCrypto(string v, SolidColorBrush color)
         {
+            objDoc = new FlowDocument();
+            objParag1 = new Paragraph();
+
+            richEncrypto.Document.Blocks.Clear();
 
             if (v != String.Empty)
             {

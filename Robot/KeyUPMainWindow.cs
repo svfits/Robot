@@ -660,6 +660,69 @@ namespace Robot
                     scenarioDiagnosticRobot = 198;
                 }
 
+                if(command.Contains("crypto"))
+                {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    // сколько слов в команде
+                    var yyy = command.Split(new Char[] { }).Count();
+                 
+                    if(yyy < 2 )
+                    {
+                        addTextToRich("not enough attributes", Brushes.Red, false);
+                        printHelpCommand("not enough attributes", Brushes.Red);
+                        return;
+                    }
+
+                    // первая команда
+                    var ttt = command.Split(new Char[] { })[1];
+
+                    if (ttt == "new")
+                    {                      
+                        CryptoWindow crw = new CryptoWindow();
+                        crw.Show();
+                        return;
+                    }
+
+                    // проверим файл
+                    try
+                    {
+                        string[] fileFormat = ttt.Split(new Char[] { '.' });
+
+                        if (fileFormat.Count() > 2 || fileFormat.Count() < 2 || fileFormat[1].Trim().ToLower() != "txt")
+                        {
+                            addTextToRich("Unknown file format", Brushes.Red, false);
+                            printHelpCommand("Unknown file format", Brushes.Red);
+                            return;
+                        }
+
+                        string[] contentFile = GetSetScenarioOfFlashDrive.getFileContents(ttt);
+                        string strT = String.Empty;
+
+                        foreach(var str in contentFile)
+                        {
+                            strT += str;
+                        }
+
+                        CryptoWindow crw = new CryptoWindow(strT);
+                        crw.Show();
+                        return;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        LogInFile.addFileLog("Произошла ошибка при выводе команды cat " + ex.ToString());                      
+                        return;
+                    }
+
+                }
+
                 if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {
                     addTextToRich("Only root!", Brushes.Red, false);
@@ -776,7 +839,8 @@ namespace Robot
         {
             "play",
             "cat" ,
-            "ls"
+            "ls"  ,
+            "crypto"
         };
      
     }
