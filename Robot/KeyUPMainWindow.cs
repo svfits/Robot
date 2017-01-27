@@ -249,8 +249,7 @@ namespace Robot
                         textBoxCommands.Clear();
                         beeper();
                         return;
-                    }
-                    
+                    }                    
                 }
 
                 // если это справка

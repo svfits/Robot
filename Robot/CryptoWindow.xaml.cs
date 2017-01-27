@@ -24,6 +24,12 @@ namespace Robot
             InitializeComponent();
         }
 
+        public CryptoWindow(string fileName)
+        {
+            InitializeComponent();
+            richForCrypto.IsReadOnly = true;
+        }
+
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -36,25 +42,41 @@ namespace Robot
 
         private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string cnbSelected = cmb.SelectedValue.ToString();
-
-            switch (cnbSelected)
+            try
             {
-                case "Hex":
-                    RotxTbc.Visibility = Visibility.Collapsed;
-                    WithKeyTBC.Visibility = Visibility.Collapsed;
-                    break;
-                case "Rotx":
-                    RotxTbc.Visibility = Visibility.Visible;
-                    WithKeyTBC.Visibility = Visibility.Collapsed;
-                    break;
-                case "With Key":
-                    RotxTbc.Visibility = Visibility.Collapsed;
-                    WithKeyTBC.Visibility = Visibility.Visible;
-                    break;
-                default:
-                    break;
+                var cnbSelected = cmb.SelectedValue.ToString();
+                //MessageBox.Show(cmb.SelectedValue);
+                System.Diagnostics.Debug.WriteLine(cnbSelected);
+
+                switch (cnbSelected)
+                {
+                    case "Hex":
+                        System.Diagnostics.Debug.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEX");
+                        Key.Visibility = Visibility.Hidden;
+                        break;
+                    case "Rotx":
+                        System.Diagnostics.Debug.WriteLine("ROoooooooooooooooooooooooooooooooooooooooooooootx");
+
+                      //  Key.Visibility = Visibility.Visible;
+                        break;
+                    case "With Key":
+                        System.Diagnostics.Debug.WriteLine("Wiiiiiiiiiiiiiiiiiiiiiith Keeeeeeeeeeeeeeeeeeeeey");
+                      //  Key.Visibility = Visibility.Visible;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+          
+        }
+            
     }
 }

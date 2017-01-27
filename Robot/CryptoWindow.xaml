@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Encryptor - Decryptor" Height="600" Width="680">
+        Title="Encryptor - Decryptor" Height="600" Width="680" Loaded="Window_Loaded">
     
     <Grid>
         <Border Margin="10,10,10,10" />
@@ -23,39 +23,32 @@
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Source"/>
                 </GroupBox.Header>
-            <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen"></TextBox>
+            <RichTextBox x:Name="richForCrypto" Margin="5,5,5,5" Grid.Column="0" Grid.Row="0" Background="Black" Foreground="LightGreen"  IsReadOnly="True"></RichTextBox>
             </GroupBox>
             <GroupBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
                 <GroupBox.Header>
                     <TextBlock FontWeight="Bold" Foreground="Azure" Text="Destination"/>
                 </GroupBox.Header>
-                <TextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></TextBox>
+                <RichTextBox Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Background="Black" Foreground="LightGreen"></RichTextBox>
             </GroupBox>
             <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
-                <Grid >
+                <StackPanel Margin="5,5,5,5">
+               
+                    <GroupBox Header="Choose crypto metod" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="cmb" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                                  SelectedIndex="0" SelectionChanged="cmb_SelectionChanged" SelectedValuePath="Content">
+                            <ComboBoxItem Content="Hex" />
+                            <ComboBoxItem Content="Rotx" />
+                            <ComboBoxItem Content="With Key"/>
+                        </ComboBox>
+                    </GroupBox>
+                
+                    <GroupBox Header="" x:Name="Key" Visibility="Hidden" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                              HorizontalAlignment="Stretch"  Margin="5,5,5,5" Background="Gray">                       
+                            <TextBox x:Name="KeyTextBox" Text="text"/>                      
+                    </GroupBox>
 
-                <TabControl Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
-                    <TabItem Header="Choose crypto metod" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <ComboBox x:Name="cmb" Margin="5,5,5,5" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedIndex="0" SelectionChanged="cmb_SelectionChanged">
-                            <ComboBoxItem>Hex</ComboBoxItem>
-                            <ComboBoxItem>Rotx</ComboBoxItem>
-                            <ComboBoxItem>With Key</ComboBoxItem>
-                            </ComboBox>
-                    </TabItem>
-                </TabControl>
-                    <TabControl x:Name="RotxTbc" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
-                        <TabItem Header="Rotation Step" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <TextBox x:Name="rotxTxb" Text="text" />
-                        </TabItem>
-                    </TabControl>
-                    
-                    <TabControl x:Name="WithKeyTBC" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Gray">
-                        <TabItem Header="Rotation Step" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <TextBox x:Name="WithKeyTBX" Text="text" />
-                        </TabItem>
-                    </TabControl>
-
-                </Grid>
+                </StackPanel>
             </Border>
             <Border Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" >
                 <Grid>
@@ -67,8 +60,8 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button x:Name="EncryptBtn" Grid.Column="0" Grid.Row="0" Content="Encrypt" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="EncryptBtn_Click"  />
-                    <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
+                    <Button x:Name="EncryptBtn" Grid.Column="0" Grid.Row="0" Content="Encrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="EncryptBtn_Click"  />
+                    <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
                     <TextBox Text="wrong selection leads to the data lost Are you sure? Press again" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
                              HorizontalAlignment="Stretch" Grid.Row="1" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" />
                 </Grid>
