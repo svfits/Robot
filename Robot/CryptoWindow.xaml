@@ -43,9 +43,22 @@
                         </ComboBox>
                     </GroupBox>
                 
-                    <GroupBox Header="" x:Name="Key" Visibility="Hidden" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                    <GroupBox Header="Key" x:Name="Key" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
                               HorizontalAlignment="Stretch"  Margin="5,5,5,5" Background="Gray">                       
                             <TextBox x:Name="KeyTextBox" Text=""/>                      
+                    </GroupBox>
+
+                    <GroupBox Header="Rotation Step" x:Name="RotaionStep" Visibility="Collapsed" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                              HorizontalAlignment="Stretch"  Margin="5,5,5,5" Background="Gray">
+                        <TextBox x:Name="RotionTextBox" Validation.Error="RotionTextBox_Error">
+                            <TextBox.Text>
+                                <Binding Path="key" NotifyOnValidationError="True">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </GroupBox>
 
                 </StackPanel>

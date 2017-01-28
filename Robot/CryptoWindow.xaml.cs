@@ -24,10 +24,14 @@ namespace Robot
 
         FlowDocument objDoc = new FlowDocument();
         Paragraph objParag1 = new Paragraph();
+        KeyT keyT;
 
         public CryptoWindow()
         {
             InitializeComponent();
+
+            keyT = new KeyT();
+            RotaionStep.DataContext = keyT;
         }
 
         public CryptoWindow(string fileNameContains)
@@ -38,13 +42,19 @@ namespace Robot
             if(!String.IsNullOrEmpty(fileNameContains))
             {               
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
-            }            
+            }
+
+            keyT = new KeyT();
+            this.DataContext = keyT;
         }
 
         public CryptoWindow(List<ListCommand> vv = null)
         {
             InitializeComponent();
             MessageBox.Show("Command crypto main tasks not found");
+
+            keyT = new KeyT();
+            this.DataContext = keyT;
         }
 
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
@@ -142,18 +152,21 @@ namespace Robot
                 {
                     case "Hex":
                         System.Diagnostics.Debug.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEX");
-                        Key.Visibility = Visibility.Hidden;
+                        Key.Visibility = Visibility.Collapsed;
+                        RotaionStep.Visibility = Visibility.Collapsed;
                         metodCrypto = "Hex";
                         break;
                     case "Rotx":
                         System.Diagnostics.Debug.WriteLine("ROoooooooooooooooooooooooooooooooooooooooooooootx");
-                        Key.Visibility = Visibility.Visible;
+                        Key.Visibility = Visibility.Collapsed;
+                        RotaionStep.Visibility = Visibility.Visible;
                         Key.Header = "Rotation Step";
                         metodCrypto = "Rotx";
                         break;
                     case "With Key":
                         System.Diagnostics.Debug.WriteLine("Wiiiiiiiiiiiiiiiiiiiiiith Keeeeeeeeeeeeeeeeeeeeey");
                         Key.Visibility = Visibility.Visible;
+                        RotaionStep.Visibility = Visibility.Collapsed;
                         Key.Header = "Key";
                         metodCrypto = "With Key";
                         break;
@@ -238,5 +251,39 @@ namespace Robot
             return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text.Trim();
         }
 
+        private void RotionTextBox_Error(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+            {
+                MessageBox.Show(e.Error.ErrorContent.ToString());
+            }
+        }
+    }
+
+    public class KeyT
+    {
+        private int _key = 1;
+        /// <summary>
+        ///  проверка ключа только цифры
+        /// </summary>
+        public int key
+        {
+            get
+            {
+                return _key;
+            }
+
+            set
+            {
+                if (value < 0 || value > 99)
+                {
+                    throw new ArgumentException("Key is not included in the range of values");
+                }
+                else
+                {
+                    _key = value;
+                }
+            }
+        }
     }
 }
