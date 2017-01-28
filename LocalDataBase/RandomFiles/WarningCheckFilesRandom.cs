@@ -107,6 +107,21 @@ namespace LocalDataBase.RandomFiles
 
             return numBer;
         }
+
+        public static char[] randomStr(char[] nStr)
+        {
+            Random r = random();
+
+            for (int i = nStr.Length -1; i >=1; i--)
+            {
+                int j = r.Next(i +1);
+                var temp = nStr[j];
+                nStr[j] = nStr[i];
+                nStr[i] = temp;
+            }
+
+            return nStr;
+        }
     }
 
     public class RandomClass

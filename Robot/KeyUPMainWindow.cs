@@ -173,12 +173,11 @@ namespace Robot
                         if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199 )
                         {
                             addTextToRich("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red, false);
-                            printHelpCommand("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red);
+                          //  printHelpCommand("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red);
                             textBoxCommands.Clear();
                             textBoxSuffixAddText("#");                           
                             beeper();
-                            x2command = false;
-                            return;
+                            x2command = false;                          
                         }
 
                         await commandsReboot();

@@ -46,7 +46,13 @@ namespace LocalDataBase.RandomFiles.Tests
         [TestMethod()]
         public void RandomFilesTest1()
         {
-         string   errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+            string errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
+        }
+
+        [TestMethod()]
+        public void randomStrTest()
+        {
+
         }
     }
 }

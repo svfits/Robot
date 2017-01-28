@@ -218,20 +218,62 @@ namespace Robot
         /// <param name="v"></param>
         /// <param name="color"></param>
         private async void addTextToRichEnCrypto(string v, SolidColorBrush color)
-        {
-            objDoc = new FlowDocument();
-            objParag1 = new Paragraph();
-
-            richEncrypto.Document.Blocks.Clear();
+        {        
 
             char[] nStr = v.ToArray();
+            // то что будем выводить
+            List<char[]> randomString = new List<char[]>();
+            //перемешаем и заполним 
+            for (int i = 1; i <= 10; i++)
+            {            
+
+                for(int j=0; j <= ( nStr.Length / 10 ); j++)
+                {
+                    char[] result = WarningCheckFilesRandom.randomStr(nStr);
+                    string gg = new string(result);
+                    int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (result.Length -1));
+
+                    string ff =  result[rdmNumber].ToString();
+                    string dd = nStr[rdmNumber].ToString();
+
+                    if (result[rdmNumber] != nStr[rdmNumber])
+                    {
+                        result[rdmNumber] = nStr[rdmNumber];
+                        randomString.Add(result);
+                    }
+                    else
+                    {
+                      //  j--;
+                        await Task.Delay(20);
+                    }
+                   
+                }
               
-            foreach(var dd in nStr)
+            }
+
+            foreach(var gg in randomString)
             {
-                addTextToRich(dd.ToString(), color);
-                int result = WarningCheckFilesRandom.randomSleep(20, 300);
-                await Task.Delay(result);
-            }  
+                addTextToRich(new string(gg), color);
+                await Task.Delay(200);
+            }
+
+            //for(int i = 1; i <= 10; i++)
+            //{
+            //    char[] randomStr = WarningCheckFilesRandom.randomStr(nStr);
+            //    int result = WarningCheckFilesRandom.randomSleep(20, 300);
+
+            //    addTextToRich(new string(randomStr), color);
+            //    await Task.Delay(500);
+            //}
+
+            //addTextToRich(nStr.ToString(), color);
+
+            //foreach (var dd in nStr)
+            //{
+            //    addTextToRich(dd.ToString(), color);
+            //    int result = WarningCheckFilesRandom.randomSleep(20, 300);
+            //    await Task.Delay(result);
+            //}  
 
             //for(int i =0; i < nStr.Length; i++ )
             //{
@@ -242,6 +284,11 @@ namespace Robot
 
         private void addTextToRich(string v, SolidColorBrush color)
         {
+            objDoc = new FlowDocument();
+            objParag1 = new Paragraph();
+
+            richEncrypto.Document.Blocks.Clear();
+
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richEncrypto.Document.ContentEnd, richEncrypto.Document.ContentEnd);
