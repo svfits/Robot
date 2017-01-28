@@ -99,6 +99,14 @@ namespace LocalDataBase.RandomFiles
             CultureInfo heIL = new CultureInfo("en-US");
             return start.AddDays(gen.Next(range)).ToString("m",heIL);
         }
+
+        public static int randomSleep(int first, int end)
+        {           
+            Random r = random();
+            int numBer = r.Next(first, end);
+
+            return numBer;
+        }
     }
 
     public class RandomClass

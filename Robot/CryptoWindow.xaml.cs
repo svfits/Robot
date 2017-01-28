@@ -1,4 +1,5 @@
 ﻿using LocalDataBase.LocalDbSQLite;
+using LocalDataBase.RandomFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -216,17 +217,35 @@ namespace Robot
         /// </summary>
         /// <param name="v"></param>
         /// <param name="color"></param>
-        private void addTextToRichEnCrypto(string v, SolidColorBrush color)
+        private async void addTextToRichEnCrypto(string v, SolidColorBrush color)
         {
             objDoc = new FlowDocument();
             objParag1 = new Paragraph();
 
             richEncrypto.Document.Blocks.Clear();
 
+            char[] nStr = v.ToArray();
+              
+            foreach(var dd in nStr)
+            {
+                addTextToRich(dd.ToString(), color);
+                int result = WarningCheckFilesRandom.randomSleep(20, 300);
+                await Task.Delay(result);
+            }  
+
+            //for(int i =0; i < nStr.Length; i++ )
+            //{
+            //    addTextToRich(nStr[i].ToString(), color);
+            //    await Task.Delay(200);
+            //}
+        }
+
+        private void addTextToRich(string v, SolidColorBrush color)
+        {
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richEncrypto.Document.ContentEnd, richEncrypto.Document.ContentEnd);
-                objParag1.Inlines.Add(new Run(v + Environment.NewLine) { Foreground = color });
+                objParag1.Inlines.Add(new Run(v /*+ Environment.NewLine*/) { Foreground = color });
                 objDoc.Blocks.Add(objParag1);
             }
 
