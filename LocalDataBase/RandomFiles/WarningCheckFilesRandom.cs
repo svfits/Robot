@@ -12,7 +12,8 @@ namespace LocalDataBase.RandomFiles
     //// ошибка в работе файла сценарий 3
     /// </summary>
  public static class WarningCheckFilesRandom
-    {       
+    {
+        private static Random r = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
 
         /// <summary>
         /// случайный сломанный файл для сценария 3
@@ -110,17 +111,18 @@ namespace LocalDataBase.RandomFiles
 
         public static char[] randomStr(char[] nStr)
         {
-            Random r = random();
+            char[] nStr1 = null;
 
             for (int i = nStr.Length -1; i >=1; i--)
             {
-                int j = r.Next(i +1);
+                int j = r.Next(i + 3);
                 var temp = nStr[j];
                 nStr[j] = nStr[i];
                 nStr[i] = temp;
+                nStr1 = nStr;
             }
 
-            return nStr;
+            return nStr1;
         }
     }
 

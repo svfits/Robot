@@ -25,7 +25,7 @@ namespace Robot
 
         FlowDocument objDoc = new FlowDocument();
         Paragraph objParag1 = new Paragraph();
-        KeyT keyT;
+        KeyT keyT;      
 
         public CryptoWindow()
         {
@@ -152,20 +152,20 @@ namespace Robot
                 switch (cnbSelected)
                 {
                     case "Hex":
-                        System.Diagnostics.Debug.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEX");
+                        //System.Diagnostics.Debug.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEX");
                         Key.Visibility = Visibility.Collapsed;
                         RotaionStep.Visibility = Visibility.Collapsed;
                         metodCrypto = "Hex";
                         break;
                     case "Rotx":
-                        System.Diagnostics.Debug.WriteLine("ROoooooooooooooooooooooooooooooooooooooooooooootx");
+                        //System.Diagnostics.Debug.WriteLine("ROoooooooooooooooooooooooooooooooooooooooooooootx");
                         Key.Visibility = Visibility.Collapsed;
                         RotaionStep.Visibility = Visibility.Visible;
                         Key.Header = "Rotation Step";
                         metodCrypto = "Rotx";
                         break;
                     case "With Key":
-                        System.Diagnostics.Debug.WriteLine("Wiiiiiiiiiiiiiiiiiiiiiith Keeeeeeeeeeeeeeeeeeeeey");
+                      //  System.Diagnostics.Debug.WriteLine("Wiiiiiiiiiiiiiiiiiiiiiith Keeeeeeeeeeeeeeeeeeeeey");
                         Key.Visibility = Visibility.Visible;
                         RotaionStep.Visibility = Visibility.Collapsed;
                         Key.Header = "Key";
@@ -196,7 +196,7 @@ namespace Robot
             if (v != String.Empty)
             {
                 TextRange range = new TextRange(richForCrypto.Document.ContentEnd, richForCrypto.Document.ContentEnd);
-                objParag1.Inlines.Add(new Run(v + Environment.NewLine) { Foreground = color });
+                objParag1.Inlines.Add(new Run(v) { Foreground = color });
                 objDoc.Blocks.Add(objParag1);
             }
 
@@ -218,44 +218,54 @@ namespace Robot
         /// <param name="v"></param>
         /// <param name="color"></param>
         private async void addTextToRichEnCrypto(string v, SolidColorBrush color)
-        {        
-
-            char[] nStr = v.ToArray();
+        {      
+            char[] chrKey = v.ToCharArray();
             // то что будем выводить
             List<char[]> randomString = new List<char[]>();
+            await Task.Delay(29);
+
+            char[] randomKey = WarningCheckFilesRandom.randomStr(chrKey.Length);
             //перемешаем и заполним 
             for (int i = 1; i <= 10; i++)
             {            
 
-                for(int j=0; j <= ( nStr.Length / 10 ); j++)
+                for(int j=0; j <= ( (chrKey.Length / 10) + 1 ); j++)
                 {
-                    char[] result = WarningCheckFilesRandom.randomStr(nStr);
-                    string gg = new string(result);
-                    int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (result.Length -1));
+                    int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (randomKey.Length - 1));
+                    var ff = randomKey[rdmNumber];
+                    var dd = chrKey[rdmNumber];
 
-                    string ff =  result[rdmNumber].ToString();
-                    string dd = nStr[rdmNumber].ToString();
+                    if (randomKey == chrKey)
+                    {
+                        System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v + " " + ff + "  " + dd);
+                        // MessageBox.Show(new string(randomKey)  + "  " + new string(chrKey) + " " +  ff + "  " + dd);
+                    }
 
-                    if (result[rdmNumber] != nStr[rdmNumber])
-                    {
-                        result[rdmNumber] = nStr[rdmNumber];
-                        randomString.Add(result);
-                    }
-                    else
-                    {
-                      //  j--;
-                        await Task.Delay(20);
-                    }
-                   
+                    //result[rdmNumber] = nStr[rdmNumber];
+                    randomKey[rdmNumber] = chrKey[rdmNumber];
+                    //if (ff != dd)
+                    //{
+                    //    randomKey[rdmNumber] = chrKey[rdmNumber];
+                      
+                    //}
+                    //else
+                    //{
+                    //    //  j--;
+                    //    await Task.Delay(20);
+                    //}
+
                 }
-              
+                randomString.Add(randomKey);
+
             }
 
             foreach(var gg in randomString)
             {
                 addTextToRich(new string(gg), color);
-                await Task.Delay(200);
+                await Task.Delay(500);
             }
+
+            addTextToRich(v, color);
 
             //for(int i = 1; i <= 10; i++)
             //{

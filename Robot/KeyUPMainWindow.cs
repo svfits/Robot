@@ -330,9 +330,11 @@ namespace Robot
                         return;
                     }
 
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    //  colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    addTextToRich(nameCommand, Brushes.White);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
+                    return;
                 }
 
                 if (( command == "cpav scan") && (scenarioDiagnosticRobot == 2))
@@ -345,9 +347,10 @@ namespace Robot
                         return;
                     }
 
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                    addTextToRich(nameCommand, Brushes.White);
                     scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
+                    return;
                 }
 
                 if (command == "make modules install")
@@ -446,9 +449,11 @@ namespace Robot
                         return;
                     }
 
+                    addTextToRich(nameCommand, Brushes.White);
                     // переустановлен модуль сбойный
-                    colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
-                    scenarioDiagnosticRobot = 199;
+                    //colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                    scenarioDiagnosticRobot = 199;                    
+                    return;
                 }             
 
                 if( command == "backup system")

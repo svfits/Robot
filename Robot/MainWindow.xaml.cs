@@ -538,8 +538,22 @@ namespace Robot
 
                         newline = newline.Replace("[markColorizeModule]", "");
                     }
-                    
-                    if(newline.Contains("#beep"))
+
+                    if (newline.Contains("[markColorizeModuleGreen]"))
+                    {
+                        if (scenarioDiagnosticRobot == 199)
+                        {
+                            colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                        }
+                        else
+                        {
+                            colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
+                        }
+
+                        newline = newline.Replace("[markColorizeModuleGreen]", "");
+                    }
+
+                    if (newline.Contains("#beep"))
                     {
                         beeper("#beep");
                         newline = newline.Replace("#beep", "");
