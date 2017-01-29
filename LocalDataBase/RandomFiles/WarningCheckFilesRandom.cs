@@ -109,20 +109,10 @@ namespace LocalDataBase.RandomFiles
             return numBer;
         }
 
-        public static char[] randomStr(char[] nStr)
+        public static char[] randomStr(int length)
         {
-            char[] nStr1 = null;
-
-            for (int i = nStr.Length -1; i >=1; i--)
-            {
-                int j = r.Next(i + 3);
-                var temp = nStr[j];
-                nStr[j] = nStr[i];
-                nStr[i] = temp;
-                nStr1 = nStr;
-            }
-
-            return nStr1;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+|";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[r.Next(s.Length)]).ToArray()).ToCharArray();
         }
     }
 
