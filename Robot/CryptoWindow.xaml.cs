@@ -218,44 +218,53 @@ namespace Robot
         /// <param name="v"></param>
         /// <param name="color"></param>
         private async void addTextToRichEnCrypto(string v, SolidColorBrush color)
-        {      
+        {  
+            if(v == String.Empty)
+            {
+                return;
+            }   
+             
             char[] chrKey = v.ToCharArray();
             // то что будем выводить
             List<string> randomString = new List<string>();
             List<int> notEdit = new List<int>();
                              
             //перемешаем и заполним 
-            for (int i = 0; i <= (v.Length * 3) - 1 ; i++)
+            for (int i = 0; i <= 20 ; i++)
             {
                 char[] randomKey = WarningCheckFilesRandom.randomStr(chrKey.Length);
-                
-                //for(int j=0; j <= ( (chrKey.Length / 100) + 1 ); j++)
-                //{
-                int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (randomKey.Length - 1));
-                var ff = randomKey[rdmNumber];
-                var dd = chrKey[rdmNumber];
 
-                if (randomKey == chrKey)
-                  {
-                     System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v + " " + ff + "  " + dd);
-                        // MessageBox.Show(new string(randomKey)  + "  " + new string(chrKey) + " " +  ff + "  " + dd);
-                  }
-
-                    //result[rdmNumber] = nStr[rdmNumber];
-                
-                notEdit.Add(rdmNumber);
-
-                if (randomKey[rdmNumber] == chrKey[rdmNumber])
+                for (int j = 0; j <= ( chrKey.Length / 20) ; j++)
                 {
-                    i--;
+                    int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (randomKey.Length - 1));
+                    notEdit.Add(rdmNumber);
                 }
+
+              
+                //var ff = randomKey[rdmNumber];
+                //var dd = chrKey[rdmNumber];
+
+                //if (randomKey == chrKey)
+                //  {
+                //     System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v + " " + ff + "  " + dd);
+                //        // MessageBox.Show(new string(randomKey)  + "  " + new string(chrKey) + " " +  ff + "  " + dd);
+                //  }
+
+                //    //result[rdmNumber] = nStr[rdmNumber];
+                
+           
+
+                //if (randomKey[rdmNumber] == chrKey[rdmNumber])
+                //{
+                //    i--;
+                //}
                                
                 foreach(var tt in notEdit)
                 {
                     randomKey[tt] = chrKey[tt];
-                    System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + chrKey[tt]);
+                  //  System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + chrKey[tt]);
                 }
-                  System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v);
+                  //System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v);
                 //}
               //  randomString.Add(new string(randomKey1));
                 randomString.Add(new string(randomKey));
