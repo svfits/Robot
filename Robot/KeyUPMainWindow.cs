@@ -169,17 +169,7 @@ namespace Robot
 
                     // reboot
                     if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
-                    {
-                        if(GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199 )
-                        {
-                            addTextToRich("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red, false);
-                          //  printHelpCommand("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red);
-                            textBoxCommands.Clear();
-                            textBoxSuffixAddText("#");                           
-                            beeper();
-                            x2command = false;                          
-                        }
-
+                    {                    
                         await commandsReboot();
                         return;
                     }
@@ -537,6 +527,16 @@ namespace Robot
                         printHelpCommand("Only root!", Brushes.Red);
                         beeper();
                         return;
+                    }
+
+                    if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() != 199)
+                    {
+                        addTextToRich("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red, false);
+                        //  printHelpCommand("Changes are not saved in the system. Reloading will lose all changes.!", Brushes.Red);
+                        textBoxCommands.Clear();
+                        textBoxSuffixAddText("#");
+                        beeper();
+                        x2command = false;
                     }
 
                     // textBoxSuffix.Text = "Proceed with reboot?";
