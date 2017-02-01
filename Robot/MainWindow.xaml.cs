@@ -540,16 +540,10 @@ namespace Robot
                     }
 
                     if (newline.Contains("[markColorizeModuleGreen]"))
-                    {
-                        if (scenarioDiagnosticRobot == 199)
-                        {
-                            colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
-                        }
-                        else
-                        {
+                    {                    
                             colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
-                        }
-
+                            scenarioDiagnosticRobot = 199;
+                        
                         newline = newline.Replace("[markColorizeModuleGreen]", "");
                     }
 

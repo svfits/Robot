@@ -232,7 +232,7 @@ namespace Robot
                 {
                     if (zz == null)
                     {
-                        addTextToRich("# " + command, Brushes.LightGreen, false);
+                        addTextToRich("# " + command, Brushes.LightGreen, true);
                         addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
                         printHelpCommand("command not found", Brushes.Red);
                         textBoxCommands.Clear();
@@ -246,7 +246,7 @@ namespace Robot
                 {
                     if(nameCommand == null)
                     {
-                        addTextToRich("# " + command , Brushes.LightGreen, false);
+                        addTextToRich("# " + command , Brushes.LightGreen, true);
                         addTextToRich(command + ":    " + "command not found", Brushes.Red, false);
                         printHelpCommand("command not found", Brushes.Red);
                         textBoxCommands.Clear();
@@ -254,13 +254,13 @@ namespace Robot
                         return;
                     }
 
-                    addTextToRich("# " + command, Brushes.LightGreen, false);
+                    addTextToRich("# " + command, Brushes.LightGreen, true);
                     addTextToRich(nameCommand, Brushes.White);
                     textBoxCommands.Clear();
                     return;
                 }
 
-                addTextToRich("# " + command, Brushes.LightGreen, false);
+                addTextToRich("# " + command, Brushes.LightGreen, true);
                 textBoxCommands.Clear();
 
                 #region команды
@@ -338,7 +338,7 @@ namespace Robot
                     }
 
                     addTextToRich(nameCommand, Brushes.White);
-                    scenarioDiagnosticRobot = 199;
+                   // scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     return;
                 }
@@ -381,8 +381,8 @@ namespace Robot
 
                     if (GetSetScenarioOfFlashDrive.checkFilesFromFlash(_moduleName))
                     {                     
-                            scenarioDiagnosticRobot = 199;
-                        colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
+                     //   scenarioDiagnosticRobot = 199;
+                     //   colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
                         GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     }
                     else
@@ -442,7 +442,8 @@ namespace Robot
                     addTextToRich(nameCommand, Brushes.White);
                     // переустановлен модуль сбойный
                     //colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
-                    scenarioDiagnosticRobot = 199;                    
+                    //Task.WaitAll();
+                  //  scenarioDiagnosticRobot = 199;                    
                     return;
                 }             
 
@@ -671,6 +672,13 @@ namespace Robot
                         addTextToRich("Only root!", Brushes.Red, false);
                         printHelpCommand("Only root!", Brushes.Red);
                         beeper();
+                        return;
+                    }
+
+                    if(scenarioDiagnosticRobot == 4)
+                    {
+                        addTextToRich("not known robot", Brushes.Red, false);
+                        printHelpCommand("not known robot", Brushes.Red);
                         return;
                     }
 
