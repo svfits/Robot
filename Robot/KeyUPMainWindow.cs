@@ -242,7 +242,7 @@ namespace Robot
                 }
 
                 // если это справка
-                if(command.Contains("?"))
+                if(command.Contains("?") || command.Contains("help"))
                 {
                     if(nameCommand == null)
                     {
@@ -667,6 +667,16 @@ namespace Robot
 
                 if(command.Contains("crypto"))
                 {
+                    // сколько слов в команде
+                    var yyy1 = command.Split(new Char[] { }).Count();
+
+                    if (yyy1 == 1)
+                    {
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto", scenarioDiagnosticRobot);
+                        addTextToRich(nameCommand, Brushes.White);
+                        return;
+                    }
+
                     if (sudoNotsudo == false)
                     {
                         addTextToRich("Only root!", Brushes.Red, false);

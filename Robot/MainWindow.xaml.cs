@@ -203,6 +203,7 @@ namespace Robot
                     {
                         addTextToRich(RepositoryLocalSQLite.serachCOnnecting(scenarioDiagnosticRobot), Brushes.White);
                     }
+                    textBoxCommands.Focus();
                     return;
                 }
 
@@ -231,6 +232,7 @@ namespace Robot
 
                     connectBtn.IsEnabled = false;
                     printInModulesDateTimer();
+                    textBoxCommands.Focus();
                     return;
 
                 }
