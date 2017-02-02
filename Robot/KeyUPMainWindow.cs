@@ -678,8 +678,7 @@ namespace Robot
                     if(scenarioDiagnosticRobot == 4)
                     {
                         addTextToRich("not known robot", Brushes.Red, false);
-                        printHelpCommand("not known robot", Brushes.Red);
-                        return;
+                        printHelpCommand("not known robot", Brushes.Red);                      
                     }
 
                     // сколько слов в команде
@@ -696,6 +695,13 @@ namespace Robot
                     {
                         if(command.Split(new Char[] { })[1] == "main" && command.Split(new Char[] { })[2] == "tasks")
                         {
+                            if(scenarioDiagnosticRobot == 4)
+                            {
+                                nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
+                                addTextToRich(nameCommand, Brushes.White);
+                                return;
+                            }
+
                             nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
                             CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint);
                             crw.ShowDialog();
@@ -717,6 +723,16 @@ namespace Robot
                     try
                     {
                         string[] fileFormat = ttt.Split(new Char[] { '.' });
+                        List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
+
+                        if (files.Find(a => a == ttt ) == null)
+                        {
+                            addTextToRich("File not found", Brushes.Red, false);
+                            printHelpCommand("File not found", Brushes.Red);
+                            return;
+                        }
+
+                        
 
                         if (fileFormat.Count() > 2 || fileFormat.Count() < 2 || fileFormat[1].Trim().ToLower() != "txt")
                         {

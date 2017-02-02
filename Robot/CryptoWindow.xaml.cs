@@ -74,6 +74,8 @@ namespace Robot
                 default:
                     break;
             }
+
+            textDecrypt.Text = String.Empty;
         }
 
         private void cryptoCaesar()
@@ -115,6 +117,8 @@ namespace Robot
                 default:
                     break;
             }
+
+            textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
         }
 
         private void encryptoCeasar()
@@ -345,6 +349,11 @@ namespace Robot
             {
                 MessageBox.Show(e.Error.ErrorContent.ToString());
             }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 
