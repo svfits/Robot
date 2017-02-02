@@ -3,6 +3,7 @@ using LocalDataBase.RandomFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -242,39 +243,20 @@ namespace Robot
                 {
                     int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (randomKey.Length - 1));
                     notEdit.Add(rdmNumber);
-                }
-
-              
-                //var ff = randomKey[rdmNumber];
-                //var dd = chrKey[rdmNumber];
-
-                //if (randomKey == chrKey)
-                //  {
-                //     System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v + " " + ff + "  " + dd);
-                //        // MessageBox.Show(new string(randomKey)  + "  " + new string(chrKey) + " " +  ff + "  " + dd);
-                //  }
-
-                //    //result[rdmNumber] = nStr[rdmNumber];
-                
+                }            
            
-
-                //if (randomKey[rdmNumber] == chrKey[rdmNumber])
-                //{
-                //    i--;
-                //}
-                               
                 foreach(var tt in notEdit)
                 {
                     randomKey[tt] = chrKey[tt];
                   //  System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + chrKey[tt]);
                 }
-                  //System.Diagnostics.Debug.WriteLine(new string(randomKey) + "  " + v);
-                //}
-              //  randomString.Add(new string(randomKey1));
+              
                 randomString.Add(new string(randomKey));
             }
 
-            foreach(var gg in randomString)
+            playTextCryptoSound();
+            
+            foreach (var gg in randomString)
             {
                 addTextToRich(gg, color);
                 System.Diagnostics.Debug.WriteLine(gg);
@@ -282,6 +264,8 @@ namespace Robot
             }
 
             addTextToRich(v, color);
+
+            stopTextCryptoSound();
 
             //for(int i = 1; i <= 10; i++)
             //{
@@ -355,6 +339,20 @@ namespace Robot
         {
             this.Close();
         }
+
+        private void playTextCryptoSound()
+        {
+            SoundPlayer player = new SoundPlayer();
+            player.Stream = Robot.Properties.Resources.enterFileName;
+            player.Play();
+        }
+
+        private void stopTextCryptoSound()
+        {
+            SoundPlayer player = new SoundPlayer();
+            player.Stream = Robot.Properties.Resources.enterFileName;
+            player.Stop();
+        }
     }
 
     public class KeyT
@@ -381,6 +379,6 @@ namespace Robot
                     _key = value;
                 }
             }
-        }
-    }
+        }     
+    }   
 }

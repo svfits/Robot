@@ -105,13 +105,12 @@ namespace LocalDataBase.RandomFiles
         {           
             Random r = random();
             int numBer = r.Next(first, end);
-
             return numBer;
         }
 
         public static char[] randomStr(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+|";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+|йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФЯЧСМИТЬБЮ{}[]";
             return new string(Enumerable.Repeat(chars, length).Select(s => s[r.Next(s.Length)]).ToArray()).ToCharArray();
         }
     }
