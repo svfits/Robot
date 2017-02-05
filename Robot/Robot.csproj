@@ -33,7 +33,7 @@
     <SuiteName>Robot</SuiteName>
     <MinimumRequiredVersion>1.0.0.9</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>60</ApplicationRevision>
+    <ApplicationRevision>75</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -225,6 +225,7 @@
     <Resource Include="ImageFonts\battery.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <None Include="Resources\enterFileName.wav" />
     <Content Include="Sounds\oneTwoFhree.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -240,11 +241,9 @@
     <Content Include="Sounds\trrr.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Sounds\enterFileName.wav">
+    <Content Include="Sounds\enterFileName.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CustomToolNamespace>textCryptoSounds</CustomToolNamespace>
-      <Generator>textCryptoSounds</Generator>
-    </Resource>
+    </Content>
     <Content Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

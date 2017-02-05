@@ -685,11 +685,11 @@ namespace Robot
                         return;
                     }
 
-                    if(scenarioDiagnosticRobot == 4)
-                    {
-                        addTextToRich("not known robot", Brushes.Red, false);
-                        printHelpCommand("not known robot", Brushes.Red);                      
-                    }
+                    //if(scenarioDiagnosticRobot == 4)
+                    //{
+                    //    addTextToRich("not known robot", Brushes.Red, false);
+                    //    printHelpCommand("not known robot", Brushes.Red);                      
+                    //}
 
                     // сколько слов в команде
                     var yyy = command.Split(new Char[] { }).Count();

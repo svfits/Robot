@@ -167,13 +167,16 @@ namespace LocalDataBase.CryptoEncrypter
         /// <returns></returns>
         public static string encryptCaesar(string txt, int key)
         {
-            byte[] arr = Encoding.Unicode.GetBytes(txt);
-            byte[] mass = new byte[txt.Length];
+            char key1 = (char)key;
+            char[] mass = txt.ToCharArray();
+
             for(int i =0; i<mass.Length;i++)
             {
-                mass[i] = (byte)(arr[i] ^ key);
+                mass[i] = (char)(mass[i] + key1);
             }
-            return Encoding.Unicode.GetString(mass);
+
+            string crypto = new string(mass);
+            return crypto;        
         }
 
         /// <summary>
@@ -184,8 +187,16 @@ namespace LocalDataBase.CryptoEncrypter
         /// <returns></returns>
         public static string decryptCaesar(string txt, int key)
         {
-            byte[] arr = Encoding.Unicode.GetBytes(txt);
-            return encryptCaesar(arr, key);
+            char key1 = (char)key;
+            char[] mass = txt.ToCharArray();
+
+            for (int i = 0; i < mass.Length; i++)
+            {
+                mass[i] = (char)(mass[i] - key1);
+            }
+
+            string crypto = new string(mass);
+            return crypto;
         }
 
         private static string encryptCaesar(byte[] arr, int key)

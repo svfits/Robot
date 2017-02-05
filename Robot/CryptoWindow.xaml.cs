@@ -81,7 +81,7 @@ namespace Robot
 
         private void cryptoCaesar()
         {
-            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(readRichCrypto(), Int32.Parse("4"));
+            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(readRichCrypto(), Int32.Parse(RotionTextBox.Text));
             addTextToRichEnCrypto(ss, Brushes.LightGreen);
         }
 
@@ -122,10 +122,18 @@ namespace Robot
             textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
         }
 
+        /// <summary>
+        /// шифрование
+        /// </summary>
         private void encryptoCeasar()
         {
-            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(readRichCrypto(), Int32.Parse("4"));
-            addTextToRichEnCrypto(ss, Brushes.LightGreen);
+            try
+            {
+                string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(readRichCrypto(), Int32.Parse(RotionTextBox.Text));
+                addTextToRichEnCrypto(ss, Brushes.LightGreen);
+            }
+            catch
+            { }
         }
 
         private void encryptorWithKey()
@@ -188,7 +196,11 @@ namespace Robot
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Topmost = true;
+#if DEBUG
+#else
+                  Topmost = true;
+#endif
+
         }
 
         /// <summary>
@@ -324,7 +336,7 @@ namespace Robot
         /// <returns></returns>
         private string readRichCrypto()
         {
-            return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text.Trim();
+            return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text;
         }
 
         private void RotionTextBox_Error(object sender, ValidationErrorEventArgs e)
