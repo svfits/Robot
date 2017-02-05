@@ -30,7 +30,7 @@ namespace Robot
             timerGetDataFlashDrive.Stop();
 
             // выличен робот или нет
-            if (scenarioDiagnosticRobot != 199)
+            if ( ( scenarioDiagnosticRobot != 199) && (scenarioDiagnosticRobot != 198))
             {
                 // нет 1-й флешки
                 if (GetSetScenarioOfFlashDrive.getNameFlashisAlive() == 0)

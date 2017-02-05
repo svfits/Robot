@@ -102,13 +102,15 @@
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="20" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
-                        <Label x:Name="connectOrDisconnectLbl" Content="DISCONNECT" Margin="10,10,10,10" Foreground="Red" VerticalAlignment="Center"
-                               FontFamily="/Robot;component/ImageFonts/#Space Age"  FontSize="35"
-                               HorizontalAlignment="Stretch"  Grid.Column="1">
+                        <Viewbox  Grid.Column="1"   HorizontalAlignment="Stretch" VerticalAlignment="Center" > 
+                        <Label x:Name="connectOrDisconnectLbl" Content="DISCONNECTED" Margin="10,10,10,10" Foreground="Red" 
+                               FontFamily="/Robot;component/ImageFonts/#Space Age" FontSize="25"
+                             >
                             <Label.Effect>
                                 <DropShadowEffect x:Name="lblConnectDropShadowEffect" BlurRadius="0" ShadowDepth="0" />
                             </Label.Effect>
                         </Label>
+                        </Viewbox>
                         <Image x:Name="logoImage" Source="ImageFonts/Logo.jpg" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="3,3,3,3"
                                  Grid.Column="3"  />
                     </Grid>

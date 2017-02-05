@@ -242,7 +242,7 @@ namespace Robot
                 }
 
                 // если это справка
-                if(command.Contains("?") || command.Contains("help"))
+                if( ( command.Contains("?") ) || ( command.Contains("help") ))
                 {
                     if(nameCommand == null)
                     {
@@ -347,7 +347,7 @@ namespace Robot
                 {
                     nameCommand = RepositoryLocalSQLite.searchCommandFromBD("make modules install", scenarioDiagnosticRobot);
                     addTextToRich(nameCommand, Brushes.White);
-                    beeper();
+                 //   beeper();
                     return;
                 }
 
@@ -655,10 +655,17 @@ namespace Robot
                         return;
                     }
 
-                    if ( ( scenarioDiagnosticRobot != 4 ) || ( scenarioDiagnosticRobot == 198 ))
+                    if ( ( scenarioDiagnosticRobot != 4 ) && ( scenarioDiagnosticRobot != 198 ))
                     {
                         addTextToRich("Robot Already Connected", Brushes.Red, false);
                         printHelpCommand("Robot Already Connected", Brushes.Red);
+                        return;
+                    }
+
+                    if(scenarioDiagnosticRobot == 198)
+                    {
+                        nameCommand = RepositoryLocalSQLite.searchCommandFromBD("ucon", scenarioDiagnosticRobot);
+                        addTextToRich(nameCommand, Brushes.White);
                         return;
                     }
 
@@ -703,7 +710,7 @@ namespace Robot
 
                     if(yyy == 3)
                     {
-                        if(command.Split(new Char[] { })[1] == "main" && command.Split(new Char[] { })[2] == "tasks")
+                        if( (command.Split(new Char[] { })[1] == "main") && (command.Split(new Char[] { })[2] == "tasks"))
                         {
                             if(scenarioDiagnosticRobot == 4)
                             {
@@ -734,15 +741,19 @@ namespace Robot
                     {
                         string[] fileFormat = ttt.Split(new Char[] { '.' });
                         List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
+                                          
+                        if (files == null)
+                        {
+                            addTextToRich("USB flash drive or flash is not available yet", Brushes.Red, false);
+                            return;
+                        }
 
                         if (files.Find(a => a == ttt ) == null)
                         {
                             addTextToRich("File not found", Brushes.Red, false);
                             printHelpCommand("File not found", Brushes.Red);
                             return;
-                        }
-
-                        
+                        }                        
 
                         if (fileFormat.Count() > 2 || fileFormat.Count() < 2 || fileFormat[1].Trim().ToLower() != "txt")
                         {
