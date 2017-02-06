@@ -144,7 +144,7 @@ namespace Robot
 
                     if (textBoxSuffix.Text.Trim() == "Password:")
                     {
-                        if (command == RepositoryLocalSQLite.searchCommandFromBD("password111q!!!", scenarioDiagnosticRobot).FirstOrDefault().helpPrint)
+                        if (command == GetSetScenarioOfFlashDrive.getPassword() )
                         {
                             sudoNotsudo = true;
                             addTextToRich("Root rights successfully", Brushes.LightGreen, false);
@@ -322,7 +322,7 @@ namespace Robot
 
                     //  colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     addTextToRich(nameCommand, Brushes.White);
-                    scenarioDiagnosticRobot = 199;
+                   //   scenarioDiagnosticRobot = 199;
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
                     return;
                 }
@@ -745,6 +745,7 @@ namespace Robot
                         if (files == null)
                         {
                             addTextToRich("USB flash drive or flash is not available yet", Brushes.Red, false);
+                            beeper();
                             return;
                         }
 
@@ -752,6 +753,7 @@ namespace Robot
                         {
                             addTextToRich("File not found", Brushes.Red, false);
                             printHelpCommand("File not found", Brushes.Red);
+                            beeper();
                             return;
                         }                        
 
@@ -759,6 +761,7 @@ namespace Robot
                         {
                             addTextToRich("Unknown file format", Brushes.Red, false);
                             printHelpCommand("Unknown file format", Brushes.Red);
+                            beeper();
                             return;
                         }
 

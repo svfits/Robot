@@ -104,6 +104,7 @@ namespace Robot
         /// <param name="e"></param>
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
+            //beeper();
             switch (metodCrypto)
             {
                 case "Hex":
@@ -336,7 +337,7 @@ namespace Robot
         /// <returns></returns>
         private string readRichCrypto()
         {
-            return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text;
+            return new TextRange(richForCrypto.Document.ContentStart, richForCrypto.Document.ContentEnd).Text.Trim();
         }
 
         private void RotionTextBox_Error(object sender, ValidationErrorEventArgs e)

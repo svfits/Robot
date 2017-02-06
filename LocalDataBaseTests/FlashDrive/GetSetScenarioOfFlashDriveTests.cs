@@ -84,6 +84,12 @@ namespace LocalDataBase.FlashDrive.Tests
         public void saveScenariyTest()
         {
             GetSetScenarioOfFlashDrive.saveScenariy("199");
-        }      
+        }
+
+        [TestMethod()]
+        public void getPasswordTest()
+        {
+            GetSetScenarioOfFlashDrive.getPassword();
+        }
     }
 }

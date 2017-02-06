@@ -30,14 +30,14 @@ namespace WpfConsoleTest
         {
             MessageBox.Show(GetSetScenarioOfFlashDrive.getFilesFromFlashAliens().ToString());
 
-            if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
-            {
-                string fff = "ghjghj";
-            }
-            else
-            {
-                string fff = "ghjghjjjjjj";
-            }
+            //if (GetSetScenarioOfFlashDrive.checkFilesFromFlash("ns230.bin"))
+            //{
+            //    string fff = "ghjghj";
+            //}
+            //else
+            //{
+            //    string fff = "ghjghjjjjjj";
+            //}
         }
     }
 }

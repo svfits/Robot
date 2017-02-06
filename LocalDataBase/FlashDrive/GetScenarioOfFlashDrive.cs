@@ -400,6 +400,44 @@ namespace LocalDataBase.FlashDrive
         }
 
         /// <summary>
+        /// Получить из файла
+        /// </summary>
+        /// <returns></returns>
+        public static string getPassword()
+        {
+            try
+            {
+                string path = Path.GetDirectoryName(@"C:\robot_comand\");
+                string pathFile = Path.Combine(path, "password");
+
+                if (!File.Exists(pathFile))
+                {
+                   // File.Create(pathFile);
+
+                    using (StreamWriter sw = new StreamWriter(pathFile, false, Encoding.Default))
+                    {
+                        sw.WriteLine("111777");
+                        return "111777";
+                    }
+                }
+
+                StreamReader file = new StreamReader(pathFile);
+
+                string value = file.ReadLine().Trim();
+                file.Close();
+                return value;
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog(DateTime.Now + " ошибка при  получении данных во временном файле выполнения задания " + ex.ToString());
+                return null;
+            }
+
+        }
+
+
+
+        /// <summary>
         ////получить содержимое файла по его имени на флешке 
         /// </summary>
         /// <param name="fileName"></param>

@@ -762,27 +762,27 @@ namespace Robot
                     case "RED":
                         color = Brushes.White;
                         return true;
-                        break;
+                         
                     case "GREEN":
                         color = Brushes.White;
                         return true;
-                        break;
+                        
                     case "ORANGE":
                         color = Brushes.White;
                         return true;
-                        break;
+                        
                     case "YELLOW":
                         color = Brushes.White;
                         return true;
-                        break;
+                        
                     case "BLUE":
                         color = Brushes.White;
                         return true;
-                        break;
+                        
                     case "CYAN":
                         color = Brushes.White;
                         return true;
-                        break;
+                       
                     default:
 
                         break;
@@ -811,27 +811,27 @@ namespace Robot
                     case "RED":
                         color = Brushes.Red;
                         return true;
-                        break;
+                        
                     case "GREEN":
                         color = Brushes.LightGreen;
                         return true;
-                        break;
+                      
                     case "ORANGE":
                         color = Brushes.Orange;
                         return true;
-                        break;
+                       
                     case "YELLOW":
                         color = Brushes.Yellow;
                         return true;
-                        break;
+                        
                     case "BLUE":
                         color = Brushes.Blue;
                         return true;
-                        break;
+                        
                     case "CYAN":
                         color = Brushes.Cyan;
                         return true;
-                        break;
+                        
                     default:
                         break;
                 }
@@ -904,7 +904,7 @@ namespace Robot
         }       
         
          
-        private  void beeper()
+        public  void beeper()
         {
             SystemSounds.Beep.Play();
          //     SystemSounds.Asterisk.Play();
