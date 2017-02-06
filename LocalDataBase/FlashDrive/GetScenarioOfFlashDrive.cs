@@ -16,9 +16,7 @@ namespace LocalDataBase.FlashDrive
          /// файлы на флешке
          /// </summary>
      public static List<string> binCheck = new List<string>()
-        {
-            "cp1600-bf-v2-5-0.bin",
-            "cp1600-sys-v15-7-16.bin",            
+        {                   
             "ss274.bin",
             "sa232.bin",
             "sw244.bin",
