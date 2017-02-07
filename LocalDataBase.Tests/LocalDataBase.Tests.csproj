@@ -49,6 +49,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoEncrypterTest.cs" />
     <Compile Include="GetSetScenarioOfFlashDriveTest.cs" />
     <Compile Include="GetSetScenarioOfFlashDriveTest.getFilesFromFlashTest.g.cs">
       <DependentUpon>GetSetScenarioOfFlashDriveTest.cs</DependentUpon>

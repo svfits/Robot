@@ -46,8 +46,10 @@ namespace LocalDataBase.CryptoEncrypter
                 }
                 return System.Text.Encoding.UTF8.GetString(raw);
             }
-            catch
+            catch(Exception ex)
             {
+                Robot.LogInFile.addFileLog("Произошло исключение при дешифровке файла методом HEX  " + ex.ToString());
+                System.Diagnostics.Debug.WriteLine("Произошло исключение при дешифровке файла методом HEX  " + ex.ToString());
                 return "";
             }
         }
