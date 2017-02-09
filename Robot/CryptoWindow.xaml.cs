@@ -27,26 +27,43 @@ namespace Robot
         FlowDocument objDoc = new FlowDocument();
         Paragraph objParag1 = new Paragraph();
         KeyT keyT;
+        /// <summary>
+        /// показать красный или не показать 
+        /// </summary>
         private bool decryptMessage;
-
+        
+        /// <summary>
+        /// просто окно для шифрования
+        /// </summary>
         public CryptoWindow()
         {
             InitializeComponent();
 
             keyT = new KeyT();
             RotaionStep.DataContext = keyT;
+            decryptMessage = false;
         }
 
-        public CryptoWindow(string fileNameContains)
+        /// <summary>
+        /// выведем содержимое файла
+        /// </summary>
+        /// <param name="fileNameContains"></param>
+        public CryptoWindow(string fileNameContains, int _scenario)
         {
             InitializeComponent();
             richForCrypto.IsReadOnly = true;
+
+            if(_scenario == 198)
+            {
+                decryptMessage = true;
+            }
 
             if(!String.IsNullOrEmpty(fileNameContains))
             {               
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }
 
+            decryptMessage = false;
             keyT = new KeyT();
             this.DataContext = keyT;
         }
@@ -109,6 +126,8 @@ namespace Robot
             {
                 textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
                 decryptMessage = true;
+                beeper();
+                return;
             }
 
             switch (metodCrypto)
@@ -199,6 +218,11 @@ namespace Robot
             {
                
             }
+        }
+
+        public void beeper()
+        {
+            SystemSounds.Beep.Play();           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

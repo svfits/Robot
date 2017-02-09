@@ -77,7 +77,7 @@
                     </Grid.RowDefinitions>
                     <Button x:Name="EncryptBtn" Grid.Column="0" Grid.Row="0" Content="Encrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="EncryptBtn_Click"  />
                     <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
-                    <TextBox x:Name="textDecrypt" Text="" Grid.ColumnSpan="2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Grid.Row="1" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" />
+                    <TextBox x:Name="textDecrypt" Text="" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Foreground="Red"  HorizontalAlignment="Stretch" Grid.Row="1" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" />
                     <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Grid.Row="3" Grid.ColumnSpan="2" FontSize="15" Margin="5,5,5,5"/>
                 </Grid>
             </Border>

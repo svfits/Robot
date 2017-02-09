@@ -752,7 +752,7 @@ namespace Robot
                                 }
 
                                 nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
-                                CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint);
+                                CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint,scenarioDiagnosticRobot);
                                 crw.ShowDialog();
                                 return;
                             }
@@ -810,7 +810,7 @@ namespace Robot
                             strT += str;
                         }
 
-                        CryptoWindow crw = new CryptoWindow(strT);
+                        CryptoWindow crw = new CryptoWindow(strT,scenarioDiagnosticRobot);
                         crw.ShowDialog();
                         return;
 
