@@ -322,7 +322,8 @@ namespace Robot
 
                     //  colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     addTextToRich(nameCommand, Brushes.White);
-                   //   scenarioDiagnosticRobot = 199;
+                    //   scenarioDiagnosticRobot = 199;
+                    await Task.Delay(30000);
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
                     return;
                 }
@@ -338,7 +339,8 @@ namespace Robot
                     }
 
                     addTextToRich(nameCommand, Brushes.White);
-                   // scenarioDiagnosticRobot = 199;
+                    // scenarioDiagnosticRobot = 199;
+                    await Task.Delay(30000);
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     return;
                 }
@@ -642,7 +644,35 @@ namespace Robot
 
                 if(command == "init system")
                 {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    // список файлов на флешке
+                    List<string> files = GetSetScenarioOfFlashDrive.getFilesFromFlashAliens();
+
+                    if (files == null)
+                    {
+                        addTextToRich("USB flash drive or flash is not available yet", Brushes.Red, false);
+                        return;
+                    }
+
+                    if (files.Find( a => a == "cp1600-bf-v2-5-0.bin" ) == null || (files.Find(a => a == "cp1600-sys-v15-7-16.bin")) == null)
+                    {
+                        addTextToRich("File not found", Brushes.Red, false);
+                        printHelpCommand("File not found", Brushes.Red);
+                        return;
+                    }
+
+                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD(command, scenarioDiagnosticRobot);
+                    addTextToRich(nameCommand, Brushes.White);
+                    await Task.Delay(30000);
                     scenarioDiagnosticRobot = 199;
+                    return;
                 }
 
                 if(command == "ucon")
@@ -712,17 +742,24 @@ namespace Robot
                     {
                         if( (command.Split(new Char[] { })[1] == "main") && (command.Split(new Char[] { })[2] == "tasks"))
                         {
-                            if(scenarioDiagnosticRobot == 4)
+                            try
                             {
+                                if (scenarioDiagnosticRobot == 4)
+                                {
+                                    nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
+                                    addTextToRich(nameCommand, Brushes.White);
+                                    return;
+                                }
+
                                 nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
-                                addTextToRich(nameCommand, Brushes.White);
+                                CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint);
+                                crw.ShowDialog();
                                 return;
                             }
-
-                            nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
-                            CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint);
-                            crw.ShowDialog();
-                            return;
+                            catch(Exception ex)
+                            {
+                                LogInFile.addFileLog(DateTime.Now + " При запуске шифрования произошла ошибка " + ex.ToString() + "  " + " Номер сценария " + scenarioDiagnosticRobot + "   " + nameCommand);
+                            }
                         }
                     }
 

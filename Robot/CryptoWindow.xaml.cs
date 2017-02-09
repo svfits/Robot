@@ -26,7 +26,8 @@ namespace Robot
 
         FlowDocument objDoc = new FlowDocument();
         Paragraph objParag1 = new Paragraph();
-        KeyT keyT;      
+        KeyT keyT;
+        private bool decryptMessage;
 
         public CryptoWindow()
         {
@@ -104,7 +105,12 @@ namespace Robot
         /// <param name="e"></param>
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
-            //beeper();
+            if(decryptMessage == false)
+            {
+                textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
+                decryptMessage = true;
+            }
+
             switch (metodCrypto)
             {
                 case "Hex":
@@ -120,7 +126,7 @@ namespace Robot
                     break;
             }
 
-            textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
+           
         }
 
         /// <summary>
