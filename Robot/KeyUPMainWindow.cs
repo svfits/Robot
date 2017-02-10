@@ -78,7 +78,7 @@ namespace Robot
                     return;
                 }
 
-                if (connectNotConnect == false && scenarioDiagnosticRobot != 4)
+                if (connectNotConnect == false)
                 {
                     //  addTextToRich("Инициализация робота не выполнена", Brushes.Red, false);
                     printHelpCommand("Robot is not Connected", Brushes.Red);
