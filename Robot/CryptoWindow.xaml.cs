@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -79,7 +80,9 @@ namespace Robot
 
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
         {
-            switch(metodCrypto)
+            textDecrypt.Text = "";
+
+            switch (metodCrypto)
             {
                 case "Hex":
                     cryptotoHex();
@@ -124,10 +127,14 @@ namespace Robot
         {
             if(decryptMessage == false)
             {
-                textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
+                flashes();
                 decryptMessage = true;
                 beeper();
                 return;
+            }
+            else
+            {
+                decryptMessage = false;
             }
 
             switch (metodCrypto)
@@ -146,6 +153,20 @@ namespace Robot
             }
 
            
+        }
+
+        private void flashes()
+        {
+            textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
+
+            DoubleAnimation Animation = new DoubleAnimation();
+            Animation.From = textDecrypt.FontSize;
+            Animation.To = 250;
+            Animation.AutoReverse = true;
+            Animation.FillBehavior = FillBehavior.Stop;
+            Animation.RepeatBehavior = new RepeatBehavior(1);
+            Animation.Duration = TimeSpan.FromSeconds(3);
+            textDecrypt.BeginAnimation(WidthProperty, Animation);
         }
 
         /// <summary>
@@ -303,7 +324,7 @@ namespace Robot
             {
                 addTextToRich(gg, color);
                 System.Diagnostics.Debug.WriteLine(gg);
-                await Task.Delay(200);
+                await Task.Delay(300);
             }
 
             addTextToRich(v, color);

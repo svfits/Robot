@@ -23,7 +23,7 @@ namespace Robot
 
             DoubleAnimation labelAnimation = new DoubleAnimation();
             labelAnimation.From = connectOrDisconnectLbl.ActualWidth;
-            labelAnimation.To = 300;
+            labelAnimation.To = 420;
             labelAnimation.Duration = TimeSpan.FromSeconds(3);            
             connectOrDisconnectLbl.BeginAnimation(Label.WidthProperty, labelAnimation);
 

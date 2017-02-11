@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Robot"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" 
-        WindowState="Maximized"  WindowStyle="None" ResizeMode="NoResize" Width="1000" Height="1000">
+        WindowState="Maximized"  WindowStyle="None" ResizeMode="NoResize" Width="1280" Height="1024">
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="Executed_New"  />
@@ -96,15 +96,15 @@
                         <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
                             <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
                         </Grid.ColumnDefinitions>
                         <Button x:Name="connectBtn" Content="CONNECT" Click="Button_Connect_Click" Margin="10,10,10,10"  FontSize="20" Padding="10"
                                 IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Robot;component/ImageFonts/#Space Age"/>
                        
                         <Label x:Name="connectOrDisconnectLbl" Content="DISCONNECTED" Margin="5,10,10,10" Foreground="Red" HorizontalAlignment="Left"
-                               FontFamily="/Robot;component/ImageFonts/#Space Age" FontSize="28" VerticalAlignment="Center" Grid.Column="1"
+                               FontFamily="/Robot;component/ImageFonts/#Space Age" FontSize="30" VerticalAlignment="Center" Grid.Column="1"
                              >
                             <Label.Effect>
                                 <DropShadowEffect x:Name="lblConnectDropShadowEffect" BlurRadius="0" ShadowDepth="0" />
