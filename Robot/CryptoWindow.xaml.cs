@@ -32,6 +32,8 @@ namespace Robot
         /// показать красный или не показать 
         /// </summary>
         private bool decryptMessage;
+
+        int scenario = 0;
         
         /// <summary>
         /// просто окно для шифрования
@@ -53,6 +55,7 @@ namespace Robot
         {
             InitializeComponent();
             richForCrypto.IsReadOnly = true;
+            scenario = _scenario;
 
             if(_scenario == 198)
             {
@@ -81,6 +84,8 @@ namespace Robot
         private void EncryptBtn_Click(object sender, RoutedEventArgs e)
         {
             textDecrypt.Text = "";
+            textDecrypt2.Text = "";
+            textDecrypt3.Text = "";
 
             switch (metodCrypto)
             {
@@ -125,7 +130,7 @@ namespace Robot
         /// <param name="e"></param>
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(decryptMessage == false)
+            if(decryptMessage == false && scenario != 198 && scenario != 4)
             {
                 flashes();
                 decryptMessage = true;
@@ -135,6 +140,9 @@ namespace Robot
             else
             {
                 decryptMessage = false;
+                textDecrypt.Text = "";
+                textDecrypt2.Text = "";
+                textDecrypt3.Text = "";
             }
 
             switch (metodCrypto)
@@ -150,23 +158,30 @@ namespace Robot
                     break;
                 default:
                     break;
-            }
-
-           
+            }           
         }
 
+        /// <summary>
+        /// animation TEXT decrypt
+        /// </summary>
         private void flashes()
         {
-            textDecrypt.Text = "Wrong selection leads to the data lost Are you sure? Press again";
+            textDecrypt.Text = "Wrong selection leads to the data lost";
+            textDecrypt2.Text = "Are you sure?";
+            textDecrypt3.Text = "DECRYPT again";
 
-            DoubleAnimation Animation = new DoubleAnimation();
-            Animation.From = textDecrypt.FontSize;
-            Animation.To = 250;
-            Animation.AutoReverse = true;
-            Animation.FillBehavior = FillBehavior.Stop;
-            Animation.RepeatBehavior = new RepeatBehavior(1);
-            Animation.Duration = TimeSpan.FromSeconds(3);
-            textDecrypt.BeginAnimation(WidthProperty, Animation);
+            (Resources["animationTextBlock3"] as Storyboard).Begin();
+            (Resources["animationTextBlock2"] as Storyboard).Begin();
+            (Resources["animationTextBlock"] as Storyboard).Begin();
+
+            //DoubleAnimation Animation = new DoubleAnimation();
+            //Animation.From = textDecrypt.FontSize;
+            //Animation.To = 250;
+            //Animation.AutoReverse = true;
+            //Animation.FillBehavior = FillBehavior.Stop;
+            //Animation.RepeatBehavior = new RepeatBehavior(1);
+            //Animation.Duration = TimeSpan.FromSeconds(1);
+            //textDecrypt.BeginAnimation(WidthProperty, Animation);
         }
 
         /// <summary>
@@ -330,30 +345,7 @@ namespace Robot
             addTextToRich(v, color);
 
             stopTextCryptoSound();
-
-            //for(int i = 1; i <= 10; i++)
-            //{
-            //    char[] randomStr = WarningCheckFilesRandom.randomStr(nStr);
-            //    int result = WarningCheckFilesRandom.randomSleep(20, 300);
-
-            //    addTextToRich(new string(randomStr), color);
-            //    await Task.Delay(500);
-            //}
-
-            //addTextToRich(nStr.ToString(), color);
-
-            //foreach (var dd in nStr)
-            //{
-            //    addTextToRich(dd.ToString(), color);
-            //    int result = WarningCheckFilesRandom.randomSleep(20, 300);
-            //    await Task.Delay(result);
-            //}  
-
-            //for(int i =0; i < nStr.Length; i++ )
-            //{
-            //    addTextToRich(nStr[i].ToString(), color);
-            //    await Task.Delay(200);
-            //}
+                     
         }
 
         private void addTextToRich(string v, SolidColorBrush color)

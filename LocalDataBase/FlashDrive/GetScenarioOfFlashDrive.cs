@@ -36,6 +36,11 @@ namespace LocalDataBase.FlashDrive
         {
             string fileNameKernel = "RobotKernel.bin";
 
+#if DEBUG
+            return 1;
+#else
+#endif
+
             try
             {
                 foreach (var dinfo in DriveInfo.GetDrives())

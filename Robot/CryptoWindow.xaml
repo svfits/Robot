@@ -8,7 +8,21 @@
         WindowStartupLocation="CenterScreen"
          WindowStyle="None"
         Title="Encryptor - Decryptor" Height="600" Width="750" Loaded="Window_Loaded">
-    
+    <Window.Resources>
+        <Storyboard x:Key="animationTextBlock">
+            <DoubleAnimation BeginTime="00:00:00.1" Duration="00:00:04" From="0" To="10" AutoReverse="True" Storyboard.TargetName="textDecrypt"
+                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
+        </Storyboard>
+        <Storyboard x:Key="animationTextBlock2">
+            <DoubleAnimation BeginTime="00:00:00.1" Duration="00:00:04" From="0" To="10" AutoReverse="True" Storyboard.TargetName="textDecrypt2"
+                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
+        </Storyboard>
+        <Storyboard x:Key="animationTextBlock3">
+            <DoubleAnimation BeginTime="00:00:00.1" Duration="00:00:04" From="0" To="10" AutoReverse="True" Storyboard.TargetName="textDecrypt3"
+                             Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" />
+        </Storyboard>
+    </Window.Resources>
+
     <Grid>
         <Border Margin="10,10,10,10"  />
         <Grid Background="Gray">
@@ -77,11 +91,24 @@
                     </Grid.RowDefinitions>
                     <Button x:Name="EncryptBtn" Grid.Column="0" Grid.Row="0" Content="Encrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="EncryptBtn_Click"  />
                     <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
-                    <TextBlock Name="textDecrypt" Grid.ColumnSpan="2" VerticalAlignment="Center" Foreground="Red"  HorizontalAlignment="Center" Grid.Row="1" Margin="5,5,5,5" TextWrapping="Wrap" FontSize="20">
+
+                    <StackPanel Name="stPnDecrypt" Orientation="Vertical" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1" Margin="5,5,5,5"  VerticalAlignment="Center">
+                    <TextBlock Name="textDecrypt"  Foreground="Red"   TextWrapping="Wrap" FontSize="16">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
                         </TextBlock.Effect>
                     </TextBlock>
+                        <TextBlock Name="textDecrypt2" Foreground="Red" FontSize="16">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                       <TextBlock Name="textDecrypt3" Foreground="Red" FontSize="20">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
+                            </TextBlock.Effect>
+                      </TextBlock>
+                    </StackPanel>
                     <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Grid.Row="3" Grid.ColumnSpan="2" FontSize="15" Margin="5,5,5,5"/>
                 </Grid>
             </Border>
