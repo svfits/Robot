@@ -50,7 +50,7 @@ namespace LocalDataBase.CryptoEncrypter
             {
                 Robot.LogInFile.addFileLog("Произошло исключение при дешифровке файла методом HEX  " + ex.ToString());
                 System.Diagnostics.Debug.WriteLine("Произошло исключение при дешифровке файла методом HEX  " + ex.ToString());
-                return "";
+                return "Text is not encrypted";
             }
         }
 

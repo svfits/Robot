@@ -441,6 +441,7 @@ namespace Robot
                         return;
                     }
 
+                    errorFileScenario3 = WarningCheckFilesRandom.RandomFiles();
                     addTextToRich(nameCommand, Brushes.White);
                     // переустановлен модуль сбойный
                     //colorizeModule(scenarioDiagnosticRobot, Brushes.Black);
@@ -752,7 +753,7 @@ namespace Robot
                                 }
 
                                 nameCommand = RepositoryLocalSQLite.searchCommandFromBD("crypto main tasks", scenarioDiagnosticRobot);
-                                CryptoWindow crw = new CryptoWindow(nameCommand.FirstOrDefault().monitorPrint,scenarioDiagnosticRobot);
+                                CryptoWindow crw = new CryptoWindow(nameCommand,scenarioDiagnosticRobot);
                                 crw.ShowDialog();
                                 return;
                             }

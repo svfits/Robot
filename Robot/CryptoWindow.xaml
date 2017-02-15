@@ -93,17 +93,17 @@
                     <Button x:Name="DecryptBtn" Grid.Column="1" Grid.Row="0" Content="Decrypt" VerticalAlignment="Center" Padding="5,5,5,5" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="DecryptBtn_Click"  />
 
                     <StackPanel Name="stPnDecrypt" Orientation="Vertical" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1" Margin="5,5,5,5"  VerticalAlignment="Center">
-                    <TextBlock Name="textDecrypt"  Foreground="Red"   TextWrapping="Wrap" FontSize="16">
+                    <TextBlock Name="textDecrypt"  Foreground="Red"   TextWrapping="Wrap" FontSize="14">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                        <TextBlock Name="textDecrypt2" Foreground="Red" FontSize="16">
+                        <TextBlock Name="textDecrypt2" Foreground="Red" FontSize="14">
                             <TextBlock.Effect>
                                 <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
                             </TextBlock.Effect>
                         </TextBlock>
-                       <TextBlock Name="textDecrypt3" Foreground="Red" FontSize="20">
+                       <TextBlock Name="textDecrypt3" Foreground="Red" FontSize="14">
                             <TextBlock.Effect>
                                 <DropShadowEffect Color="#FF0F0E0E" RenderingBias="Quality"/>
                             </TextBlock.Effect>

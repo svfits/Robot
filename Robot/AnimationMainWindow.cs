@@ -30,7 +30,7 @@ namespace Robot
             DoubleAnimation logoAnimation = new DoubleAnimation();
             logoAnimation.From = logoImage.ActualWidth;
             logoAnimation.To = 80;
-            logoAnimation.Duration = TimeSpan.FromSeconds(10);
+            logoAnimation.Duration = TimeSpan.FromSeconds(5);
             logoImage.BeginAnimation(WidthProperty, logoAnimation);
 
             DoubleAnimation robotAnimation = new DoubleAnimation();

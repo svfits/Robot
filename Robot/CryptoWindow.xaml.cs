@@ -31,20 +31,21 @@ namespace Robot
         /// <summary>
         /// показать красный или не показать 
         /// </summary>
-        private bool decryptMessage;
+        private bool? decryptMessage;
 
         int scenario = 0;
+
+        List<ListCommand> lsCommand = new List<ListCommand>();
         
         /// <summary>
-        /// просто окно для шифрования
+        /// просто окно для шифрования new 
         /// </summary>
         public CryptoWindow()
         {
             InitializeComponent();
-
+          //  decryptMessage = false;
             keyT = new KeyT();
-            RotaionStep.DataContext = keyT;
-            decryptMessage = false;
+            RotaionStep.DataContext = keyT;           
         }
 
         /// <summary>
@@ -54,28 +55,44 @@ namespace Robot
         public CryptoWindow(string fileNameContains, int _scenario)
         {
             InitializeComponent();
-            richForCrypto.IsReadOnly = true;
-            scenario = _scenario;
 
-            if(_scenario == 198)
-            {
-                decryptMessage = true;
-            }
+            decryptMessage = false;
+            richForCrypto.IsReadOnly = true;
+            scenario = _scenario;                
 
             if(!String.IsNullOrEmpty(fileNameContains))
             {               
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }
-
-            decryptMessage = false;
+                    
             keyT = new KeyT();
             this.DataContext = keyT;
         }
 
-        public CryptoWindow(List<ListCommand> vv = null)
+        /// <summary>
+        ////вывод по сценарию crypto main tasks
+        /// </summary>
+        /// <param name="vv"></param>
+        /// <param name="_scenario"></param>
+        public CryptoWindow(List<ListCommand> vv, int _scenario)
         {
             InitializeComponent();
-            MessageBox.Show("Command crypto main tasks not found");
+            richForCrypto.IsReadOnly = true;
+            lsCommand = vv;
+
+            if(_scenario == 198)
+            {
+                decryptMessage = false;
+                addTextToRichCrypto(vv.FirstOrDefault().monitorPrint, Brushes.LightGreen);
+                keyT = new KeyT();
+                this.DataContext = keyT;
+                return;
+            }
+            
+            if (!String.IsNullOrEmpty(vv.FirstOrDefault().monitorPrint))
+            {
+                addTextToRichCrypto(vv.FirstOrDefault().monitorPrint , Brushes.LightGreen);
+            }
 
             keyT = new KeyT();
             this.DataContext = keyT;
@@ -124,27 +141,64 @@ namespace Robot
         }      
 
         /// <summary>
-        ////Расшифровка
+        //// шифровка
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(decryptMessage == false && scenario != 198 && scenario != 4)
+            if (decryptMessage == false)
             {
                 flashes();
                 decryptMessage = true;
                 beeper();
                 return;
             }
-            else
+            else if(decryptMessage != null)
             {
                 decryptMessage = false;
                 textDecrypt.Text = "";
                 textDecrypt2.Text = "";
                 textDecrypt3.Text = "";
+
+                if( ( lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim() != metodCrypto))
+                {
+                    EncryptBtn.IsEnabled = false;
+                    DecryptBtn.IsEnabled = false;
+                    beeper();
+                    //Not correct decrypt method. 
+                  //  addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
+                    addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                    return;
+                }
+
+                startMethodCrypto();
+                return;
             }
 
+            if(decryptMessage == null)
+            {
+                if ((lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower() ))
+                {
+                    EncryptBtn.IsEnabled = false;
+                    DecryptBtn.IsEnabled = false;
+                    beeper();
+                    //Not correct decrypt method. 
+                    addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                    return;
+                }
+
+                startMethodCrypto();
+                return;                               
+            }
+          
+        }
+
+        /// <summary>
+        /// запустим шифрование
+        /// </summary>
+        private void startMethodCrypto()
+        {
             switch (metodCrypto)
             {
                 case "Hex":
@@ -158,7 +212,7 @@ namespace Robot
                     break;
                 default:
                     break;
-            }           
+            }
         }
 
         /// <summary>
@@ -166,9 +220,9 @@ namespace Robot
         /// </summary>
         private void flashes()
         {
-            textDecrypt.Text = "Wrong selection leads to the data lost";
+            textDecrypt.Text = "Wrong selection leads to the data lost.";
             textDecrypt2.Text = "Are you sure?";
-            textDecrypt3.Text = "DECRYPT again";
+            textDecrypt3.Text = "press DECRYPT again";
 
             (Resources["animationTextBlock3"] as Storyboard).Begin();
             (Resources["animationTextBlock2"] as Storyboard).Begin();
@@ -307,10 +361,14 @@ namespace Robot
             {
                 return;
             }   
-             
+            
+            // original crypt 
             char[] chrKey = v.ToCharArray();
-            // то что будем выводить
+            
+            // то что будем выводить мусор
             List<string> randomString = new List<string>();
+
+            //случайные позиции котрые совпали с шифром
             List<int> notEdit = new List<int>();
                              
             //перемешаем и заполним 
@@ -325,8 +383,8 @@ namespace Robot
                 }            
            
                 foreach(var tt in notEdit)
-                {
-                    randomKey[tt] = chrKey[tt];
+                {                    
+                    randomKey[tt] =  chrKey[tt];
                   //  System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + chrKey[tt]);
                 }
               
