@@ -36,7 +36,12 @@ namespace Robot
         int scenario = 0;
 
         List<ListCommand> lsCommand = new List<ListCommand>();
-        
+
+        /// <summary>
+        /// crypto file or crypto
+        /// </summary>
+        private bool cryptnotCryptTextFile = false;
+
         /// <summary>
         /// просто окно для шифрования new 
         /// </summary>
@@ -61,7 +66,13 @@ namespace Robot
             scenario = _scenario;                
 
             if(!String.IsNullOrEmpty(fileNameContains))
-            {               
+            {
+                if(fileNameContains.Contains("#hex"))
+                {
+                    fileNameContains = fileNameContains.Replace("#hex", "");
+                    cryptnotCryptTextFile = true;
+                }
+                  
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }
                     
@@ -160,15 +171,27 @@ namespace Robot
                 textDecrypt.Text = "";
                 textDecrypt2.Text = "";
                 textDecrypt3.Text = "";
-
-                if( ( lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim() != metodCrypto))
+                          
+                               
+                if( ( lsCommand.Count != 0 ) && ( lsCommand != null ) && ( lsCommand.FirstOrDefault().helpPrint.Trim() != metodCrypto ))
                 {
                     EncryptBtn.IsEnabled = false;
                     DecryptBtn.IsEnabled = false;
                     beeper();
                     //Not correct decrypt method. 
-                  //  addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
+                    //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
                     addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                    return;
+                }
+
+                //file crypto
+                if (!cryptnotCryptTextFile)
+                {
+                    EncryptBtn.IsEnabled = false;
+                    DecryptBtn.IsEnabled = false;
+                    beeper();
+                    //text is not encrypted
+                    addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
                     return;
                 }
 
@@ -178,6 +201,12 @@ namespace Robot
 
             if(decryptMessage == null)
             {
+                if(lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "none")
+                {
+                    //text is not encrypted
+                    addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
+                }
+
                 if ((lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower() ))
                 {
                     EncryptBtn.IsEnabled = false;

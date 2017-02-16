@@ -447,6 +447,17 @@ namespace LocalDataBase.FlashDrive
             string pathFile = Path.Combine(getPathToFlashAliens(),fileName);
 
             string[] readText = File.ReadAllLines(pathFile, Encoding.GetEncoding("windows-1251"));
+
+            //foreach(var ss in readText)
+            //{
+            //   if(ss.Contains("#hex"))
+            //    {
+            //        ss.Replace("#hex","");
+            //    }
+            //} 
+
+            readText = readText.Select( a => a.Replace("#hex","")).ToArray();
+
             return readText;
         }
     }
