@@ -201,22 +201,26 @@ namespace Robot
 
             if(decryptMessage == null)
             {
-                if(lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "none")
+                if (lsCommand != null && lsCommand.Count != 0 )
                 {
-                    //text is not encrypted
-                    addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
-                }
 
-                if ((lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower() ))
-                {
-                    EncryptBtn.IsEnabled = false;
-                    DecryptBtn.IsEnabled = false;
-                    beeper();
-                    //Not correct decrypt method. 
-                    addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
-                    return;
-                }
+                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "none")
+                    {
+                        //text is not encrypted
+                        addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
+                    }
 
+                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower())
+                    {
+                        EncryptBtn.IsEnabled = false;
+                        DecryptBtn.IsEnabled = false;
+                        beeper();
+                        //Not correct decrypt method. 
+                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                        return;
+                    }
+
+                }
                 startMethodCrypto();
                 return;                               
             }
