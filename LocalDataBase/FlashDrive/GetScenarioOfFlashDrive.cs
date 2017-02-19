@@ -456,7 +456,7 @@ namespace LocalDataBase.FlashDrive
             //    }
             //} 
 
-            readText = readText.Select( a => a.Replace("#hex","")).ToArray();
+            //readText = readText.Select( a => a.Replace("#hex","")).ToArray();
 
             return readText;
         }

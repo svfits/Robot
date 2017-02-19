@@ -171,25 +171,33 @@ namespace Robot
                 textDecrypt.Text = "";
                 textDecrypt2.Text = "";
                 textDecrypt3.Text = "";
-                          
-                               
-                if( ( lsCommand.Count != 0 ) && ( lsCommand != null ) && ( lsCommand.FirstOrDefault().helpPrint.Trim() != metodCrypto ))
+                   
+                
+                // crypto main tasks       
+                if(lsCommand.Count > 0)
                 {
-                    EncryptBtn.IsEnabled = false;
-                    DecryptBtn.IsEnabled = false;
-                    beeper();
-                    //Not correct decrypt method. 
-                    //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                    addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                    if ((lsCommand.Count != 0) && (lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower()))
+                    {
+                        EncryptBtn.IsEnabled = false;
+                        DecryptBtn.IsEnabled = false;
+                        //  beeper();
+                        //Not correct decrypt method. 
+                        //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
+                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                        return;
+                    }
+
+                    startMethodCrypto();
                     return;
-                }
+                }                              
+              
 
                 //file crypto
                 if (!cryptnotCryptTextFile)
                 {
                     EncryptBtn.IsEnabled = false;
                     DecryptBtn.IsEnabled = false;
-                    beeper();
+                    //beeper();
                     //text is not encrypted
                     addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
                     return;
