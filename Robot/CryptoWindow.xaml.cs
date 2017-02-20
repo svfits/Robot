@@ -63,9 +63,15 @@ namespace Robot
 
             decryptMessage = false;
             richForCrypto.IsReadOnly = true;
-            scenario = _scenario;                
+            scenario = _scenario;
 
-            if(!String.IsNullOrEmpty(fileNameContains))
+            if (error198BlockInterface.error198BlockInterfaceCryptoTextFile == true)
+            {
+                EncryptBtn.IsEnabled = false;
+                DecryptBtn.IsEnabled = false;
+            }
+
+            if (!String.IsNullOrEmpty(fileNameContains))
             {
                 if(fileNameContains.Contains("#hex"))
                 {
@@ -97,6 +103,13 @@ namespace Robot
                 addTextToRichCrypto(vv.FirstOrDefault().monitorPrint, Brushes.LightGreen);
                 keyT = new KeyT();
                 this.DataContext = keyT;
+
+                if(error198BlockInterface.error198BlockInterfaceCryptoMainTasks == true)
+                {
+                    EncryptBtn.IsEnabled = false;
+                    DecryptBtn.IsEnabled = false;
+                }
+
                 return;
             }
             
@@ -183,7 +196,9 @@ namespace Robot
                         //  beeper();
                         //Not correct decrypt method. 
                         //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.LightGreen);
+
+                        error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
                         return;
                     }
 
@@ -200,6 +215,8 @@ namespace Robot
                     //beeper();
                     //text is not encrypted
                     addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
+
+                    error198BlockInterface.error198BlockInterfaceCryptoTextFile = true;
                     return;
                 }
 
@@ -535,5 +552,40 @@ namespace Robot
                 }
             }
         }     
-    }   
+    }
+
+    /// <summary>
+    /// Заблокирован ли интерфейс шифрования или доступен
+    /// </summary>
+    public static class error198BlockInterface
+    {
+        private static bool _error198BlockInterfaceCryptoMainTasks;
+        private static bool _error198BlockInterfaceCryptoTextFile;
+
+        public static Boolean error198BlockInterfaceCryptoMainTasks
+        {
+            get
+            {
+                return _error198BlockInterfaceCryptoMainTasks;
+            }
+
+            set
+            {
+                _error198BlockInterfaceCryptoMainTasks = value;
+            }
+        }
+
+        public static Boolean error198BlockInterfaceCryptoTextFile
+        {
+            get
+            {
+                return _error198BlockInterfaceCryptoTextFile;
+            }
+
+            set
+            {
+                _error198BlockInterfaceCryptoTextFile = value;
+            }
+        }
+    }
 }
