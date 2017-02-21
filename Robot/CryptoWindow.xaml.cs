@@ -37,6 +37,8 @@ namespace Robot
 
         List<ListCommand> lsCommand = new List<ListCommand>();
 
+        string methodCryptoInFile;
+
         /// <summary>
         /// crypto file or crypto
         /// </summary>
@@ -75,10 +77,25 @@ namespace Robot
             {
                 if(fileNameContains.Contains("#hex"))
                 {
+                    methodCryptoInFile = "hex";
                     fileNameContains = fileNameContains.Replace("#hex", "");
                     cryptnotCryptTextFile = true;
                 }
-                  
+
+                if (fileNameContains.Contains("#rotx"))
+                {
+                    methodCryptoInFile = "rotx";
+                    fileNameContains = fileNameContains.Replace("#rotx", "");
+                    cryptnotCryptTextFile = true;
+                }
+
+                if (fileNameContains.Contains("#withkey"))
+                {
+                    methodCryptoInFile = "withkey";
+                    fileNameContains = fileNameContains.Replace("#withkey", "");
+                    cryptnotCryptTextFile = true;
+                }
+
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }
                     
@@ -196,8 +213,8 @@ namespace Robot
                         //  beeper();
                         //Not correct decrypt method. 
                         //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.LightGreen);
-
+                        //   addTextToRichEnCrypto("Not correct decrypt method.", Brushes.LightGreen);
+                        addTextToRich("Not correct decrypt method.", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
                         return;
                     }
@@ -214,10 +231,25 @@ namespace Robot
                     DecryptBtn.IsEnabled = false;
                     //beeper();
                     //text is not encrypted
-                    addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
-
+                    //addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
+                    addTextToRich("Text is not correct crypted", Brushes.Red);
                     error198BlockInterface.error198BlockInterfaceCryptoTextFile = true;
                     return;
+
+                }
+                else if(cryptnotCryptTextFile == true)
+                {
+                    if (metodCrypto.ToLower() != methodCryptoInFile)
+                    {
+                        EncryptBtn.IsEnabled = false;
+                        DecryptBtn.IsEnabled = false;
+                        //beeper();
+                        //text is not encrypted
+                      //  addTextToRichEnCrypto("Text is not correct crypted", Brushes.Red);
+                        addTextToRich("Text is not correct crypted", Brushes.Red);
+                        error198BlockInterface.error198BlockInterfaceCryptoTextFile = true;
+                        return;
+                    }
                 }
 
                 startMethodCrypto();

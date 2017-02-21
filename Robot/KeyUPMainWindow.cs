@@ -627,6 +627,8 @@ namespace Robot
 
                         string[] contentFile = GetSetScenarioOfFlashDrive.getFileContents(fileName);
                         contentFile = contentFile.Select(a => a.Replace("#hex", "")).ToArray();
+                        contentFile = contentFile.Select(a => a.Replace("#rotx", "")).ToArray();
+                        contentFile = contentFile.Select(a => a.Replace("#withkey", "")).ToArray();
 
                         foreach (var s in contentFile)
                         {
