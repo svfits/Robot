@@ -45,6 +45,11 @@ namespace Robot
         private bool cryptnotCryptTextFile = false;
 
         /// <summary>
+        /// имя файла заблокированного
+        /// </summary>
+        string fileName;
+
+        /// <summary>
         /// просто окно для шифрования new 
         /// </summary>
         public CryptoWindow()
@@ -59,15 +64,18 @@ namespace Robot
         /// выведем содержимое файла
         /// </summary>
         /// <param name="fileNameContains"></param>
-        public CryptoWindow(string fileNameContains, int _scenario)
+        public CryptoWindow(string fileNameContains, int _scenario, string _fileName)
         {
             InitializeComponent();
 
+            fileName = _fileName;
             decryptMessage = false;
             richForCrypto.IsReadOnly = true;
             scenario = _scenario;
 
-            if (error198BlockInterface.error198BlockInterfaceCryptoTextFile == true)
+            List<string> resultList = error198BlockInterface.error198BlockInterfaceCryptoTextFile.Where(t => t.Contains(_fileName)).ToList<string>();
+
+            if (resultList.Count > 0 )
             {
                 EncryptBtn.IsEnabled = false;
                 DecryptBtn.IsEnabled = false;
@@ -91,7 +99,7 @@ namespace Robot
 
                 if (fileNameContains.Contains("#withkey"))
                 {
-                    methodCryptoInFile = "withkey";
+                    methodCryptoInFile = "with key";
                     fileNameContains = fileNameContains.Replace("#withkey", "");
                     cryptnotCryptTextFile = true;
                 }
@@ -179,14 +187,14 @@ namespace Robot
         {
             string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.stringToHEx(readRichCrypto());
             addTextToRichEnCrypto(ss, Brushes.LightGreen);      
-        }      
+        }
 
         /// <summary>
         //// шифровка
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DecryptBtn_Click(object sender, RoutedEventArgs e)
+        private async void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
             if (decryptMessage == false)
             {
@@ -195,16 +203,16 @@ namespace Robot
                 beeper();
                 return;
             }
-            else if(decryptMessage != null)
+            else if (decryptMessage != null)
             {
                 decryptMessage = false;
                 textDecrypt.Text = "";
                 textDecrypt2.Text = "";
                 textDecrypt3.Text = "";
-                   
-                
+
+
                 // crypto main tasks       
-                if(lsCommand.Count > 0)
+                if (lsCommand.Count > 0)
                 {
                     if ((lsCommand.Count != 0) && (lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower()))
                     {
@@ -213,16 +221,18 @@ namespace Robot
                         //  beeper();
                         //Not correct decrypt method. 
                         //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        //   addTextToRichEnCrypto("Not correct decrypt method.", Brushes.LightGreen);
-                        addTextToRich("Not correct decrypt method.", Brushes.Red);
+                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED.", Brushes.LightGreen);
+                        await Task.Delay(8000);
+                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        addTextToRich("TEXT IS NOT ENCRYPTED.", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
                         return;
                     }
 
                     startMethodCrypto();
                     return;
-                }                              
-              
+                }
+
 
                 //file crypto
                 if (!cryptnotCryptTextFile)
@@ -231,13 +241,14 @@ namespace Robot
                     DecryptBtn.IsEnabled = false;
                     //beeper();
                     //text is not encrypted
-                    //addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
+                    addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
+                    await Task.Delay(8000);
                     addTextToRich("Text is not correct crypted", Brushes.Red);
-                    error198BlockInterface.error198BlockInterfaceCryptoTextFile = true;
+                    error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
                     return;
 
                 }
-                else if(cryptnotCryptTextFile == true)
+                else if (cryptnotCryptTextFile == true)
                 {
                     if (metodCrypto.ToLower() != methodCryptoInFile)
                     {
@@ -245,9 +256,10 @@ namespace Robot
                         DecryptBtn.IsEnabled = false;
                         //beeper();
                         //text is not encrypted
-                      //  addTextToRichEnCrypto("Text is not correct crypted", Brushes.Red);
+                        addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
+                        await Task.Delay(8000);
                         addTextToRich("Text is not correct crypted", Brushes.Red);
-                        error198BlockInterface.error198BlockInterfaceCryptoTextFile = true;
+                        error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
                         return;
                     }
                 }
@@ -256,15 +268,15 @@ namespace Robot
                 return;
             }
 
-            if(decryptMessage == null)
+            if (decryptMessage == null)
             {
-                if (lsCommand != null && lsCommand.Count != 0 )
+                if (lsCommand != null && lsCommand.Count != 0)
                 {
 
                     if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "none")
                     {
                         //text is not encrypted
-                        addTextToRichEnCrypto("Text is not encrypted", Brushes.LightGreen);
+                        addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
                     }
 
                     if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower())
@@ -273,15 +285,17 @@ namespace Robot
                         DecryptBtn.IsEnabled = false;
                         beeper();
                         //Not correct decrypt method. 
-                        addTextToRichEnCrypto("Not correct decrypt method.", Brushes.Red);
+                        addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
+                        await Task.Delay(8000);
+                        addTextToRich("WRONG KEY WORD. ", Brushes.Red);
                         return;
                     }
 
                 }
                 startMethodCrypto();
-                return;                               
+                return;
             }
-          
+
         }
 
         /// <summary>
@@ -592,7 +606,7 @@ namespace Robot
     public static class error198BlockInterface
     {
         private static bool _error198BlockInterfaceCryptoMainTasks;
-        private static bool _error198BlockInterfaceCryptoTextFile;
+        private static List<string> _error198BlockInterfaceCryptoTextFile = new List<string>();
 
         public static Boolean error198BlockInterfaceCryptoMainTasks
         {
@@ -607,7 +621,7 @@ namespace Robot
             }
         }
 
-        public static Boolean error198BlockInterfaceCryptoTextFile
+        public static List<string> error198BlockInterfaceCryptoTextFile
         {
             get
             {

@@ -814,7 +814,7 @@ namespace Robot
                             strT += str;
                         }
 
-                        CryptoWindow crw = new CryptoWindow(strT, scenarioDiagnosticRobot);
+                        CryptoWindow crw = new CryptoWindow(strT, scenarioDiagnosticRobot,ttt);
                         crw.ShowDialog();
                         return;
 

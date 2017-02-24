@@ -33,7 +33,7 @@ namespace LocalDataBase.FlashDrive
       /// </summary>
       /// <returns></returns>
       public  static int getNameFlashisAlive()
-        {
+        {            
             string fileNameKernel = "RobotKernel.bin";
 
             try
