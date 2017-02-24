@@ -221,10 +221,10 @@ namespace Robot
                         //  beeper();
                         //Not correct decrypt method. 
                         //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED.", Brushes.LightGreen);
+                        addTextToRichEnCrypto("NOT ENCRYPTED TEXT", Brushes.LightGreen);
                         await Task.Delay(8000);
                         System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("TEXT IS NOT ENCRYPTED.", Brushes.Red);
+                        addTextToRich("NOT ENCRYPTED TEXT", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
                         return;
                     }
@@ -268,6 +268,7 @@ namespace Robot
                 return;
             }
 
+            // CRYPTO NEW
             if (decryptMessage == null)
             {
                 if (lsCommand != null && lsCommand.Count != 0)
@@ -489,7 +490,7 @@ namespace Robot
                 foreach(var tt in notEdit)
                 {                    
                     randomKey[tt] =  chrKey[tt];
-                  //  System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + chrKey[tt]);
+                    System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + "   " + chrKey[tt]);
                 }
               
                 randomString.Add(new string(randomKey));
@@ -500,7 +501,7 @@ namespace Robot
             foreach (var gg in randomString)
             {
                 addTextToRich(gg, color);
-                System.Diagnostics.Debug.WriteLine(gg);
+              //  System.Diagnostics.Debug.WriteLine(gg);
                 await Task.Delay(300);
             }
 

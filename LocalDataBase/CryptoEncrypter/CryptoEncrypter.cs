@@ -103,7 +103,7 @@ namespace LocalDataBase.CryptoEncrypter
             }
             catch
             {
-                return "Text is not correct crypted";
+                return "NOT CORRECT KEY";
             }
         }
 
@@ -157,7 +157,7 @@ namespace LocalDataBase.CryptoEncrypter
             }
             catch
             {
-                return "Text is not correct crypted";
+                return "NOT CORRECT KEY";
             }
         }
 
