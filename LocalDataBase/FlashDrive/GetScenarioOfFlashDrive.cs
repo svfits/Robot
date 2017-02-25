@@ -35,7 +35,7 @@ namespace LocalDataBase.FlashDrive
       public  static int getNameFlashisAlive()
         {            
             string fileNameKernel = "RobotKernel.bin";
-
+         //   return 1;
             try
             {
                 foreach (var dinfo in DriveInfo.GetDrives())
@@ -264,7 +264,7 @@ namespace LocalDataBase.FlashDrive
         /// </summary>
         /// <returns></returns>
         public static string getPathToFlashRobotKernel()
-        {
+        {            
             string fileNameKernel = "RobotKernel.bin";
 
             try

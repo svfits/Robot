@@ -104,6 +104,18 @@ namespace Robot
                     cryptnotCryptTextFile = true;
                 }
 
+                if (fileNameContains.Contains("#none"))
+                {
+                    methodCryptoInFile = "#none";
+                    fileNameContains = fileNameContains.Replace("#none", "");
+                    //addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                    addTextToRichCrypto(fileNameContains, Brushes.LightGreen);
+
+                    addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                    cryptnotCryptTextFile = true;
+                    return;
+                }
+
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
             }
                     
@@ -137,7 +149,19 @@ namespace Robot
 
                 return;
             }
-            
+
+            if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+            {
+                //TEXT IS NOT ENCRYPTED
+               // addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+             //   await Task.Delay(delayShowData);
+                System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                addTextToRichCrypto(vv.FirstOrDefault().monitorPrint, Brushes.LightGreen);
+                addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                return;
+            }
+
             if (!String.IsNullOrEmpty(vv.FirstOrDefault().monitorPrint))
             {
                 addTextToRichCrypto(vv.FirstOrDefault().monitorPrint , Brushes.LightGreen);
@@ -196,6 +220,8 @@ namespace Robot
         /// <param name="e"></param>
         private async void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
+            int delayShowData = 8000;
+
             if (decryptMessage == false)
             {
                 flashes();
@@ -214,6 +240,16 @@ namespace Robot
                 // crypto main tasks       
                 if (lsCommand.Count > 0)
                 {
+                    if(lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+                    {
+                        //TEXT IS NOT ENCRYPTED
+                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                        await Task.Delay(delayShowData);
+                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                        return;
+                    }
+
                     if ((lsCommand.Count != 0) && (lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower()))
                     {
                         EncryptBtn.IsEnabled = false;
@@ -221,10 +257,10 @@ namespace Robot
                         //  beeper();
                         //Not correct decrypt method. 
                         //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        addTextToRichEnCrypto("NOT ENCRYPTED TEXT", Brushes.LightGreen);
-                        await Task.Delay(8000);
+                        addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
+                        await Task.Delay(delayShowData);
                         System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("NOT ENCRYPTED TEXT", Brushes.Red);
+                        addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
                         return;
                     }
@@ -242,7 +278,7 @@ namespace Robot
                     //beeper();
                     //text is not encrypted
                     addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
-                    await Task.Delay(8000);
+                    await Task.Delay(delayShowData);
                     addTextToRich("Text is not correct crypted", Brushes.Red);
                     error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
                     return;
@@ -250,15 +286,26 @@ namespace Robot
                 }
                 else if (cryptnotCryptTextFile == true)
                 {
+                    if(methodCryptoInFile == "#none")
+                    {
+                        //TEXT IS NOT ENCRYPTED
+                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+                        await Task.Delay(delayShowData);
+                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                        return;
+                    }
+
+
                     if (metodCrypto.ToLower() != methodCryptoInFile)
                     {
                         EncryptBtn.IsEnabled = false;
                         DecryptBtn.IsEnabled = false;
                         //beeper();
                         //text is not encrypted
-                        addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
-                        await Task.Delay(8000);
-                        addTextToRich("Text is not correct crypted", Brushes.Red);
+                        addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
+                        await Task.Delay(delayShowData);
+                        addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
                         return;
                     }
@@ -274,10 +321,11 @@ namespace Robot
                 if (lsCommand != null && lsCommand.Count != 0)
                 {
 
-                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "none")
+                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
                     {
                         //text is not encrypted
-                        addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
+                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+                        return;
                     }
 
                     if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower())
@@ -287,7 +335,8 @@ namespace Robot
                         beeper();
                         //Not correct decrypt method. 
                         addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
-                        await Task.Delay(8000);
+                        await Task.Delay(delayShowData);
+                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         addTextToRich("WRONG KEY WORD. ", Brushes.Red);
                         return;
                     }
@@ -477,22 +526,23 @@ namespace Robot
             List<int> notEdit = new List<int>();
                              
             //перемешаем и заполним 
-            for (int i = 0; i <= 20 ; i++)
+            for (int i = 0; i <= 30 ; i++)
             {
                 char[] randomKey = WarningCheckFilesRandom.randomStr(chrKey.Length);
 
-                for (int j = 0; j <= ( chrKey.Length / 20) ; j++)
+                for (int j = 0; j <= ( chrKey.Length / 30) ; j++)
                 {
                     int rdmNumber = WarningCheckFilesRandom.randomSleep(0, (randomKey.Length - 1));
-                    notEdit.Add(rdmNumber);
+                    notEdit.Add(rdmNumber);                  
                 }            
            
                 foreach(var tt in notEdit)
                 {                    
                     randomKey[tt] =  chrKey[tt];
-                    System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + "   " + chrKey[tt]);
+                   // System.Diagnostics.Debug.WriteLine(randomKey[tt] + "  " + tt + "   " + chrKey[tt]);
                 }
-              
+
+                await Task.Delay(1);
                 randomString.Add(new string(randomKey));
             }
 
@@ -502,7 +552,7 @@ namespace Robot
             {
                 addTextToRich(gg, color);
               //  System.Diagnostics.Debug.WriteLine(gg);
-                await Task.Delay(300);
+                await Task.Delay(150);
             }
 
             addTextToRich(v, color);

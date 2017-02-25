@@ -629,6 +629,7 @@ namespace Robot
                         contentFile = contentFile.Select(a => a.Replace("#hex", "")).ToArray();
                         contentFile = contentFile.Select(a => a.Replace("#rotx", "")).ToArray();
                         contentFile = contentFile.Select(a => a.Replace("#withkey", "")).ToArray();
+                        contentFile = contentFile.Select(a => a.Replace("#none", "")).ToArray();
 
                         foreach (var s in contentFile)
                         {
