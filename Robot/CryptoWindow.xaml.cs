@@ -109,11 +109,11 @@ namespace Robot
                     methodCryptoInFile = "#none";
                     fileNameContains = fileNameContains.Replace("#none", "");
                     //addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
-                    addTextToRichCrypto(fileNameContains, Brushes.LightGreen);
+                    //addTextToRichCrypto(fileNameContains, Brushes.LightGreen);
 
-                    addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                    //addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
                     cryptnotCryptTextFile = true;
-                    return;
+                    //return;
                 }
 
                 addTextToRichCrypto(fileNameContains,Brushes.LightGreen);
@@ -150,17 +150,17 @@ namespace Robot
                 return;
             }
 
-            if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
-            {
-                //TEXT IS NOT ENCRYPTED
-               // addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
-             //   await Task.Delay(delayShowData);
-                System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+            //{
+            //    //TEXT IS NOT ENCRYPTED
+            //   // addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+            // //   await Task.Delay(delayShowData);
+            //    System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-                addTextToRichCrypto(vv.FirstOrDefault().monitorPrint, Brushes.LightGreen);
-                addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
-                return;
-            }
+            //    addTextToRichCrypto(vv.FirstOrDefault().monitorPrint, Brushes.LightGreen);
+            //    addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+            //    return;
+            //}
 
             if (!String.IsNullOrEmpty(vv.FirstOrDefault().monitorPrint))
             {
@@ -197,8 +197,34 @@ namespace Robot
 
         private void cryptoCaesar()
         {
-            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(readRichCrypto(), Int32.Parse(RotionTextBox.Text));
-            addTextToRichEnCrypto(ss, Brushes.LightGreen);
+            try
+            {
+                string textNotCrypted = readRichCrypto();
+                string cryptedTxt = String.Empty;
+
+                foreach (var txtStr in textNotCrypted.Split(new string[] { "\r\n" }, StringSplitOptions.None))
+                {
+                    foreach (var word in txtStr.Split(new string[] { " " }, StringSplitOptions.None))
+                    {
+                        if (word != "")
+                        {
+                            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(word, Int32.Parse(RotionTextBox.Text));
+                            cryptedTxt = cryptedTxt + ss;
+                        }
+
+                        cryptedTxt = cryptedTxt + " ";
+
+                    }
+
+                    cryptedTxt = cryptedTxt + "\r\n";
+                }
+
+                addTextToRichEnCrypto(cryptedTxt, Brushes.LightGreen);
+            }
+            catch (Exception ex )
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void cryptoWithKey()
@@ -220,130 +246,139 @@ namespace Robot
         /// <param name="e"></param>
         private async void DecryptBtn_Click(object sender, RoutedEventArgs e)
         {
-            int delayShowData = 8000;
-
-            if (decryptMessage == false)
+            try
             {
-                flashes();
-                decryptMessage = true;
-                beeper();
-                return;
-            }
-            else if (decryptMessage != null)
-            {
-                decryptMessage = false;
-                textDecrypt.Text = "";
-                textDecrypt2.Text = "";
-                textDecrypt3.Text = "";
+                int delayShowData = 8000;
 
-
-                // crypto main tasks       
-                if (lsCommand.Count > 0)
+                if (decryptMessage == false)
                 {
-                    if(lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
-                    {
-                        //TEXT IS NOT ENCRYPTED
-                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.Red);
-                        await Task.Delay(delayShowData);
-                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
-                        return;
-                    }
-
-                    if ((lsCommand.Count != 0) && (lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower()))
-                    {
-                        EncryptBtn.IsEnabled = false;
-                        DecryptBtn.IsEnabled = false;
-                        //  beeper();
-                        //Not correct decrypt method. 
-                        //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
-                        addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
-                        await Task.Delay(delayShowData);
-                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
-                        error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
-                        return;
-                    }
-
-                    startMethodCrypto();
+                    flashes();
+                    decryptMessage = true;
+                    beeper();
                     return;
                 }
-
-
-                //file crypto
-                if (!cryptnotCryptTextFile)
+                else if (decryptMessage != null)
                 {
-                    EncryptBtn.IsEnabled = false;
-                    DecryptBtn.IsEnabled = false;
-                    //beeper();
-                    //text is not encrypted
-                    addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
-                    await Task.Delay(delayShowData);
-                    addTextToRich("Text is not correct crypted", Brushes.Red);
-                    error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
-                    return;
+                    decryptMessage = false;
+                    textDecrypt.Text = "";
+                    textDecrypt2.Text = "";
+                    textDecrypt3.Text = "";
 
-                }
-                else if (cryptnotCryptTextFile == true)
-                {
-                    if(methodCryptoInFile == "#none")
+
+                    // crypto main tasks       
+                    if (lsCommand.Count > 0)
                     {
-                        //TEXT IS NOT ENCRYPTED
-                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
-                        await Task.Delay(delayShowData);
-                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                        if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+                        {
+                            //TEXT IS NOT ENCRYPTED
+                            addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                            await Task.Delay(delayShowData);
+                            System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                            return;
+                        }
+
+                        if ((lsCommand.Count != 0) && (lsCommand != null) && (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower()))
+                        {
+                            EncryptBtn.IsEnabled = false;
+                            DecryptBtn.IsEnabled = false;
+                            //  beeper();
+                            //Not correct decrypt method. 
+                            //addTextToRichCrypto("Not correct decrypt method.", Brushes.Red);
+                            addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
+                            await Task.Delay(delayShowData);
+                            System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
+                            error198BlockInterface.error198BlockInterfaceCryptoMainTasks = true;
+                            return;
+                        }
+
+                        startMethodCrypto();
                         return;
                     }
 
 
-                    if (metodCrypto.ToLower() != methodCryptoInFile)
+                    //file crypto
+                    if (!cryptnotCryptTextFile)
                     {
                         EncryptBtn.IsEnabled = false;
                         DecryptBtn.IsEnabled = false;
                         //beeper();
                         //text is not encrypted
-                        addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
+                        addTextToRichEnCrypto("Text is not correct crypted", Brushes.LightGreen);
                         await Task.Delay(delayShowData);
-                        addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
+                        addTextToRich("Text is not correct crypted", Brushes.Red);
                         error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
                         return;
+
                     }
+                    else if (cryptnotCryptTextFile == true)
+                    {
+                        if (methodCryptoInFile == "#none")
+                        {
+                            //TEXT IS NOT ENCRYPTED
+                            addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+                            await Task.Delay(delayShowData);
+                            System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            addTextToRich("TEXT IS NOT ENCRYPTED", Brushes.Red);
+                            return;
+                        }
+
+
+                        if (metodCrypto.ToLower() != methodCryptoInFile)
+                        {
+                            EncryptBtn.IsEnabled = false;
+                            DecryptBtn.IsEnabled = false;
+                            //beeper();
+                            //text is not encrypted
+                            addTextToRichEnCrypto("WRONG CRYPTO METHOD", Brushes.LightGreen);
+                            await Task.Delay(delayShowData);
+                            addTextToRich("WRONG CRYPTO METHOD", Brushes.Red);
+                            error198BlockInterface.error198BlockInterfaceCryptoTextFile.Add(fileName);
+                            return;
+                        }
+                    }
+
+                    startMethodCrypto();
+                    return;
+
+
                 }
 
-                startMethodCrypto();
-                return;
-            }
-
-            // CRYPTO NEW
-            if (decryptMessage == null)
-            {
-                if (lsCommand != null && lsCommand.Count != 0)
+                // CRYPTO NEW
+                if (decryptMessage == null)
                 {
-
-                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+                    if (lsCommand != null && lsCommand.Count != 0)
                     {
-                        //text is not encrypted
-                        addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
-                        return;
-                    }
 
-                    if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower())
-                    {
-                        EncryptBtn.IsEnabled = false;
-                        DecryptBtn.IsEnabled = false;
-                        beeper();
-                        //Not correct decrypt method. 
-                        addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
-                        await Task.Delay(delayShowData);
-                        System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        addTextToRich("WRONG KEY WORD. ", Brushes.Red);
-                        return;
-                    }
+                        if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() == "#none")
+                        {
+                            //text is not encrypted
+                            addTextToRichEnCrypto("TEXT IS NOT ENCRYPTED", Brushes.LightGreen);
+                            return;
+                        }
 
+                        if (lsCommand.FirstOrDefault().helpPrint.Trim().ToLower() != metodCrypto.ToLower())
+                        {
+                            EncryptBtn.IsEnabled = false;
+                            DecryptBtn.IsEnabled = false;
+                            beeper();
+                            //Not correct decrypt method. 
+                            addTextToRichEnCrypto("WRONG KEY WORD. ", Brushes.LightGreen);
+                            await Task.Delay(delayShowData);
+                            System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            addTextToRich("WRONG KEY WORD. ", Brushes.Red);
+                            return;
+                        }
+
+                    }
+                    startMethodCrypto();
+                    return;
                 }
-                startMethodCrypto();
-                return;
+            }
+            catch(Exception ex)
+            {
+                LogInFile.addFileLog("Произошла ошибка при нажатии кнопки дешифрования " + ex.ToString());
             }
 
         }
