@@ -213,10 +213,9 @@ namespace Robot
                         }
 
                         cryptedTxt = cryptedTxt + " ";
-
                     }
 
-                    cryptedTxt = cryptedTxt + "\r\n";
+                    cryptedTxt = cryptedTxt + Environment.NewLine;
                 }
 
                 addTextToRichEnCrypto(cryptedTxt, Brushes.LightGreen);
@@ -432,13 +431,64 @@ namespace Robot
         /// </summary>
         private void encryptoCeasar()
         {
+            //try
+            //{
+            //    string textNotCrypted = readRichCrypto();
+            //    string cryptedTxt = String.Empty;
+
+            //    foreach (var txtStr in textNotCrypted.Split(new string[] { "\r\n" }, StringSplitOptions.None))
+            //    {
+            //        foreach (var word in txtStr.Split(new string[] { " " }, StringSplitOptions.None))
+            //        {
+            //            if (word != "")
+            //            {
+            //                string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.encryptCaesar(word, Int32.Parse(RotionTextBox.Text));
+            //                cryptedTxt = cryptedTxt + ss;
+            //            }
+
+            //            cryptedTxt = cryptedTxt + " ";
+            //        }
+
+            //        cryptedTxt = cryptedTxt + "\r\n";
+            //    }
+
+            //    addTextToRichEnCrypto(cryptedTxt, Brushes.LightGreen);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
+
+
             try
             {
-                string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(readRichCrypto(), Int32.Parse(RotionTextBox.Text));
-                addTextToRichEnCrypto(ss, Brushes.LightGreen);
+                //string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(readRichCrypto(), Int32.Parse(RotionTextBox.Text));
+                //addTextToRichEnCrypto(ss, Brushes.LightGreen);
+                string textNotCrypted = readRichCrypto();
+                string cryptedTxt = String.Empty;
+
+                foreach (var txtStr in textNotCrypted.Split(new string[] { "\n" }, StringSplitOptions.None))
+                {
+                    foreach (var word in txtStr.Split(new string[] { " " }, StringSplitOptions.None))
+                    {
+                        if (word != "")
+                        {
+                            string ss = LocalDataBase.CryptoEncrypter.CryptoEncrypter.decryptCaesar(word, Int32.Parse(RotionTextBox.Text));
+                            cryptedTxt = cryptedTxt + ss;
+                        }
+
+                        cryptedTxt = cryptedTxt + " ";
+                    }
+
+                    cryptedTxt = cryptedTxt + Environment.NewLine;
+                }
+
+                addTextToRichEnCrypto(cryptedTxt, Brushes.LightGreen);
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    " + ex);
+            }
         }
 
         private void encryptorWithKey()
@@ -587,7 +637,7 @@ namespace Robot
             {
                 addTextToRich(gg, color);
               //  System.Diagnostics.Debug.WriteLine(gg);
-                await Task.Delay(150);
+                await Task.Delay(350);
             }
 
             addTextToRich(v, color);
