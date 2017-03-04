@@ -791,18 +791,27 @@ namespace Robot
                             return;
                         }
 
-                        if (files.Find(a => a == ttt) == null)
+                        // просто проверка формат типа crypto dsfsdf
+                        if (fileFormat.Count() != 2 && fileFormat.Count() == 1)
                         {
-                            addTextToRich("File not found", Brushes.Red, false);
-                            printHelpCommand("File not found", Brushes.Red);
+                            addTextToRich("Unknown command", Brushes.Red, false);
+                            printHelpCommand("Unknown command", Brushes.Red);
                             beeper();
                             return;
                         }
 
-                        if (fileFormat.Count() > 2 || fileFormat.Count() < 2 || fileFormat[1].Trim().ToLower() != "txt")
+                        if(files.Find(a => a == ttt) == null && fileFormat[1].Trim().ToLower() == "txt")
                         {
-                            addTextToRich("Unknown file format", Brushes.Red, false);
-                            printHelpCommand("Unknown file format", Brushes.Red);
+                            addTextToRich("File not found", Brushes.Red, false);
+                            printHelpCommand("File not fount", Brushes.Red);
+                            beeper();
+                            return;
+                        }
+
+                        if (fileFormat.Count() >= 2 && fileFormat[1].Trim().ToLower() != "txt")
+                        {
+                            addTextToRich("Unknown format file", Brushes.Red, false);
+                            printHelpCommand("Unknown format file", Brushes.Red);
                             beeper();
                             return;
                         }
