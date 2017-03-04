@@ -91,5 +91,11 @@ namespace LocalDataBase.FlashDrive.Tests
         {
             GetSetScenarioOfFlashDrive.getPassword();
         }
+
+        [TestMethod()]
+        public void getPasswordForCryptoTest()
+        {
+            GetSetScenarioOfFlashDrive.getPasswordForCrypto();
+        }
     }
 }

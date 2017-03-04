@@ -167,6 +167,33 @@ namespace Robot
                         }
                     }
 
+                    if(textBoxSuffix.Text.Trim() == "Please enter the password to unlock the crypto file:")
+                    {
+                        if(command == GetSetScenarioOfFlashDrive.getPasswordForCrypto())
+                        {
+                            error198BlockInterface.error198BlockInterfaceCryptoTextFile = null;
+                            error198BlockInterface.error198BlockInterfaceCryptoMainTasks = false;
+
+                            addTextToRich("Successfully unblock crypto sysytem", Brushes.LightGreen, false);
+                            printHelpCommand("Successfully unblock crypto sysytem", Brushes.LightGreen);
+
+                            textBoxCommands.Clear();
+                            textBoxSuffixAddText("#");
+                            x2command = false;
+                            return;
+                        }
+                        else
+                        {
+                            addTextToRich("Wrong password", Brushes.Red, false);
+                            printHelpCommand("Wrong password", Brushes.Red);
+
+                            textBoxCommands.Clear();
+                            textBoxSuffixAddText("#");
+                            x2command = false;
+                            return;
+                        }
+                    }
+
                     // reboot
                     if (textBoxSuffix.Text.Trim() == "Proceed with reboot?" && command == "yes")
                     {
@@ -707,7 +734,7 @@ namespace Robot
                     scenarioDiagnosticRobot = 198;
                 }
 
-                if (command.Contains("crypto"))
+                if (tt == "crypto")
                 {
                     // сколько слов в команде
                     var yyy1 = command.Split(new Char[] { }).Count();
@@ -837,6 +864,23 @@ namespace Robot
 
                 }
 
+                if(tt == "unblock" && command.Contains("crypto"))
+                {
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    //textBoxSuffix.Text = "Password: ";
+                    textBoxSuffixAddText("Please enter the password to unlock the crypto file: ");
+                    printHelpCommand("Please enter the password to unlock the crypto file: ", Brushes.Red);
+                    x2command = true;
+                    return;
+                }
+
                 if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {
                     addTextToRich("Only root!", Brushes.Red, false);
@@ -954,7 +998,8 @@ namespace Robot
             "play",
             "cat" ,
             "ls"  ,
-            "crypto"
+            "crypto",
+            "unblock crypto"           
         };
 
     }   

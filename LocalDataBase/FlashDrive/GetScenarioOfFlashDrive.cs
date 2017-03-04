@@ -435,6 +435,41 @@ namespace LocalDataBase.FlashDrive
 
         }
 
+        /// <summary>
+        /// Get password for crypto
+        /// </summary>
+        /// <returns></returns>
+        public static string getPasswordForCrypto()
+        {
+            try
+            {
+                string path = Path.GetDirectoryName(@"C:\robot_comand\");
+                string pathFile = Path.Combine(path, "unblock_pass");
+
+                if (!File.Exists(pathFile))
+                {
+                    // File.Create(pathFile);
+
+                    using (StreamWriter sw = new StreamWriter(pathFile, false, Encoding.Default))
+                    {
+                        sw.WriteLine("111777");
+                        return "111777";
+                    }
+                }
+
+                StreamReader file = new StreamReader(pathFile);
+
+                string value = file.ReadLine().Trim();
+                file.Close();
+                return value;
+            }
+            catch (Exception ex)
+            {
+                LogInFile.addFileLog(DateTime.Now + " get password for unblock_pass crypto " + ex.ToString());
+                return null;
+            }
+
+        }
 
 
         /// <summary>
