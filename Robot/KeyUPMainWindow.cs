@@ -171,7 +171,7 @@ namespace Robot
                     {
                         if(command == GetSetScenarioOfFlashDrive.getPasswordForCrypto())
                         {
-                            error198BlockInterface.error198BlockInterfaceCryptoTextFile = null;
+                            error198BlockInterface.error198BlockInterfaceCryptoTextFile = new List<string>();
                             error198BlockInterface.error198BlockInterfaceCryptoMainTasks = false;
 
                             addTextToRich("Successfully unblock crypto sysytem", Brushes.LightGreen, false);
