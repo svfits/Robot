@@ -955,11 +955,13 @@ namespace Robot
 
         private void printInModulesDateTimer()
         {
-            timerRobotWorkPrintModules = new Timer();
-
-            timerRobotWorkPrintModules.Elapsed += addTexttoModules;
-            timerRobotWorkPrintModules.Interval = 1000;
-            timerRobotWorkPrintModules.Start();
+            if (connectNotConnect == true)
+            {
+                timerRobotWorkPrintModules = new Timer();
+                timerRobotWorkPrintModules.Elapsed += addTexttoModules;
+                timerRobotWorkPrintModules.Interval = 1000;
+                timerRobotWorkPrintModules.Start();
+            }
         }
 
         /// <summary>
@@ -985,6 +987,11 @@ namespace Robot
         private void addTexttoModules(object sender, ElapsedEventArgs e)
         {
             timerRobotWorkPrintModules.Stop();
+
+            if(connectNotConnect == false)
+            {
+                return;
+            }
 
             Random r = new Random();
             int randomString = r.Next(1, 6);

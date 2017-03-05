@@ -33,7 +33,7 @@
     <SuiteName>Robot</SuiteName>
     <MinimumRequiredVersion>1.0.0.9</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>105</ApplicationRevision>
+    <ApplicationRevision>106</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

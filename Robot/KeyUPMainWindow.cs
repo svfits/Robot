@@ -881,6 +881,55 @@ namespace Robot
                     return;
                 }
 
+
+                if (tt == "disconn")
+                {
+
+                    if (sudoNotsudo == false)
+                    {
+                        addTextToRich("Only root!", Brushes.Red, false);
+                        printHelpCommand("Only root!", Brushes.Red);
+                        beeper();
+                        return;
+                    }
+
+                    objDoc = new FlowDocument();
+                    objParag1 = new Paragraph();
+                    richTextBox.Document.Blocks.Clear();
+                    addTextToRich("", Brushes.Green, false);
+
+                    connectNotConnect = false;
+                    // очистим модули
+                  
+                    timerRobotWorkPrintModules.Stop();                  
+                   
+
+                    //// нет 2-й флешки
+                    //if (GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario() == 0)
+                    //{
+                    //    scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getNameFlashisAlive();
+                    //}
+                    //else
+                    //{
+                    //    // из 2-й флешки
+                    //    scenarioDiagnosticRobot = GetSetScenarioOfFlashDrive.getScenarioApplyNotapplyscenario();
+                    //}
+
+                    sudoNotsudo = false;
+                    textBoxSuffixAddText("#");
+                    textBoxCommands.Clear();
+
+                    connectBtn.IsEnabled = true;
+                   
+                    modeLbl.Content = "Link Ok";
+
+                    connectOrDisconnectLbl.Content = "DISCONNECTED";
+                    connectOrDisconnectLbl.Foreground = Brushes.Red;
+                    printHelpCommand("Robot disconnected", Brushes.LightGreen);
+                    emptyModules();
+                    return;
+                }
+
                 if (nameCommand != null && sudoNotsudo == false && nameCommand.FirstOrDefault().sudo == 1)
                 {
                     addTextToRich("Only root!", Brushes.Red, false);
@@ -999,7 +1048,8 @@ namespace Robot
             "cat" ,
             "ls"  ,
             "crypto",
-            "unblock crypto"           
+            "unblock crypto",
+            "disconn"    
         };
 
     }   
