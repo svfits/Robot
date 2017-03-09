@@ -860,6 +860,8 @@ namespace Robot
                 objDoc.Blocks.Add(objParag1);
 
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
             }
@@ -894,6 +896,8 @@ namespace Robot
             try
             {                
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
+                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
             }

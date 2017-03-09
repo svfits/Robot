@@ -52,10 +52,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="textBoxSuffix" Grid.Column="0" Foreground="LightGreen" BorderBrush="Black"
                          BorderThickness="0" Background="Black" Text="#" IsReadOnly="True"
-                         Focusable="False" PreviewMouseLeftButtonDown="textBoxSuffix_PreviewMouseLeftButtonDown"/>
+                         Focusable="False" PreviewMouseLeftButtonDown="textBoxSuffix_PreviewMouseLeftButtonDown" FontSize="13"/>
                 <TextBox x:Name="textBoxCommands" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" TextWrapping="Wrap"
                          Text="" MinWidth="50" Background="Black" Foreground="LightGreen" BorderThickness="0"
-                         KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0" CaretBrush="LightGreen"
+                         KeyUp="richTextBox_KeyUp" MinLines="1" Focusable="True" TabIndex="0" CaretBrush="LightGreen" FontSize="13"
                          >
                     <!--<TextBox.CaretBrush>  
                         

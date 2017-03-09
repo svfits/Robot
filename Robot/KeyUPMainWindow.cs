@@ -893,6 +893,13 @@ namespace Robot
                         return;
                     }
 
+                    //YOU CAN DISCONNECT ROBOT....
+                    //THE SYSTEM WILL CLOSE
+                    addTextToRich("YOU CAN DISCONNECT ROBOT....", Brushes.Green, false);
+                    addTextToRich("THE SYSTEM WILL CLOSE", Brushes.Green, false);
+
+                    await Task.Delay(3000);
+
                     objDoc = new FlowDocument();
                     objParag1 = new Paragraph();
                     richTextBox.Document.Blocks.Clear();
