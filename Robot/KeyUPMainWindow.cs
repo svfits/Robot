@@ -171,11 +171,19 @@ namespace Robot
                     {
                         if(command == GetSetScenarioOfFlashDrive.getPasswordForCrypto())
                         {
+                            if (error198BlockInterface.error198BlockInterfaceCryptoTextFile.Count() == 0)
+                            {
+
+                                addTextToRich("The crypto system is not locked", Brushes.LightGreen, false);
+                                printHelpCommand("The crypto system is not locked", Brushes.LightGreen);
+                                return;
+                            }
+
                             error198BlockInterface.error198BlockInterfaceCryptoTextFile = new List<string>();
                             error198BlockInterface.error198BlockInterfaceCryptoMainTasks = false;
 
-                            addTextToRich("Successfully unblock crypto sysytem", Brushes.LightGreen, false);
-                            printHelpCommand("Successfully unblock crypto sysytem", Brushes.LightGreen);
+                            addTextToRich("Successfully unblock crypto system", Brushes.LightGreen, false);
+                            printHelpCommand("Successfully unblock crypto system", Brushes.LightGreen);
 
                             textBoxCommands.Clear();
                             textBoxSuffixAddText("#");
