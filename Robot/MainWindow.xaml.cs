@@ -721,7 +721,7 @@ namespace Robot
                         {
                            txt = word;
                          
-                            //  await Task.Delay(30);
+                           await Task.Delay(30);
                         }
                              
                     }
@@ -729,7 +729,7 @@ namespace Robot
                     {
                         txt = "";
                           MessageBox.Show("Произошла ошибка " + line + " ошибка в слове " + word + "  " + ex);
-                     //   LogInFile.addFileLog("Произошла ошибка поиска вхождения Тэгов цветов команды, иправтье команду тэги должны быть по отдельности " + ex.ToString());
+                         //LogInFile.addFileLog("Произошла ошибка поиска вхождения Тэгов цветов команды, иправтье команду тэги должны быть по отдельности " + ex.ToString());
                     }
                 }
                 else
@@ -741,7 +741,9 @@ namespace Robot
 
                 addTextToRich(txt + " ", color);
             }
-            addTextToRich("\n", Brushes.White);
+
+            deleteTextToRich();
+            addTextToRich("\n", Brushes.White);            
         }
 
         /// <summary>
@@ -847,28 +849,41 @@ namespace Robot
     /// <param name="v"></param>
     /// <param name="color"></param>
     private void addTextToRich(string v, SolidColorBrush color)
-        {
-            //if (sudoNotsudo )
-            //{
-            //    v = "root" + v;
-            //}          
+        {                 
 
             try
             {
-                TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+               // TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
                 objParag1.Inlines.Add(new Run(v) { Foreground = color });
                 objDoc.Blocks.Add(objParag1);
 
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
-                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
-                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
+                //richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
+               // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
+
+                //deleteTextToRich();
             }
             catch (Exception ex)
             {
                 LogInFile.addFileLog("ошибка при добавлении консоль цветных слов " + ex.ToString());
             }
+        }
+
+        private void deleteTextToRich()
+        {
+                       
+            Paragraph par = richTextBox.Document.Blocks.FirstBlock as Paragraph;
+
+            double he = textBoxCommands.Height;
+
+            if (par != null && textBoxCommands.ActualHeight <= 31)
+            {
+                par.Inlines.Remove(par.Inlines.FirstOrDefault());
+                richTextBox.ScrollToEnd();
+            }         
+            
         }
 
 
@@ -888,7 +903,7 @@ namespace Robot
 
             if (v != String.Empty)
             {
-                TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+               // TextRange range = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
                 objParag1.Inlines.Add(new Run(v + Environment.NewLine) {Foreground = color } );
                 objDoc.Blocks.Add(objParag1);             
             }
@@ -896,8 +911,8 @@ namespace Robot
             try
             {                
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.Document = objDoc; }));
-                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
-                richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
+               // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontFamily = new FontFamily("Arial"); }));
+               // richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.FontSize = 13; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.CaretPosition = richTextBox.Document.ContentEnd; }));
                 richTextBox.Dispatcher.Invoke(new Action(delegate { richTextBox.ScrollToEnd(); }));
             }
@@ -905,6 +920,8 @@ namespace Robot
             {
                 LogInFile.addFileLog("ошибка при добавлении консоль  " + ex.ToString());
             }
+
+            deleteTextToRich();
         }       
         
          

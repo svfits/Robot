@@ -38,7 +38,10 @@
                          AcceptsTab="False" AllowDrop="False" BorderThickness="0" IsReadOnly="True"
                          Focusable="False"
                          ScrollViewer.VerticalScrollBarVisibility="auto"
-                         PreviewMouseLeftButtonDown="richTextBox_PreviewMouseLeftButtonDown">
+                         PreviewMouseLeftButtonDown="richTextBox_PreviewMouseLeftButtonDown" 
+                         FontFamily="Arial"
+                         FontSize="13"                         
+                         >
                 <!--<FlowDocument>
                     <Paragraph>
                         <Run Text="#" Foreground="LightGreen"/>
