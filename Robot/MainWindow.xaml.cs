@@ -478,7 +478,7 @@ namespace Robot
             // по строкам
             foreach (string line in nameCommand.FirstOrDefault().monitorPrint.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
             {
-                int pause = 300;
+                int pause = 50;
                 string newline = line;
 
                 if (!String.IsNullOrEmpty(line))
@@ -573,19 +573,45 @@ namespace Robot
                         newline = newline.Replace("#alert", "");
                     }
 
-                    // раскраска по словам
-                    if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
+                    newline = newline.Replace("<RED>", "").Replace("</RED>", "");
+                    newline = newline.Replace("<GREEN>", "").Replace("</GREEN>", "");
+                    newline = newline.Replace("<ORANGE>", "").Replace("</ORANGE>", "");
+                    newline = newline.Replace("<BLUE>", "").Replace("</BLUE>", "");
+                    newline = newline.Replace("<CYAN>", "").Replace("</CYAN>", "");
+                    newline = newline.Replace("<YELLOW>", "").Replace("</YELLOW>", "");
+
+                    string[] stringSeparators1 = new string[] { "<PAUSEWORD>" };
+                    string[] stringSeparatorsEnd1 = new string[] { "</PAUSEWORD>" };
+
+                    if (newline.Contains("<PAUSEWORD>") && newline.Contains("</PAUSEWORD>"))
                     {
-                        try
-                        {                           
-                            await PaintWord(newline);
-                            continue;
-                        }
-                        catch
-                        {
-                          //  LogInFile.addFileLog("Произошла ошибка при раскраске слов в командах " + ex.ToString());
-                        }
+
+                        string pause17 = newline.Split(stringSeparators1, StringSplitOptions.None)[1].Split(stringSeparatorsEnd1, StringSplitOptions.None)[0];
+                        int  pause18 = Int32.Parse(pause17);
+                        newline = newline.Replace("<PAUSEWORD>" + pause18 + "</PAUSEWORD>", "");
+                        newline = newline.Replace("<PAUSEWORD>", "");
+                        newline = newline.Replace("</PAUSEWORD>", "");
+                        await Task.Delay(pause);
                     }
+
+                   
+
+                    // раскраска по словам
+                    //if (newline.Contains("<") && newline.Contains("</") && newline.Contains(">"))
+                    //{
+                    //    try
+                    //    {                           
+                    //        //await PaintWord(newline);
+                    //        //  continue;
+
+                    //        //pause
+                            
+                    //    }
+                    //    catch
+                    //    {
+                    //      //  LogInFile.addFileLog("Произошла ошибка при раскраске слов в командах " + ex.ToString());
+                    //    }
+                    //}
 
                     // раскраска по строкам
                     if (newline.Contains("#RED"))
