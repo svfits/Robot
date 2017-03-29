@@ -35,7 +35,7 @@ namespace Robot
 
             DoubleAnimation robotAnimation = new DoubleAnimation();
             robotAnimation.From = robotImage.ActualWidth;
-            robotAnimation.To = 250;
+            robotAnimation.To = 180;
             robotAnimation.Duration = TimeSpan.FromSeconds(5);
             robotImage.BeginAnimation(Image.WidthProperty, robotAnimation);
 
