@@ -358,7 +358,7 @@ namespace Robot
                     //  colorizeModule(scenarioDiagnosticRobot, Brushes.Green);
                     addTextToRich(nameCommand, Brushes.White);
                     //   scenarioDiagnosticRobot = 199;
-                    await Task.Delay(30000);
+                    await Task.Delay(40000);
                     GetSetScenarioOfFlashDrive.saveScenariy("199");
                     return;
                 }
@@ -375,7 +375,7 @@ namespace Robot
 
                     addTextToRich(nameCommand, Brushes.White);
                     // scenarioDiagnosticRobot = 199;
-                    await Task.Delay(30000);
+                    await Task.Delay(40000);
                     GetSetScenarioOfFlashDrive.saveScenariy(199.ToString());
                     return;
                 }
